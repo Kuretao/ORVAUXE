@@ -1,0 +1,4 @@
+{
+  "extends": "@orvauxe/typescript-config/react-library.json",
+  "include": ["src/**/*.ts", "src/**/*.tsx", "vitest.setup.ts", "vitest.config.ts"]
+}

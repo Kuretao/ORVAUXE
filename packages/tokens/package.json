@@ -1,0 +1,21 @@
+{
+  "name": "@orvauxe/tokens",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./styles.css": "./src/tokens.css"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@orvauxe/eslint-config": "workspace:*",
+    "@orvauxe/typescript-config": "workspace:*",
+    "eslint": "9.39.5",
+    "typescript": "6.0.3"
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "extends": "@orvauxe/typescript-config/react-library.json",
+  "include": ["sanity.cli.ts", "sanity.config.ts", "src/**/*.ts"]
+}

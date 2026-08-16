@@ -1,0 +1,80 @@
+:root {
+  --orvauxe-color-black: #0b0b0b;
+  --orvauxe-color-ivory: #f2efe8;
+  --orvauxe-color-bone: #d8d2c7;
+  --orvauxe-color-graphite-brand: #74716b;
+  --orvauxe-color-graphite-ui: #6f6c66;
+  --orvauxe-color-oxblood: #421817;
+
+  --orvauxe-font-display: "Bodoni Moda", "Times New Roman", serif;
+  --orvauxe-font-interface: "Inter", Arial, sans-serif;
+  --orvauxe-type-hero: clamp(3.5rem, 8vw, 8.5rem);
+  --orvauxe-type-section: clamp(2.5rem, 5vw, 5.5rem);
+  --orvauxe-type-quote: clamp(2rem, 4vw, 4.5rem);
+  --orvauxe-type-body: 1rem;
+  --orvauxe-type-label: 0.75rem;
+  --orvauxe-leading-display: 0.96;
+  --orvauxe-leading-body: 1.6;
+
+  --orvauxe-space-1: 0.25rem;
+  --orvauxe-space-2: 0.5rem;
+  --orvauxe-space-3: 0.75rem;
+  --orvauxe-space-4: 1rem;
+  --orvauxe-space-6: 1.5rem;
+  --orvauxe-space-8: 2rem;
+  --orvauxe-space-12: 3rem;
+  --orvauxe-space-16: 4rem;
+  --orvauxe-space-24: 6rem;
+
+  /* Structural values complete the implementation contract; Brand Book v1.1 does not prescribe numbers. */
+  --orvauxe-container-content: 75rem;
+  --orvauxe-container-reading: 46rem;
+  --orvauxe-gutter: clamp(1rem, 4vw, 4rem);
+  --orvauxe-grid-columns: 12;
+  --orvauxe-grid-gap: clamp(1rem, 2vw, 2rem);
+  --orvauxe-breakpoint-sm: 40rem;
+  --orvauxe-breakpoint-md: 48rem;
+  --orvauxe-breakpoint-lg: 64rem;
+  --orvauxe-breakpoint-xl: 80rem;
+
+  --orvauxe-motion-fast: 160ms;
+  --orvauxe-motion-ui: 320ms;
+  --orvauxe-motion-editorial: 800ms;
+  --orvauxe-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  --orvauxe-focus-color: var(--orvauxe-color-oxblood);
+  --orvauxe-focus-width: 0.125rem;
+  --orvauxe-focus-offset: 0.1875rem;
+  --orvauxe-border-width: 1px;
+  --orvauxe-border-color: var(--orvauxe-color-bone);
+  --orvauxe-radius-minimal: 0.125rem;
+  --orvauxe-shadow-structural: 0 0.5rem 2rem rgb(11 11 11 / 8%);
+
+  --orvauxe-z-base: 0;
+  --orvauxe-z-header: 20;
+  --orvauxe-z-overlay: 40;
+  --orvauxe-z-modal: 60;
+}
+
+@theme inline {
+  --color-orvauxe-black: var(--orvauxe-color-black);
+  --color-atelier-ivory: var(--orvauxe-color-ivory);
+  --color-bone: var(--orvauxe-color-bone);
+  --color-graphite-brand: var(--orvauxe-color-graphite-brand);
+  --color-graphite-ui: var(--orvauxe-color-graphite-ui);
+  --color-oxblood: var(--orvauxe-color-oxblood);
+  --font-display: var(--orvauxe-font-display);
+  --font-interface: var(--orvauxe-font-interface);
+  --breakpoint-sm: var(--orvauxe-breakpoint-sm);
+  --breakpoint-md: var(--orvauxe-breakpoint-md);
+  --breakpoint-lg: var(--orvauxe-breakpoint-lg);
+  --breakpoint-xl: var(--orvauxe-breakpoint-xl);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --orvauxe-motion-fast: 1ms;
+    --orvauxe-motion-ui: 1ms;
+    --orvauxe-motion-editorial: 1ms;
+  }
+}

@@ -1,0 +1,11 @@
+packages:
+  - apps/*
+  - packages/*
+
+onlyBuiltDependencies:
+  - "@sentry/cli"
+  - esbuild
+
+ignoredBuiltDependencies:
+  - core-js
+  - unrs-resolver

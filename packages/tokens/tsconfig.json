@@ -1,0 +1,4 @@
+{
+  "extends": "@orvauxe/typescript-config/base.json",
+  "include": ["src/**/*.ts"]
+}

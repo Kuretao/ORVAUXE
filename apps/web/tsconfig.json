@@ -1,0 +1,16 @@
+{
+  "extends": "@orvauxe/typescript-config/nextjs.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/modules/atelier": ["./src/modules/atelier/public.ts"],
+      "@/modules/editions": ["./src/modules/editions/public.ts"],
+      "@/modules/legal": ["./src/modules/legal/public.ts"],
+      "@/modules/project-inquiry": ["./src/modules/project-inquiry/public.ts"],
+      "@/modules/studio": ["./src/modules/studio/public.ts"]
+    },
+    "types": ["node"]
+  },
+  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "tests/e2e"]
+}

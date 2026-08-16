@@ -1,0 +1,138 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  CI: "true"
+  NEXT_TELEMETRY_DISABLED: "1"
+  # Official Cloudflare Turnstile always-pass test site key.
+  NEXT_PUBLIC_TURNSTILE_SITE_KEY: "1x00000000000000000000AA"
+  ORVAUXE_SITE_URL: "http://127.0.0.1:3000"
+  SANITY_STUDIO_PROJECT_ID: "ci000000"
+  SANITY_STUDIO_DATASET: "production"
+
+jobs:
+  quality:
+    name: Quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.34.5
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24.19.0
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Restore Turbo cache
+        uses: actions/cache@v5
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-${{ github.ref_name }}-
+            ${{ runner.os }}-turbo-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check Sanity schema and generated types
+        run: pnpm typegen:check
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Run unit and component tests
+        run: pnpm test
+
+      - name: Build applications and packages
+        run: pnpm build
+
+      - name: Preserve compiled web application
+        uses: actions/upload-artifact@v7
+        with:
+          name: web-build-${{ github.sha }}
+          path: |
+            apps/web/.next/
+            !apps/web/.next/cache/
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 1
+
+  browser:
+    name: Deterministic E2E and axe
+    needs: quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      ORVAUXE_E2E_MODE: "stub"
+      # Official Cloudflare Turnstile always-pass test secret key.
+      TURNSTILE_SECRET_KEY: "1x0000000000000000000000000000000AA"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.34.5
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24.19.0
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Restore compiled web application
+        uses: actions/download-artifact@v7
+        with:
+          name: web-build-${{ github.sha }}
+          path: apps/web/.next/
+
+      - name: Install Playwright Chromium
+        run: pnpm --filter @orvauxe/web exec playwright install --with-deps chromium
+
+      - name: Run deterministic E2E and axe smoke tests
+        run: pnpm test:e2e
+
+      - name: Upload Playwright diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-failure-${{ github.run_id }}
+          path: |
+            apps/web/playwright-report/
+            apps/web/blob-report/
+            apps/web/test-results/
+          if-no-files-found: ignore
+          retention-days: 7

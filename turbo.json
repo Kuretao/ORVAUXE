@@ -1,0 +1,59 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalEnv": ["CI"],
+  "tasks": {
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "typecheck": {
+      "dependsOn": ["^typecheck"]
+    },
+    "test": {
+      "dependsOn": ["^test"]
+    },
+    "build": {
+      "dependsOn": ["^build"]
+    },
+    "@orvauxe/web#build": {
+      "dependsOn": ["^build"],
+      "env": [
+        "NEXT_PUBLIC_SANITY_PROJECT_ID",
+        "NEXT_PUBLIC_SANITY_DATASET",
+        "NEXT_PUBLIC_TURNSTILE_SITE_KEY",
+        "NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN",
+        "NEXT_PUBLIC_POSTHOG_HOST",
+        "NEXT_PUBLIC_SENTRY_DSN",
+        "ORVAUXE_SITE_URL",
+        "VERCEL_ENV"
+      ],
+      "passThroughEnv": [
+        "NEXT_TELEMETRY_DISABLED",
+        "SANITY_API_TOKEN",
+        "SANITY_PREVIEW_SECRET",
+        "ATTIO_API_KEY",
+        "ATTIO_DEFAULT_DEAL_OWNER",
+        "ATTIO_DEFAULT_DEAL_STAGE",
+        "RESEND_API_KEY",
+        "RESEND_FROM_EMAIL",
+        "PROJECT_INQUIRY_RECIPIENT_EMAIL",
+        "TURNSTILE_SECRET_KEY",
+        "SENTRY_AUTH_TOKEN",
+        "SENTRY_ORG",
+        "SENTRY_PROJECT"
+      ],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "@orvauxe/studio#build": {
+      "dependsOn": ["^build"],
+      "env": ["SANITY_STUDIO_PROJECT_ID", "SANITY_STUDIO_DATASET"],
+      "outputs": ["dist/**"]
+    },
+    "e2e": {
+      "cache": false
+    }
+  }
+}
