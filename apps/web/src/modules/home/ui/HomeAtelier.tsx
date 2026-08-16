@@ -23,7 +23,12 @@ export function HomeAtelier({ atelier }: HomeAtelierProps) {
             <Text className={styles.price} variant="label">
               {atelier.price}
             </Text>
-            <Link href={atelier.cta.href} variant="navigation">
+            <Link
+              className={styles.editorialAction}
+              data-arrow="forward"
+              href={atelier.cta.href}
+              variant="navigation"
+            >
               {atelier.cta.label}
             </Link>
           </div>

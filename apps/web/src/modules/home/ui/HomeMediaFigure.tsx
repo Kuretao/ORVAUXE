@@ -5,31 +5,18 @@ import type { ReactNode } from "react";
 import type { HomeMedia } from "../model/home-page";
 import styles from "./Home.module.css";
 
-type HomeMediaVariant = "editorial" | "featured-edition";
-
 interface HomeMediaFigureProps {
   media: HomeMedia | null;
-  variant: HomeMediaVariant;
 }
 
-const placeholderByVariant: Record<
-  HomeMediaVariant,
-  { caption: string; sizes: string; src: string }
-> = {
-  editorial: {
-    caption: "Temporary media — production photography pending.",
-    sizes: "100vw",
-    src: "/media/home-editorial-temporary.png",
-  },
-  "featured-edition": {
-    caption: "Temporary concept media — final Edition imagery pending.",
-    sizes: "(min-width: 96rem) 60rem, (min-width: 64rem) 66vw, (min-width: 48rem) 62.5vw, 100vw",
-    src: "/media/home-edition-concept-temporary.png",
-  },
-};
+const placeholder = {
+  alt: "Black leather, brushed metal and smoked glass material study.",
+  sizes: "(min-width: 96rem) 60rem, (min-width: 64rem) 66vw, (min-width: 48rem) 62.5vw, 100vw",
+  src: "/media/home-campaign-nocturne-temporary.webp",
+} as const;
 
-function mediaCaption(media: HomeMedia | null, placeholderCaption: string): ReactNode {
-  if (!media) return placeholderCaption;
+function mediaCaption(media: HomeMedia | null): ReactNode {
+  if (!media) return null;
   if (!media.caption && !media.credit) return null;
 
   return (
@@ -40,20 +27,12 @@ function mediaCaption(media: HomeMedia | null, placeholderCaption: string): Reac
   );
 }
 
-export function HomeMediaFigure({ media, variant }: HomeMediaFigureProps) {
-  const placeholder = placeholderByVariant[variant];
-  const alt = media && !media.decorative ? media.alt : "";
+export function HomeMediaFigure({ media }: HomeMediaFigureProps) {
+  const alt = media ? (media.decorative ? "" : media.alt) : placeholder.alt;
 
   return (
-    <Media
-      aspect="auto"
-      caption={mediaCaption(media, placeholder.caption)}
-      className={variant === "editorial" ? styles.editorialMedia : styles.editionMedia}
-    >
-      <div
-        className={variant === "editorial" ? styles.editorialMediaFrame : styles.editionMediaFrame}
-        data-placeholder={media ? undefined : "temporary"}
-      >
+    <Media aspect="auto" caption={mediaCaption(media)} className={styles.editionMedia}>
+      <div className={styles.editionMediaFrame} data-placeholder={media ? undefined : "temporary"}>
         <Image
           alt={alt}
           fill

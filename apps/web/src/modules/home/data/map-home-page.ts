@@ -140,7 +140,6 @@ function mapFeaturedEdition(
   const name = cleanText(edition?.name);
   const category = cleanText(edition?.category);
   const copy = cleanText(edition?.intro);
-  const price = cleanText(edition?.startingPrice);
   const editionNumber = finiteNumber(edition?.editionNumber);
 
   if (
@@ -148,7 +147,6 @@ function mapFeaturedEdition(
     !name ||
     !category ||
     !copy ||
-    !price ||
     !editionNumber ||
     !Number.isInteger(editionNumber) ||
     editionNumber < 1
@@ -170,8 +168,6 @@ function mapFeaturedEdition(
     statusLabel,
     category,
     copy,
-    price,
-    href: "/editions",
     media: mapHomeMedia(edition.hero),
   };
 }
@@ -179,7 +175,6 @@ function mapFeaturedEdition(
 export function mapHomePage(page: HomePageQueryResult): HomePageData | null {
   if (!page) return null;
 
-  const heroEyebrow = cleanText(page.heroEyebrow);
   const heroHeading = cleanText(page.heroHeading);
   const heroCopy = cleanText(page.heroCopy);
   const heroPrimaryCta = mapCta(page.heroPrimaryCta, "/start-a-project", "startProject");
@@ -210,7 +205,6 @@ export function mapHomePage(page: HomePageQueryResult): HomePageData | null {
   const seoDescription = cleanText(page.seo?.metaDescription);
 
   if (
-    !heroEyebrow ||
     !heroHeading ||
     !heroCopy ||
     !heroPrimaryCta ||
@@ -243,13 +237,12 @@ export function mapHomePage(page: HomePageQueryResult): HomePageData | null {
   return {
     contentSource: "sanity",
     hero: {
-      eyebrow: heroEyebrow,
       heading: heroHeading,
       copy: heroCopy,
       primaryCta: heroPrimaryCta,
       secondaryCta: heroSecondaryCta,
     },
-    editorialMedia: mapHomeMedia(page.heroMedia),
+    heroMedia: mapHomeMedia(page.heroMedia),
     statement: {
       heading: statementHeading,
       body: statementBody,
@@ -267,6 +260,7 @@ export function mapHomePage(page: HomePageQueryResult): HomePageData | null {
       price: atelierPrice,
       capabilities: atelierCapabilities,
       cta: atelierCta,
+      media: mapHomeMedia(page.atelierCampaignMedia),
     },
     studio: {
       heading: studioHeading,

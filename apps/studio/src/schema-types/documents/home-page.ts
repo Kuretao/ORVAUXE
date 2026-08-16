@@ -34,12 +34,6 @@ export const homePage = defineType({
   type: "document",
   fields: [
     defineField({
-      name: "heroEyebrow",
-      title: "Hero eyebrow",
-      type: "string",
-      validation: (rule) => rule.required().max(80),
-    }),
-    defineField({
       name: "heroHeading",
       title: "Hero heading",
       type: "string",
@@ -80,9 +74,9 @@ export const homePage = defineType({
     }),
     defineField({
       name: "heroMedia",
-      title: "Editorial hero media",
+      title: "Opening campaign media",
       description:
-        "Optional approved media for the editorial interlude. Leave empty until usage rights are confirmed.",
+        "Optional approved media for the first campaign state. Leave empty until usage rights are confirmed.",
       type: "imageWithAlt",
     }),
     defineField({
@@ -161,6 +155,13 @@ export const homePage = defineType({
           .custom((value) =>
             requireInternalDestination(value as InternalCtaValue | undefined, "/atelier", null),
           ),
+    }),
+    defineField({
+      name: "atelierCampaignMedia",
+      title: "Atelier campaign media",
+      description:
+        "Optional approved media for the fixed Atelier campaign state. Leave empty until usage rights are confirmed.",
+      type: "imageWithAlt",
     }),
     defineField({
       name: "studioHeading",

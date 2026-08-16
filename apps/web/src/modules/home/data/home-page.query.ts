@@ -33,7 +33,6 @@ const imageProjection = `
 
 export const homePageQuery = defineQuery(`
   *[_type == "homePage"][0] {
-    heroEyebrow,
     heroHeading,
     heroCopy,
     heroPrimaryCta {
@@ -62,7 +61,6 @@ export const homePageQuery = defineQuery(`
       category,
       status,
       "intro": pt::text(intro),
-      startingPrice,
       hero {
         ${imageProjection}
       }
@@ -76,6 +74,9 @@ export const homePageQuery = defineQuery(`
       destinationKind,
       destination,
       analyticsId
+    },
+    atelierCampaignMedia {
+      ${imageProjection}
     },
     studioHeading,
     studioDescriptor,

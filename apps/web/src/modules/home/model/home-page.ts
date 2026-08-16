@@ -24,21 +24,18 @@ export interface FeaturedHomeEdition {
   readonly statusLabel: string;
   readonly category: string;
   readonly copy: string;
-  readonly price: string;
-  readonly href: "/editions";
   readonly media: HomeMedia | null;
 }
 
 export interface HomePageData {
   readonly contentSource: HomeContentSource;
   readonly hero: {
-    readonly eyebrow: string;
     readonly heading: string;
     readonly copy: string;
     readonly primaryCta: HomeCta;
     readonly secondaryCta: HomeCta;
   };
-  readonly editorialMedia: HomeMedia | null;
+  readonly heroMedia: HomeMedia | null;
   readonly statement: {
     readonly heading: string;
     readonly body: string;
@@ -56,6 +53,7 @@ export interface HomePageData {
     readonly price: string;
     readonly capabilities: readonly string[];
     readonly cta: HomeCta;
+    readonly media: HomeMedia | null;
   };
   readonly studio: {
     readonly heading: string;

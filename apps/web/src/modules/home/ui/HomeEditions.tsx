@@ -31,7 +31,12 @@ export function HomeEditions({ editions }: HomeEditionsProps) {
             <Text className={styles.price} variant="label">
               {editions.price}
             </Text>
-            <Link href={editions.indexHref} variant="navigation">
+            <Link
+              className={styles.editorialAction}
+              data-arrow="forward"
+              href={editions.indexHref}
+              variant="navigation"
+            >
               Explore Editions
             </Link>
           </div>
@@ -40,7 +45,7 @@ export function HomeEditions({ editions }: HomeEditionsProps) {
         <article aria-labelledby="home-featured-edition-heading" className={styles.featuredEdition}>
           <Grid className={styles.featuredEditionGrid}>
             <div className={styles.featuredMediaColumn}>
-              <HomeMediaFigure media={featured.media} variant="featured-edition" />
+              <HomeMediaFigure media={featured.media} />
             </div>
             <div className={styles.featuredEditionDetails}>
               <dl className={styles.editionMetadata}>
@@ -61,12 +66,6 @@ export function HomeEditions({ editions }: HomeEditionsProps) {
                 {featured.name}
               </Heading>
               <Text variant="body-md">{featured.copy}</Text>
-              <Text className={styles.price} variant="label">
-                {featured.price}
-              </Text>
-              <Link href={featured.href} variant="editorial">
-                Explore Editions
-              </Link>
             </div>
           </Grid>
         </article>

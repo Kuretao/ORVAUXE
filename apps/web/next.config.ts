@@ -1,21 +1,9 @@
 import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
-const contentSecurityPolicy = [
-  "default-src 'self'",
-  "base-uri 'self'",
-  "object-src 'none'",
-  "frame-ancestors 'none'",
-  "form-action 'self'",
-  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://*.posthog.com",
-  "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' blob: data: https://cdn.sanity.io https://*.posthog.com",
-  "font-src 'self' data:",
-  "connect-src 'self' https://*.api.sanity.io https://*.apicdn.sanity.io https://*.posthog.com https://*.sentry.io https://challenges.cloudflare.com",
-  "frame-src https://challenges.cloudflare.com",
-  "worker-src 'self' blob:",
-  "upgrade-insecure-requests",
-].join("; ");
+import { buildContentSecurityPolicy } from "./src/config/content-security-policy";
+
+const contentSecurityPolicy = buildContentSecurityPolicy(process.env.NODE_ENV);
 
 const securityHeaders = [
   { key: "Content-Security-Policy", value: contentSecurityPolicy },
@@ -26,6 +14,7 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["127.0.0.1"],
   images: {
     remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io" }],
   },

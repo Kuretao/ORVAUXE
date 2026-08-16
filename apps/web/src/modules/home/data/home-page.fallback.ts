@@ -3,7 +3,6 @@ import type { HomePageData } from "../model/home-page";
 export const homePageFallback = {
   contentSource: "fallback",
   hero: {
-    eyebrow: "ORVAUXE — DIGITAL COMMERCE STUDIO",
     heading: "Commerce for the distinctive.",
     copy: "Premium Shopify storefronts for fashion, jewelry and design-led brands.",
     primaryCta: {
@@ -17,7 +16,7 @@ export const homePageFallback = {
       analyticsId: null,
     },
   },
-  editorialMedia: null,
+  heroMedia: null,
   statement: {
     heading: "Built to be desired. Designed to be bought.",
     body: "ORVAUXE treats brand expression and commerce usability as one system—so the storefront feels distinctive and remains clear to use.",
@@ -34,8 +33,6 @@ export const homePageFallback = {
       statusLabel: "Concept Edition",
       category: "Fashion",
       copy: "For fashion brands with a cinematic point of view.",
-      price: "From $2,490",
-      href: "/editions",
       media: null,
     },
   },
@@ -57,12 +54,13 @@ export const homePageFallback = {
       href: "/atelier",
       analyticsId: null,
     },
+    media: null,
   },
   studio: {
     heading: "ORVAUXE",
     descriptor: "Commerce Atelier",
     origin: "Chengdu · Worldwide",
-    body: "ORVAUXE is an independent digital commerce studio working across borders with fashion, jewelry and design-led brands.",
+    body: "An independent commerce atelier for brands that refuse to look interchangeable.",
   },
   finalCta: {
     eyebrow: "START A PROJECT",

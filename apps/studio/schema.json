@@ -1154,13 +1154,6 @@
           "type": "string"
         }
       },
-      "heroEyebrow": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
       "heroHeading": {
         "type": "objectAttribute",
         "value": {
@@ -1292,6 +1285,14 @@
         "value": {
           "type": "inline",
           "name": "cta"
+        },
+        "optional": true
+      },
+      "atelierCampaignMedia": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "imageWithAlt"
         },
         "optional": true
       },

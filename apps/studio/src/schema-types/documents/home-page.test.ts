@@ -3,7 +3,6 @@ import { describe, expect, it } from "vitest";
 import { homePage } from "./home-page";
 
 const expectedFieldNames = [
-  "heroEyebrow",
   "heroHeading",
   "heroCopy",
   "heroPrimaryCta",
@@ -20,6 +19,7 @@ const expectedFieldNames = [
   "atelierPrice",
   "atelierCapabilities",
   "atelierCta",
+  "atelierCampaignMedia",
   "studioHeading",
   "studioDescriptor",
   "studioOrigin",

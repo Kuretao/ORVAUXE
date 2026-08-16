@@ -1,9 +1,15 @@
 import { expect, test } from "@playwright/test";
 
 const visualStates = [
-  { height: 812, name: "home-mobile-375.png", width: 375 },
-  { height: 900, name: "home-desktop-1440.png", width: 1440 },
-  { height: 1080, name: "home-wide-1920.png", width: 1920 },
+  { fullPage: true, height: 812, name: "home-mobile-375.png", width: 375 },
+  {
+    fullPage: false,
+    height: 640,
+    name: "home-short-laptop-1366x640.png",
+    width: 1366,
+  },
+  { fullPage: true, height: 900, name: "home-desktop-1440.png", width: 1440 },
+  { fullPage: true, height: 1080, name: "home-wide-1920.png", width: 1920 },
 ] as const;
 
 for (const state of visualStates) {
@@ -21,7 +27,7 @@ for (const state of visualStates) {
     await expect(page).toHaveScreenshot(state.name, {
       animations: "disabled",
       caret: "hide",
-      fullPage: true,
+      fullPage: state.fullPage,
       maxDiffPixelRatio: 0.02,
       threshold: 0.25,
     });

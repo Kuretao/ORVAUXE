@@ -6,7 +6,6 @@ import { homePageFallback } from "./home-page.fallback";
 import { mapHomeMedia, mapHomePage } from "./map-home-page";
 
 const validPage = {
-  heroEyebrow: "Studio",
   heroHeading: "Commerce for the distinctive.",
   heroCopy: "Premium Shopify storefronts.",
   heroPrimaryCta: {
@@ -33,7 +32,6 @@ const validPage = {
     category: "Fashion",
     status: "draft",
     intro: "For fashion brands with a cinematic point of view.",
-    startingPrice: "From $2,490",
     hero: null,
   },
   atelierHeading: "Atelier",
@@ -46,10 +44,11 @@ const validPage = {
     destination: "/atelier",
     analyticsId: null,
   },
+  atelierCampaignMedia: null,
   studioHeading: "ORVAUXE",
   studioDescriptor: "Commerce Atelier",
   studioOrigin: "Chengdu · Worldwide",
-  studioBody: "An independent digital commerce studio.",
+  studioBody: "An independent commerce atelier.",
   finalCtaEyebrow: "Start a project",
   finalCtaHeading: "Have a brand worth building for?",
   finalCtaBody: "Tell us what you are building.",
@@ -82,7 +81,6 @@ describe("Home page content mapping", () => {
         featured: {
           numberLabel: "Edition 001",
           statusLabel: "Concept Edition",
-          href: "/editions",
         },
       },
       studio: { descriptor: "Commerce Atelier", origin: "Chengdu · Worldwide" },
@@ -135,8 +133,8 @@ describe("Home page content mapping", () => {
     expect(homePageFallback.editions.featured).toMatchObject({
       name: "Nocturne",
       statusLabel: "Concept Edition",
-      href: "/editions",
     });
-    expect(homePageFallback.editorialMedia).toBeNull();
+    expect(homePageFallback.heroMedia).toBeNull();
+    expect(homePageFallback.atelier.media).toBeNull();
   });
 });

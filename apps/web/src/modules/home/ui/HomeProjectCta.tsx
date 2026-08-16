@@ -55,7 +55,8 @@ export function HomeProjectCta({ content }: HomeProjectCtaProps) {
           </Text>
           <div className={styles.projectCtaAction}>
             <TrackedHomeLink
-              className={styles.primaryLink}
+              className={`${styles.primaryLink} ${styles.editorialAction}`}
+              data-arrow="project"
               href={content.cta.href}
               placement="final"
               variant="navigation"
