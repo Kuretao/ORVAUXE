@@ -52,17 +52,27 @@ export const homePageQuery = defineQuery(`
     },
     statementHeading,
     serviceIntroduction,
+    whatWeBuildHeading,
+    whatWeBuildIntroduction,
+    whatWeBuildSignals,
     editionsHeading,
     editionsIntroduction,
-    editionsPrice,
     "featuredEdition": selectedEditions[0]-> {
       name,
+      "slug": slug.current,
       editionNumber,
       category,
       status,
+      startingPrice,
       "intro": pt::text(intro),
       hero {
         ${imageProjection}
+      },
+      storefrontViews[] {
+        kind,
+        media {
+          ${imageProjection}
+        }
       }
     },
     atelierHeading,
@@ -78,10 +88,18 @@ export const homePageQuery = defineQuery(`
     atelierCampaignMedia {
       ${imageProjection}
     },
+    processHeading,
+    processSteps[] {
+      title,
+      description
+    },
     studioHeading,
     studioDescriptor,
     studioOrigin,
     studioBody,
+    studioMedia {
+      ${imageProjection}
+    },
     finalCtaEyebrow,
     finalCtaHeading,
     finalCtaBody,

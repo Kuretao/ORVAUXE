@@ -12,7 +12,7 @@ Owns site name/description, contact details, verified social profiles, default S
 
 ### homePage singleton
 
-Owns fixed-slot content: hero copy/media, clear service introduction, selected Edition references, Atelier introduction and closing CTA. The field model follows the approved page composition; it is not sections[].
+Owns fixed-slot content: hero copy/media, point of view, What We Build copy and exactly three signals, one constrained Edition 001 — Nocturne reference, Atelier introduction/media, exactly four Process steps, Studio copy/media and the closing CTA. The field model follows the approved page composition; it is not sections[]. The legacy `editionsPrice` field remains temporarily for migration safety, while the Homepage reads price copy from the selected Edition's `startingPrice`.
 
 ### atelierPage singleton
 
@@ -33,6 +33,7 @@ Owns:
 - intro;
 - gallery of imageWithAlt;
 - controlled features;
+- four to six uniquely typed `storefrontViews` (`home`, `collection`, `product`, `cart`, `editorial`, `mobile`) using `imageWithAlt`, with Home, Collection, Product and Mobile required;
 - startingPrice copy;
 - launchEstimate copy;
 - optional approved demo URL;
@@ -40,6 +41,8 @@ Owns:
 - SEO.
 
 Slug and Edition number require uniqueness validation. A retired Edition remains addressable only under the approved redirect/index policy.
+
+The current Homepage product story is intentionally Nocturne-specific. Studio filters its single featured reference to draft Edition 001 with slug `nocturne`, and the web mapper rejects any mismatched identity or status rather than combining another Edition with Nocturne-specific interface art direction. A future Homepage Edition rotation requires an explicit product-story revision, not an unrestricted reference swap.
 
 ### legalPage collection
 

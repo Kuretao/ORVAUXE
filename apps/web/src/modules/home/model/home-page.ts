@@ -18,13 +18,29 @@ export interface HomeMedia {
   readonly credit: string | null;
 }
 
+export type StorefrontViewKind =
+  "home" | "collection" | "product" | "cart" | "editorial" | "mobile";
+
+export interface HomeStorefrontView {
+  readonly kind: StorefrontViewKind;
+  readonly media: HomeMedia;
+}
+
 export interface FeaturedHomeEdition {
-  readonly numberLabel: string;
-  readonly name: string;
-  readonly statusLabel: string;
-  readonly category: string;
+  readonly numberLabel: "Edition 001";
+  readonly name: "Nocturne";
+  readonly statusLabel: "Concept Edition";
+  readonly category: "Fashion";
   readonly copy: string;
+  readonly startingPrice: string;
+  readonly platform: "Shopify";
   readonly media: HomeMedia | null;
+  readonly storefrontViews: readonly HomeStorefrontView[];
+}
+
+export interface HomeProcessStep {
+  readonly title: string;
+  readonly description: string;
 }
 
 export interface HomePageData {
@@ -40,10 +56,14 @@ export interface HomePageData {
     readonly heading: string;
     readonly body: string;
   };
+  readonly whatWeBuild: {
+    readonly heading: string;
+    readonly introduction: string;
+    readonly signals: readonly string[];
+  };
   readonly editions: {
     readonly heading: string;
     readonly introduction: string;
-    readonly price: string;
     readonly indexHref: "/editions";
     readonly featured: FeaturedHomeEdition;
   };
@@ -55,11 +75,16 @@ export interface HomePageData {
     readonly cta: HomeCta;
     readonly media: HomeMedia | null;
   };
+  readonly process: {
+    readonly heading: string;
+    readonly steps: readonly HomeProcessStep[];
+  };
   readonly studio: {
     readonly heading: string;
     readonly descriptor: string;
     readonly origin: string;
     readonly body: string;
+    readonly media: HomeMedia | null;
   };
   readonly finalCta: {
     readonly eyebrow: string;

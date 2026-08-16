@@ -10,6 +10,9 @@ const expectedFieldNames = [
   "heroMedia",
   "statementHeading",
   "serviceIntroduction",
+  "whatWeBuildHeading",
+  "whatWeBuildIntroduction",
+  "whatWeBuildSignals",
   "editionsHeading",
   "editionsIntroduction",
   "editionsPrice",
@@ -20,10 +23,13 @@ const expectedFieldNames = [
   "atelierCapabilities",
   "atelierCta",
   "atelierCampaignMedia",
+  "processHeading",
+  "processSteps",
   "studioHeading",
   "studioDescriptor",
   "studioOrigin",
   "studioBody",
+  "studioMedia",
   "finalCtaEyebrow",
   "finalCtaHeading",
   "finalCtaBody",
@@ -44,7 +50,37 @@ describe("Home page schema", () => {
 
     expect(selectedEditions).toMatchObject({
       type: "array",
-      of: [{ type: "reference", to: [{ type: "edition" }] }],
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "edition" }],
+          options: {
+            filter: 'slug.current == "nocturne" && editionNumber == 1 && status == "draft"',
+          },
+        },
+      ],
+    });
+  });
+
+  it("models the expanded narrative as constrained fields", () => {
+    const whatWeBuildSignals = homePage.fields.find((field) => field.name === "whatWeBuildSignals");
+    const processSteps = homePage.fields.find((field) => field.name === "processSteps");
+
+    expect(whatWeBuildSignals).toMatchObject({
+      type: "array",
+      of: [{ type: "string" }],
+    });
+    expect(processSteps).toMatchObject({
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            { name: "title", type: "string" },
+            { name: "description", type: "text" },
+          ],
+        },
+      ],
     });
   });
 });

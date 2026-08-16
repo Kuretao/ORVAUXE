@@ -59,13 +59,28 @@ const cmsPage: HomePageData = {
     ...homePageFallback.editions,
     featured: {
       ...homePageFallback.editions.featured,
-      name: "Aperture",
-      statusLabel: "ORVAUXE Original",
       copy: "CMS-authored Edition copy.",
       media: editionMedia,
+      storefrontViews: homePageFallback.editions.featured.storefrontViews.map((view) => ({
+        ...view,
+        media: editionMedia,
+      })),
     },
   },
 };
+
+const expectedSectionLabels = [
+  "home-campaign-heading",
+  "home-statement-heading",
+  "home-what-we-build-heading",
+  "home-editions-heading",
+  "home-nocturne-heading",
+  "home-storefront-system-heading",
+  "home-atelier-heading",
+  "home-process-heading",
+  "home-studio-heading",
+  "home-project-cta-heading",
+] as const;
 
 describe("HomeScreen", () => {
   it("server-renders the initial campaign and complete fallback narrative", () => {
@@ -75,14 +90,18 @@ describe("HomeScreen", () => {
     expect(markup).toContain('data-content-source="fallback"');
     expect(markup.match(/<h1\b/g)).toHaveLength(1);
     expect(markup).toContain("Commerce for the distinctive.");
+    expect(markup).toContain("Commerce shaped around the brand.");
+    expect(markup).toContain("A complete storefront system.");
+    expect(markup).toContain("From direction to launch.");
     expect(markup).toContain("01 / 03");
     expect(markup).not.toContain("Temporary media");
     expect(markup).not.toContain("final Edition imagery pending");
   });
 
-  it("keeps one H1, commercial clarity, named sections, and truthful destination links", () => {
+  it("keeps one H1 and server-renders the complete ten-part commercial narrative", () => {
     render(<HomeScreen page={homePageFallback} />);
 
+    const main = screen.getByRole("main");
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
     expect(
       screen.getByRole("heading", { level: 1, name: "Commerce for the distinctive." }),
@@ -90,6 +109,28 @@ describe("HomeScreen", () => {
     expect(screen.getAllByText("Commerce Atelier").length).toBeGreaterThan(0);
     expect(screen.getAllByText("Chengdu · Worldwide").length).toBeGreaterThan(0);
     expect(screen.getByText(/Premium Shopify storefronts/)).toBeInTheDocument();
+
+    expect(Array.from(main.children, (element) => element.getAttribute("aria-labelledby"))).toEqual(
+      expectedSectionLabels,
+    );
+
+    for (const name of [
+      "Built to be desired. Designed to be bought.",
+      "Commerce shaped around the brand.",
+      "Editions",
+      "Nocturne",
+      "A complete storefront system.",
+      "Atelier",
+      "From direction to launch.",
+      "ORVAUXE",
+      "Have a brand worth building for?",
+    ]) {
+      expect(screen.getByRole("region", { name })).toBeInTheDocument();
+    }
+  });
+
+  it("shows product proof, Edition scope, process, and truthful routes without agency filler", () => {
+    render(<HomeScreen page={homePageFallback} />);
 
     const destinations = screen.getByRole("navigation", { name: "Homepage destinations" });
     expect(within(destinations).getByRole("link", { name: /Editions/ })).toHaveAttribute(
@@ -109,18 +150,94 @@ describe("HomeScreen", () => {
       "/studio",
     );
 
+    const whatWeBuild = screen.getByRole("region", {
+      name: "Commerce shaped around the brand.",
+    });
+    const signals = within(whatWeBuild).getByRole("list", {
+      name: "Core storefront capabilities",
+    });
+    expect(within(signals).getAllByRole("listitem")).toHaveLength(3);
+    for (const signal of ["Brand-led UX", "Commerce architecture", "Shopify implementation"]) {
+      expect(within(signals).getByText(signal)).toBeInTheDocument();
+    }
+
+    const productProofImages = within(whatWeBuild).getAllByRole("img");
+    expect(productProofImages).toHaveLength(2);
+    expect(productProofImages[0]).toHaveAttribute("loading", "lazy");
+    expect(productProofImages[0]).toHaveAttribute(
+      "sizes",
+      "(min-width: 96rem) 67rem, (min-width: 64rem) 72vw, (min-width: 48rem) 75vw, 100vw",
+    );
+    expect(productProofImages[1]).toHaveAttribute("loading", "lazy");
+    expect(productProofImages[1]).toHaveAttribute(
+      "sizes",
+      "(min-width: 96rem) 18rem, (min-width: 64rem) 18vw, (min-width: 48rem) 26vw, 40vw",
+    );
+
+    const editions = screen.getByRole("region", { name: "Editions" });
+    expect(within(editions).getByText(/Curated premium storefront systems/)).toBeInTheDocument();
+    expect(within(editions).getByRole("link", { name: "Explore Editions" })).toHaveAttribute(
+      "href",
+      "/editions",
+    );
+    expect(screen.getAllByText("From $2,490", { exact: true })).toHaveLength(1);
+
+    const nocturne = screen.getByRole("region", { name: "Nocturne" });
+    expect(within(nocturne).getByText("04 / Edition 001", { exact: true })).toBeInTheDocument();
+    expect(within(nocturne).getByText("Fashion", { exact: true })).toBeInTheDocument();
     expect(
-      screen.getByRole("region", { name: "Built to be desired. Designed to be bought." }),
+      within(nocturne).getByText("Concept Edition / ORVAUXE Original", { exact: true }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("region", { name: "Editions" })).toBeInTheDocument();
-    expect(screen.getByRole("article", { name: "Nocturne" })).toBeInTheDocument();
-    expect(screen.getByRole("region", { name: "Atelier" })).toBeInTheDocument();
-    expect(screen.getByRole("region", { name: "ORVAUXE" })).toBeInTheDocument();
-    expect(
-      screen.getByRole("region", { name: "Have a brand worth building for?" }),
-    ).toBeInTheDocument();
+    expect(within(nocturne).getByText("Shopify", { exact: true })).toBeInTheDocument();
+    expect(within(nocturne).getByRole("link", { name: "Explore Editions" })).toHaveAttribute(
+      "href",
+      "/editions",
+    );
+    for (const image of within(nocturne).getAllByRole("img")) {
+      expect(image).toHaveAttribute("loading", "lazy");
+      expect(image.getAttribute("sizes")).toBeTruthy();
+    }
+
+    const system = screen.getByRole("region", { name: "A complete storefront system." });
+    const systemLists = within(system).getAllByRole("list", {
+      name: "Included storefront views",
+    });
+    expect(systemLists).toHaveLength(2);
+    for (const list of systemLists) {
+      expect(within(list).getAllByRole("listitem")).toHaveLength(6);
+    }
+    for (const stage of ["Home", "Collection", "Product", "Cart", "Editorial", "Mobile"]) {
+      expect(within(system).getAllByText(stage, { exact: true })).toHaveLength(2);
+    }
+
+    const atelier = screen.getByRole("region", { name: "Atelier" });
+    expect(within(atelier).getByRole("link", { name: "Discover Atelier" })).toHaveAttribute(
+      "href",
+      "/atelier",
+    );
+    expect(within(atelier).getAllByRole("listitem")).toHaveLength(6);
+
+    const process = screen.getByRole("region", { name: "From direction to launch." });
+    expect(within(process).getAllByRole("listitem")).toHaveLength(4);
+    for (const stage of ["Direction", "Adaptation", "Build", "Launch"]) {
+      expect(within(process).getByRole("heading", { level: 3, name: stage })).toBeInTheDocument();
+    }
+
+    const finalCta = screen.getByRole("region", { name: "Have a brand worth building for?" });
+    expect(within(finalCta).getByRole("link", { name: "Start a Project" })).toHaveAttribute(
+      "href",
+      "/start-a-project",
+    );
+
     expect(document.querySelector('a[href="/editions/nocturne"]')).not.toBeInTheDocument();
+    expect(document.querySelector('a[href^="/work"]')).not.toBeInTheDocument();
+    expect(document.querySelector('a[href^="/journal"]')).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: /work|journal/i })).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(
+        /\b(?:temporary|placeholder|fake|mock)\b|final (?:media|imagery) pending|demo only/i,
+      ),
+    ).not.toBeInTheDocument();
   });
 
   it("loads only the initial state eagerly and wraps manual navigation with focus retained", () => {
@@ -178,12 +295,101 @@ describe("HomeScreen", () => {
     expect(within(campaign).getByText("Commerce for the distinctive.")).toBeInTheDocument();
   });
 
-  it("renders CMS media through the same campaign and preserves featured captions", () => {
+  it("keeps the storefront-system island local, semantic, and manually controllable", () => {
+    render(<HomeScreen page={homePageFallback} />);
+
+    const system = screen.getByRole("region", { name: "A complete storefront system." });
+    const state = system.querySelector("[data-system-state]");
+    const buttons = within(system).getAllByRole("button");
+
+    expect(state).toHaveAttribute("data-system-state", "home");
+    expect(buttons).toHaveLength(6);
+    expect(buttons[0]).toHaveAttribute("aria-pressed", "true");
+
+    const product = within(system).getByRole("button", { name: /Product/ });
+    fireEvent.click(product);
+
+    expect(state).toHaveAttribute("data-system-state", "product");
+    expect(product).toHaveAttribute("aria-pressed", "true");
+    expect(system.querySelector('[data-storefront-view="product"]')).toBeInTheDocument();
+    for (const label of ["Home", "Collection", "Product", "Cart", "Editorial", "Mobile"]) {
+      expect(within(system).getAllByText(label, { exact: true })).toHaveLength(2);
+    }
+  });
+
+  it("disconnects the storefront-system observer and media listener on unmount", () => {
+    const disconnect = vi.fn();
+    const observe = vi.fn();
+    const addEventListener = vi.fn();
+    const removeEventListener = vi.fn();
+    const originalMatchMedia = Object.getOwnPropertyDescriptor(window, "matchMedia");
+
+    const mediaQueryList = {
+      addEventListener,
+      addListener: vi.fn(),
+      dispatchEvent: vi.fn(() => true),
+      matches: true,
+      media:
+        "(min-width: 64rem) and (min-height: 50rem) and (prefers-reduced-motion: no-preference)",
+      onchange: null,
+      removeEventListener,
+      removeListener: vi.fn(),
+    } as MediaQueryList;
+
+    Object.defineProperty(window, "matchMedia", {
+      configurable: true,
+      value: vi.fn(() => mediaQueryList),
+    });
+
+    class IntersectionObserverStub implements IntersectionObserver {
+      readonly root = null;
+      readonly rootMargin = "";
+      readonly scrollMargin = "";
+      readonly thresholds = [];
+
+      disconnect() {
+        disconnect();
+      }
+
+      observe() {
+        observe();
+      }
+
+      takeRecords() {
+        return [];
+      }
+
+      unobserve() {}
+    }
+
+    vi.stubGlobal("IntersectionObserver", IntersectionObserverStub);
+
+    try {
+      const { unmount } = render(<HomeScreen page={homePageFallback} />);
+
+      expect(observe).toHaveBeenCalledTimes(6);
+      expect(addEventListener).toHaveBeenCalledWith("change", expect.any(Function));
+
+      unmount();
+
+      expect(disconnect).toHaveBeenCalledTimes(1);
+      expect(removeEventListener).toHaveBeenCalledWith("change", expect.any(Function));
+    } finally {
+      vi.unstubAllGlobals();
+      if (originalMatchMedia) {
+        Object.defineProperty(window, "matchMedia", originalMatchMedia);
+      } else {
+        Reflect.deleteProperty(window, "matchMedia");
+      }
+    }
+  });
+
+  it("renders CMS media through the campaign and reusable product-story views", () => {
     render(<HomeScreen page={cmsPage} />);
 
     expect(screen.getByRole("main")).toHaveAttribute("data-content-source", "sanity");
     expect(screen.getAllByText("ORVAUXE").length).toBeGreaterThan(0);
-    expect(screen.getByRole("article", { name: "Aperture" })).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "Nocturne" })).toBeInTheDocument();
     expect(screen.getByText("CMS-authored Edition copy.")).toBeInTheDocument();
 
     const campaignImage = screen.getByRole("img", { name: heroMedia.alt });
@@ -192,14 +398,16 @@ describe("HomeScreen", () => {
     expect(campaignImage).toHaveStyle({ objectPosition: heroMedia.objectPosition });
     expect(screen.queryByText("Material and light study.")).not.toBeInTheDocument();
 
-    const featuredArticle = screen.getByRole("article", { name: "Aperture" });
-    const featuredImage = within(featuredArticle).getByRole("img", { name: editionMedia.alt });
-    expect(featuredImage).toHaveAttribute("loading", "lazy");
-    expect(featuredImage).toHaveAttribute(
-      "sizes",
-      "(min-width: 96rem) 60rem, (min-width: 64rem) 66vw, (min-width: 48rem) 62.5vw, 100vw",
-    );
-    expect(within(featuredArticle).getByText("Edition composition study.")).toBeInTheDocument();
+    const featuredRegion = screen.getByRole("region", { name: "Nocturne" });
+    const featuredImages = within(featuredRegion).getAllByRole("img", {
+      name: editionMedia.alt,
+    });
+    expect(featuredImages.length).toBeGreaterThan(1);
+    for (const featuredImage of featuredImages) {
+      expect(featuredImage).toHaveAttribute("loading", "lazy");
+      expect(featuredImage).toHaveStyle({ objectPosition: editionMedia.objectPosition });
+      expect(featuredImage.getAttribute("sizes")).toBeTruthy();
+    }
   });
 
   it("emits only the two approved start-project events", () => {

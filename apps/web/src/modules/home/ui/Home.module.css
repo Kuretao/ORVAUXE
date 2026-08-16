@@ -282,29 +282,6 @@
   color: var(--orvauxe-accent-primary);
 }
 
-.editionMedia {
-  width: 100%;
-}
-
-.editionMediaFrame {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  background: var(--orvauxe-surface-secondary);
-}
-
-.editionMediaFrame > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.mediaCredit {
-  display: block;
-  color: var(--orvauxe-text-secondary);
-}
-
 .visuallyHidden {
   position: absolute;
   width: 1px;
@@ -329,15 +306,18 @@
   }
 }
 
-.statement,
 .editions,
 .atelier,
 .projectCta {
   padding-block: var(--orvauxe-space-section-major);
 }
 
+.statement {
+  padding-block: var(--orvauxe-space-section);
+}
+
 .studio {
-  padding-block: 0 var(--orvauxe-space-section-major);
+  padding-block: var(--orvauxe-space-section-major);
 }
 
 .sectionIndex {
@@ -384,59 +364,24 @@
   color: var(--orvauxe-text-secondary);
 }
 
-.featuredEdition {
-  margin-block-start: clamp(var(--orvauxe-space-12), 6vw, var(--orvauxe-space-24));
-}
-
-.featuredEditionGrid {
-  align-items: start;
-}
-
-.featuredMediaColumn,
-.featuredEditionDetails {
-  grid-column: 1 / -1;
-}
-
-.featuredEditionDetails {
+.editionsCatalogue {
   display: grid;
-  align-content: start;
-  justify-items: start;
-  gap: var(--orvauxe-space-6);
-  padding-block-start: var(--orvauxe-space-6);
-}
-
-.editionMetadata {
-  display: grid;
-  width: 100%;
-  margin: 0;
-  gap: var(--orvauxe-space-3);
-}
-
-.editionMetadata > div {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--orvauxe-space-4);
-  padding-block-end: var(--orvauxe-space-2);
-  border-block-end: var(--orvauxe-border-width) solid var(--orvauxe-border-subtle);
-}
-
-.editionMetadata dt,
-.editionMetadata dd {
-  margin: 0;
-  font-family: var(--orvauxe-type-caption-family);
-  font-size: var(--orvauxe-type-caption-size);
-  font-weight: var(--orvauxe-type-caption-weight);
-  line-height: var(--orvauxe-type-caption-line-height);
-  letter-spacing: var(--orvauxe-type-caption-letter-spacing);
-}
-
-.editionMetadata dt {
-  color: var(--orvauxe-text-secondary);
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--orvauxe-space-3) var(--orvauxe-space-6);
+  align-items: baseline;
+  margin-block-start: var(--orvauxe-space-section);
+  padding-block: var(--orvauxe-space-6);
+  border-block: var(--orvauxe-border-width) solid var(--orvauxe-border-default);
   text-transform: uppercase;
 }
 
-.editionMetadata dd {
+.editionsCatalogue > :nth-child(even) {
+  justify-self: end;
   text-align: end;
+}
+
+.editionsStatus {
+  color: var(--orvauxe-text-secondary);
 }
 
 .atelierIntroduction {
@@ -448,9 +393,47 @@
   grid-column: 1 / -1;
 }
 
+.atelierExperience {
+  align-items: start;
+  margin-block-start: var(--orvauxe-space-section);
+}
+
+.atelierMedia,
+.capabilityList {
+  grid-column: 1 / -1;
+}
+
+.atelierMedia {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  aspect-ratio: 4 / 3;
+  margin: 0;
+  background: var(--orvauxe-surface-secondary);
+}
+
+.atelierMedia > img {
+  object-fit: cover;
+}
+
+.atelierMediaCaption {
+  position: absolute;
+  z-index: var(--orvauxe-z-raised);
+  inset-inline: var(--orvauxe-space-4);
+  inset-block-end: var(--orvauxe-space-4);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--orvauxe-space-2) var(--orvauxe-space-4);
+  color: var(--atelier-ivory);
+  font-family: var(--orvauxe-type-caption-family);
+  font-size: var(--orvauxe-type-caption-size);
+  line-height: var(--orvauxe-type-caption-line-height);
+}
+
 .capabilityList {
   display: grid;
-  margin: var(--orvauxe-space-section) 0 0;
+  margin: var(--orvauxe-space-8) 0 0;
   padding: 0;
   list-style: none;
 }
@@ -472,22 +455,37 @@
 }
 
 .studioDivider {
-  margin-block-end: var(--orvauxe-space-section);
+  margin-block-end: var(--orvauxe-space-8);
 }
 
 .studioGrid {
   align-items: end;
 }
 
+.studioMedia,
 .studioIdentity,
-.studioBody {
+.studioCopy {
   grid-column: 1 / -1;
+}
+
+.studioMedia {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  margin: 0;
+  background: var(--orvauxe-surface-secondary);
+}
+
+.studioMedia > img {
+  object-fit: cover;
 }
 
 .studioIdentity {
   display: grid;
   justify-items: start;
   gap: var(--orvauxe-space-3);
+  margin-block-start: var(--orvauxe-space-8);
 }
 
 .studioHeading {
@@ -500,8 +498,18 @@
 }
 
 .studioBody {
-  margin-block-start: var(--orvauxe-space-8);
   color: var(--orvauxe-text-secondary);
+}
+
+.studioCopy {
+  display: grid;
+  gap: var(--orvauxe-space-4);
+  margin-block-start: var(--orvauxe-space-8);
+}
+
+.studioSupporting {
+  color: var(--orvauxe-text-secondary);
+  text-transform: uppercase;
 }
 
 .projectCtaFrame {
@@ -587,15 +595,6 @@
     grid-row: 2;
   }
 
-  .featuredMediaColumn {
-    grid-column: 1 / 6;
-  }
-
-  .featuredEditionDetails {
-    grid-column: 6 / 9;
-    padding-block-start: 0;
-  }
-
   .atelierIntroduction > :first-child {
     grid-column: 1 / 5;
   }
@@ -604,8 +603,14 @@
     grid-column: 5 / 9;
   }
 
+  .atelierMedia {
+    grid-column: 1 / 5;
+    aspect-ratio: 4 / 5;
+  }
+
   .capabilityList {
-    margin-inline-start: calc((100% + var(--orvauxe-grid-gap)) / 8);
+    grid-column: 5 / 9;
+    margin-block-start: 0;
   }
 
   .capabilityRow {
@@ -613,13 +618,26 @@
     padding-block: var(--orvauxe-space-6);
   }
 
-  .studioIdentity {
+  .studioMedia {
     grid-column: 1 / 6;
+    grid-row: 1 / 3;
+    aspect-ratio: 4 / 5;
   }
 
-  .studioBody {
+  .studioIdentity,
+  .studioCopy {
     grid-column: 6 / 9;
+  }
+
+  .studioIdentity {
+    grid-row: 1;
     margin-block-start: 0;
+  }
+
+  .studioCopy {
+    grid-row: 2;
+    align-self: end;
+    margin-block-start: var(--orvauxe-space-8);
   }
 }
 
@@ -677,14 +695,6 @@
     grid-row: 1;
   }
 
-  .featuredMediaColumn {
-    grid-column: 1 / 9;
-  }
-
-  .featuredEditionDetails {
-    grid-column: 9 / 13;
-  }
-
   .atelierIntroduction > :first-child {
     grid-column: 1 / 6;
   }
@@ -693,16 +703,22 @@
     grid-column: 8 / 13;
   }
 
+  .atelierMedia {
+    grid-column: 1 / 6;
+  }
+
   .capabilityList {
-    margin-inline-start: calc((100% + var(--orvauxe-grid-gap)) / 4);
+    grid-column: 7 / 13;
   }
 
-  .studioIdentity {
-    grid-column: 1 / 8;
+  .studioMedia {
+    grid-column: 1 / 9;
+    aspect-ratio: 16 / 11;
   }
 
-  .studioBody {
-    grid-column: 8 / 13;
+  .studioIdentity,
+  .studioCopy {
+    grid-column: 9 / 13;
   }
 
   .projectCtaBody {

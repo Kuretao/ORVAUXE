@@ -5,6 +5,21 @@ import type { HomePageQueryResult } from "@/generated/sanity.types";
 import { homePageFallback } from "./home-page.fallback";
 import { mapHomeMedia, mapHomePage } from "./map-home-page";
 
+const validMedia = {
+  decorative: false,
+  alt: "A Nocturne storefront view",
+  caption: null,
+  credit: "ORVAUXE",
+  image: {
+    asset: { _ref: "image-nocturne-1536x1024-webp" },
+    assetId: "image-nocturne-1536x1024-webp",
+    assetUrl: "https://cdn.sanity.io/images/test/production/nocturne-1536x1024.webp",
+    dimensions: { width: 1536, height: 1024, aspectRatio: 1.5 },
+    crop: null,
+    hotspot: null,
+  },
+} as const;
+
 const validPage = {
   heroHeading: "Commerce for the distinctive.",
   heroCopy: "Premium Shopify storefronts.",
@@ -23,16 +38,28 @@ const validPage = {
   heroMedia: null,
   statementHeading: "Built to be desired.",
   serviceIntroduction: "Designed to be bought.",
+  whatWeBuildHeading: "Commerce shaped around the brand.",
+  whatWeBuildIntroduction: "Art direction, UX and implementation in one system.",
+  whatWeBuildSignals: ["Brand-led UX", "Commerce architecture", "Shopify implementation"],
   editionsHeading: "Editions",
   editionsIntroduction: "Curated storefront systems.",
-  editionsPrice: "From $2,490",
   featuredEdition: {
     name: "Nocturne",
+    slug: "nocturne",
     editionNumber: 1,
     category: "Fashion",
     status: "draft",
+    startingPrice: "From $2,490",
     intro: "For fashion brands with a cinematic point of view.",
     hero: null,
+    storefrontViews: [
+      { kind: "home", media: validMedia },
+      { kind: "collection", media: validMedia },
+      { kind: "product", media: validMedia },
+      { kind: "cart", media: validMedia },
+      { kind: "editorial", media: validMedia },
+      { kind: "mobile", media: validMedia },
+    ],
   },
   atelierHeading: "Atelier",
   atelierIntroduction: "A bespoke engagement.",
@@ -45,10 +72,18 @@ const validPage = {
     analyticsId: null,
   },
   atelierCampaignMedia: null,
+  processHeading: "From direction to launch.",
+  processSteps: [
+    { title: "Direction", description: "Define the direction." },
+    { title: "Adaptation", description: "Adapt the system." },
+    { title: "Build", description: "Implement the storefront." },
+    { title: "Launch", description: "Prepare the launch." },
+  ],
   studioHeading: "ORVAUXE",
   studioDescriptor: "Commerce Atelier",
   studioOrigin: "Chengdu · Worldwide",
   studioBody: "An independent commerce atelier.",
+  studioMedia: null,
   finalCtaEyebrow: "Start a project",
   finalCtaHeading: "Have a brand worth building for?",
   finalCtaBody: "Tell us what you are building.",
@@ -81,8 +116,18 @@ describe("Home page content mapping", () => {
         featured: {
           numberLabel: "Edition 001",
           statusLabel: "Concept Edition",
+          startingPrice: "From $2,490",
+          platform: "Shopify",
+          storefrontViews: expect.arrayContaining([
+            expect.objectContaining({ kind: "home" }),
+            expect.objectContaining({ kind: "mobile" }),
+          ]),
         },
       },
+      whatWeBuild: {
+        signals: ["Brand-led UX", "Commerce architecture", "Shopify implementation"],
+      },
+      process: { steps: expect.arrayContaining([expect.objectContaining({ title: "Build" })]) },
       studio: { descriptor: "Commerce Atelier", origin: "Chengdu · Worldwide" },
     });
   });
@@ -95,12 +140,72 @@ describe("Home page content mapping", () => {
         heroPrimaryCta: { ...validPage.heroPrimaryCta, destination: "/contact" },
       }),
     ).toBeNull();
+    expect(mapHomePage({ ...validPage, whatWeBuildSignals: ["One", "Two"] })).toBeNull();
+    expect(mapHomePage({ ...validPage, whatWeBuildSignals: ["One", " One ", "Three"] })).toBeNull();
+    expect(
+      mapHomePage({ ...validPage, processSteps: validPage.processSteps.slice(0, 3) }),
+    ).toBeNull();
     expect(
       mapHomePage({
         ...validPage,
         closingCta: { ...validPage.closingCta, analyticsId: "contact" },
       }),
     ).toBeNull();
+  });
+
+  it("rejects incomplete, duplicate or malformed required Edition storefront proof", () => {
+    expect(
+      mapHomePage({
+        ...validPage,
+        featuredEdition: { ...validPage.featuredEdition, startingPrice: " " },
+      }),
+    ).toBeNull();
+    expect(
+      mapHomePage({
+        ...validPage,
+        featuredEdition: {
+          ...validPage.featuredEdition,
+          storefrontViews: validPage.featuredEdition.storefrontViews.filter(
+            (view) => view.kind !== "mobile",
+          ),
+        },
+      }),
+    ).toBeNull();
+    expect(
+      mapHomePage({
+        ...validPage,
+        featuredEdition: {
+          ...validPage.featuredEdition,
+          storefrontViews: [
+            ...validPage.featuredEdition.storefrontViews.slice(0, 5),
+            { kind: "home", media: validMedia },
+          ],
+        },
+      }),
+    ).toBeNull();
+    expect(
+      mapHomePage({
+        ...validPage,
+        featuredEdition: {
+          ...validPage.featuredEdition,
+          storefrontViews: validPage.featuredEdition.storefrontViews.map((view) =>
+            view.kind === "product" ? { ...view, media: { ...validMedia, alt: " " } } : view,
+          ),
+        },
+      }),
+    ).toBeNull();
+  });
+
+  it("rejects an Edition that violates the constrained Nocturne product-story identity", () => {
+    for (const featuredEdition of [
+      { ...validPage.featuredEdition, name: "Aperture" },
+      { ...validPage.featuredEdition, slug: "aperture" },
+      { ...validPage.featuredEdition, editionNumber: 2 },
+      { ...validPage.featuredEdition, category: "Jewelry" },
+      { ...validPage.featuredEdition, status: "available" as const },
+    ]) {
+      expect(mapHomePage({ ...validPage, featuredEdition })).toBeNull();
+    }
   });
 
   it("maps crop, hotspot and accessibility metadata for UI-safe media", () => {
@@ -133,8 +238,15 @@ describe("Home page content mapping", () => {
     expect(homePageFallback.editions.featured).toMatchObject({
       name: "Nocturne",
       statusLabel: "Concept Edition",
+      startingPrice: "From $2,490",
+      platform: "Shopify",
     });
+    expect(homePageFallback.editions.featured.storefrontViews).toHaveLength(6);
+    expect(
+      new Set(homePageFallback.editions.featured.storefrontViews.map(({ kind }) => kind)).size,
+    ).toBe(6);
     expect(homePageFallback.heroMedia).toBeNull();
     expect(homePageFallback.atelier.media).toBeNull();
+    expect(homePageFallback.studio.media).toBeNull();
   });
 });

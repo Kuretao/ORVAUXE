@@ -2,7 +2,6 @@ import { Container, Grid, Heading, Link, Text } from "@orvauxe/ui";
 
 import type { HomePageData } from "../model/home-page";
 import styles from "./Home.module.css";
-import { HomeMediaFigure } from "./HomeMediaFigure";
 
 interface HomeEditionsProps {
   editions: HomePageData["editions"];
@@ -16,7 +15,7 @@ export function HomeEditions({ editions }: HomeEditionsProps) {
       <Container>
         <Grid className={styles.editionsIntroduction}>
           <Text className={styles.editionsKicker} variant="label">
-            02 / Editions
+            03 / Editions
           </Text>
           <Heading
             className={styles.editionsHeading}
@@ -29,7 +28,7 @@ export function HomeEditions({ editions }: HomeEditionsProps) {
           <div className={styles.editionsCopy}>
             <Text variant="body-lg">{editions.introduction}</Text>
             <Text className={styles.price} variant="label">
-              {editions.price}
+              {featured.startingPrice}
             </Text>
             <Link
               className={styles.editorialAction}
@@ -42,33 +41,20 @@ export function HomeEditions({ editions }: HomeEditionsProps) {
           </div>
         </Grid>
 
-        <article aria-labelledby="home-featured-edition-heading" className={styles.featuredEdition}>
-          <Grid className={styles.featuredEditionGrid}>
-            <div className={styles.featuredMediaColumn}>
-              <HomeMediaFigure media={featured.media} />
-            </div>
-            <div className={styles.featuredEditionDetails}>
-              <dl className={styles.editionMetadata}>
-                <div>
-                  <dt>Edition</dt>
-                  <dd>{featured.numberLabel}</dd>
-                </div>
-                <div>
-                  <dt>Status</dt>
-                  <dd>{featured.statusLabel}</dd>
-                </div>
-                <div>
-                  <dt>Category</dt>
-                  <dd>{featured.category}</dd>
-                </div>
-              </dl>
-              <Heading id="home-featured-edition-heading" level={3} variant="heading-lg">
-                {featured.name}
-              </Heading>
-              <Text variant="body-md">{featured.copy}</Text>
-            </div>
-          </Grid>
-        </article>
+        <div className={styles.editionsCatalogue}>
+          <Text as="span" variant="caption">
+            {featured.numberLabel}
+          </Text>
+          <Heading level={3} variant="heading-lg">
+            {featured.name}
+          </Heading>
+          <Text as="span" variant="label">
+            {featured.category}
+          </Text>
+          <Text as="span" className={styles.editionsStatus} variant="caption">
+            {featured.statusLabel}
+          </Text>
+        </div>
       </Container>
     </section>
   );

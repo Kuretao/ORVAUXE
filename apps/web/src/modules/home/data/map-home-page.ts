@@ -7,6 +7,9 @@ import type {
   HomeCta,
   HomeMedia,
   HomePageData,
+  HomeProcessStep,
+  HomeStorefrontView,
+  StorefrontViewKind,
 } from "../model/home-page";
 
 type HomePageRecord = NonNullable<HomePageQueryResult>;
@@ -15,8 +18,20 @@ type RawMedia = HomePageRecord["heroMedia"];
 type RawImage = NonNullable<NonNullable<RawMedia>["image"]>;
 type RawCrop = RawImage["crop"];
 type RawHotspot = RawImage["hotspot"];
+type RawFeaturedEdition = NonNullable<HomePageRecord["featuredEdition"]>;
+type RawStorefrontView = NonNullable<RawFeaturedEdition["storefrontViews"]>[number];
+type RawProcessStep = NonNullable<HomePageRecord["processSteps"]>[number];
 
 const analyticsIds = new Set<HomeAnalyticsId>(["contact", "startProject"]);
+const storefrontViewKinds = new Set<StorefrontViewKind>([
+  "home",
+  "collection",
+  "product",
+  "cart",
+  "editorial",
+  "mobile",
+]);
+const requiredStorefrontViewKinds = ["home", "collection", "product", "mobile"] as const;
 
 function cleanText(value: string | null | undefined): string | null {
   const text = value?.trim();
@@ -134,41 +149,87 @@ function mapCta(
   };
 }
 
+function mapStorefrontViews(
+  views: RawFeaturedEdition["storefrontViews"] | null | undefined,
+): readonly HomeStorefrontView[] | null {
+  if (!views || views.length < 4 || views.length > 6) return null;
+
+  const mappedViews: HomeStorefrontView[] = [];
+  const seenKinds = new Set<StorefrontViewKind>();
+
+  for (const view of views as RawStorefrontView[]) {
+    const kind = view.kind;
+    if (!kind || !storefrontViewKinds.has(kind) || seenKinds.has(kind)) return null;
+
+    const media = mapHomeMedia(view.media);
+    if (!media) return null;
+
+    seenKinds.add(kind);
+    mappedViews.push({ kind, media });
+  }
+
+  if (requiredStorefrontViewKinds.some((kind) => !seenKinds.has(kind))) return null;
+
+  return mappedViews;
+}
+
+function mapProcessSteps(
+  steps: HomePageRecord["processSteps"] | null | undefined,
+): readonly HomeProcessStep[] | null {
+  if (!steps || steps.length !== 4) return null;
+
+  const mappedSteps: HomeProcessStep[] = [];
+  for (const step of steps as RawProcessStep[]) {
+    const title = cleanText(step.title);
+    const description = cleanText(step.description);
+    if (!title || !description) return null;
+
+    mappedSteps.push({ title, description });
+  }
+
+  return mappedSteps;
+}
+
 function mapFeaturedEdition(
   edition: NonNullable<NonNullable<HomePageQueryResult>["featuredEdition"]> | null | undefined,
 ): FeaturedHomeEdition | null {
   const name = cleanText(edition?.name);
+  const slug = cleanText(edition?.slug);
   const category = cleanText(edition?.category);
   const copy = cleanText(edition?.intro);
+  const startingPrice = cleanText(edition?.startingPrice);
   const editionNumber = finiteNumber(edition?.editionNumber);
+  const storefrontViews = mapStorefrontViews(edition?.storefrontViews);
 
   if (
     !edition ||
     !name ||
+    !slug ||
     !category ||
     !copy ||
+    !startingPrice ||
+    !storefrontViews ||
     !editionNumber ||
     !Number.isInteger(editionNumber) ||
-    editionNumber < 1
+    editionNumber !== 1 ||
+    name !== "Nocturne" ||
+    slug !== "nocturne" ||
+    category !== "Fashion" ||
+    edition.status !== "draft"
   ) {
     return null;
   }
 
-  const statusLabels = {
-    available: "ORVAUXE Original",
-    draft: "Concept Edition",
-    retired: "Archive Edition",
-  } as const;
-  const statusLabel = edition.status ? statusLabels[edition.status] : undefined;
-  if (!statusLabel) return null;
-
   return {
-    numberLabel: `Edition ${String(editionNumber).padStart(3, "0")}`,
-    name,
-    statusLabel,
-    category,
+    numberLabel: "Edition 001",
+    name: "Nocturne",
+    statusLabel: "Concept Edition",
+    category: "Fashion",
     copy,
+    startingPrice,
+    platform: "Shopify",
     media: mapHomeMedia(edition.hero),
+    storefrontViews,
   };
 }
 
@@ -181,9 +242,15 @@ export function mapHomePage(page: HomePageQueryResult): HomePageData | null {
   const heroSecondaryCta = mapCta(page.heroSecondaryCta, "/editions", null);
   const statementHeading = cleanText(page.statementHeading);
   const statementBody = cleanText(page.serviceIntroduction);
+  const whatWeBuildHeading = cleanText(page.whatWeBuildHeading);
+  const whatWeBuildIntroduction = cleanText(page.whatWeBuildIntroduction);
+  const whatWeBuildSignals = (page.whatWeBuildSignals ?? [])
+    .map(cleanText)
+    .filter((signal): signal is string => signal !== null);
+  const hasValidWhatWeBuildSignals =
+    whatWeBuildSignals.length === 3 && new Set(whatWeBuildSignals).size === 3;
   const editionsHeading = cleanText(page.editionsHeading);
   const editionsIntroduction = cleanText(page.editionsIntroduction);
-  const editionsPrice = cleanText(page.editionsPrice);
   const featuredEdition = mapFeaturedEdition(page.featuredEdition);
   const atelierHeading = cleanText(page.atelierHeading);
   const atelierIntroduction = cleanText(page.atelierIntroduction);
@@ -193,6 +260,8 @@ export function mapHomePage(page: HomePageQueryResult): HomePageData | null {
     .filter((capability): capability is string => capability !== null)
     .filter((capability, index, capabilities) => capabilities.indexOf(capability) === index);
   const atelierCta = mapCta(page.atelierCta, "/atelier", null);
+  const processHeading = cleanText(page.processHeading);
+  const processSteps = mapProcessSteps(page.processSteps);
   const studioHeading = cleanText(page.studioHeading);
   const studioDescriptor = cleanText(page.studioDescriptor);
   const studioOrigin = cleanText(page.studioOrigin);
@@ -211,15 +280,19 @@ export function mapHomePage(page: HomePageQueryResult): HomePageData | null {
     !heroSecondaryCta ||
     !statementHeading ||
     !statementBody ||
+    !whatWeBuildHeading ||
+    !whatWeBuildIntroduction ||
+    !hasValidWhatWeBuildSignals ||
     !editionsHeading ||
     !editionsIntroduction ||
-    !editionsPrice ||
     !featuredEdition ||
     !atelierHeading ||
     !atelierIntroduction ||
     !atelierPrice ||
     atelierCapabilities.length === 0 ||
     !atelierCta ||
+    !processHeading ||
+    !processSteps ||
     !studioHeading ||
     !studioDescriptor ||
     !studioOrigin ||
@@ -247,10 +320,14 @@ export function mapHomePage(page: HomePageQueryResult): HomePageData | null {
       heading: statementHeading,
       body: statementBody,
     },
+    whatWeBuild: {
+      heading: whatWeBuildHeading,
+      introduction: whatWeBuildIntroduction,
+      signals: whatWeBuildSignals,
+    },
     editions: {
       heading: editionsHeading,
       introduction: editionsIntroduction,
-      price: editionsPrice,
       indexHref: "/editions",
       featured: featuredEdition,
     },
@@ -262,11 +339,16 @@ export function mapHomePage(page: HomePageQueryResult): HomePageData | null {
       cta: atelierCta,
       media: mapHomeMedia(page.atelierCampaignMedia),
     },
+    process: {
+      heading: processHeading,
+      steps: processSteps,
+    },
     studio: {
       heading: studioHeading,
       descriptor: studioDescriptor,
       origin: studioOrigin,
       body: studioBody,
+      media: mapHomeMedia(page.studioMedia),
     },
     finalCta: {
       eyebrow: finalCtaEyebrow,

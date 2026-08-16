@@ -93,6 +93,26 @@ export const homePage = defineType({
       validation: (rule) => rule.required().max(800),
     }),
     defineField({
+      name: "whatWeBuildHeading",
+      title: "What we build heading",
+      type: "string",
+      validation: (rule) => rule.required().max(120),
+    }),
+    defineField({
+      name: "whatWeBuildIntroduction",
+      title: "What we build introduction",
+      type: "text",
+      rows: 4,
+      validation: (rule) => rule.required().max(500),
+    }),
+    defineField({
+      name: "whatWeBuildSignals",
+      title: "What we build signals",
+      type: "array",
+      of: [defineArrayMember({ type: "string" })],
+      validation: (rule) => rule.required().unique().length(3),
+    }),
+    defineField({
       name: "editionsHeading",
       title: "Editions heading",
       type: "string",
@@ -114,9 +134,17 @@ export const homePage = defineType({
     defineField({
       name: "selectedEditions",
       title: "Featured Edition",
-      description: "Select the single Edition featured on the home page.",
+      description: "Select Edition 001 — Nocturne for the constrained Home product story.",
       type: "array",
-      of: [defineArrayMember({ type: "reference", to: [{ type: "edition" }] })],
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: [{ type: "edition" }],
+          options: {
+            filter: 'slug.current == "nocturne" && editionNumber == 1 && status == "draft"',
+          },
+        }),
+      ],
       validation: (rule) => rule.required().unique().length(1),
     }),
     defineField({
@@ -164,6 +192,43 @@ export const homePage = defineType({
       type: "imageWithAlt",
     }),
     defineField({
+      name: "processHeading",
+      title: "Process heading",
+      type: "string",
+      validation: (rule) => rule.required().max(120),
+    }),
+    defineField({
+      name: "processSteps",
+      title: "Process steps",
+      type: "array",
+      of: [
+        defineArrayMember({
+          name: "processStep",
+          title: "Process step",
+          type: "object",
+          fields: [
+            defineField({
+              name: "title",
+              title: "Title",
+              type: "string",
+              validation: (rule) => rule.required().max(100),
+            }),
+            defineField({
+              name: "description",
+              title: "Description",
+              type: "text",
+              rows: 3,
+              validation: (rule) => rule.required().max(300),
+            }),
+          ],
+          preview: {
+            select: { title: "title", subtitle: "description" },
+          },
+        }),
+      ],
+      validation: (rule) => rule.required().length(4),
+    }),
+    defineField({
       name: "studioHeading",
       title: "Studio heading",
       type: "string",
@@ -187,6 +252,13 @@ export const homePage = defineType({
       type: "text",
       rows: 5,
       validation: (rule) => rule.required().max(800),
+    }),
+    defineField({
+      name: "studioMedia",
+      title: "Studio media",
+      description:
+        "Optional approved studio or Chengdu media. Leave empty until usage rights are confirmed.",
+      type: "imageWithAlt",
     }),
     defineField({
       name: "finalCtaEyebrow",

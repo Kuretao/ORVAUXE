@@ -1,5 +1,34 @@
 import { defineArrayMember, defineField, defineType, getPublishedId } from "sanity";
 
+const requiredStorefrontViewKinds = ["home", "collection", "product", "mobile"] as const;
+
+interface StorefrontViewValue {
+  kind?: string;
+}
+
+function validateStorefrontViews(value: StorefrontViewValue[] | undefined): true | string {
+  if (!value) {
+    return true;
+  }
+
+  const kinds = value.map((view) => view.kind).filter((kind): kind is string => Boolean(kind));
+  const allowedKinds = new Set(["home", "collection", "product", "cart", "editorial", "mobile"]);
+  if (kinds.some((kind) => !allowedKinds.has(kind))) {
+    return "Storefront views contain an unsupported view kind.";
+  }
+
+  if (new Set(kinds).size !== kinds.length) {
+    return "Each storefront view kind can be used only once.";
+  }
+
+  const missingKinds = requiredStorefrontViewKinds.filter((kind) => !kinds.includes(kind));
+  if (missingKinds.length > 0) {
+    return `Storefront views must include: ${missingKinds.join(", ")}.`;
+  }
+
+  return true;
+}
+
 export const edition = defineType({
   name: "edition",
   title: "Edition",
@@ -89,6 +118,61 @@ export const edition = defineType({
       type: "array",
       of: [defineArrayMember({ type: "imageWithAlt" })],
       validation: (rule) => rule.max(12),
+    }),
+    defineField({
+      name: "storefrontViews",
+      title: "Storefront views",
+      description:
+        "Approved product-interface media for Home, Collection, Product and Mobile, with optional Cart and Editorial views.",
+      type: "array",
+      of: [
+        defineArrayMember({
+          name: "storefrontView",
+          title: "Storefront view",
+          type: "object",
+          fields: [
+            defineField({
+              name: "kind",
+              title: "View kind",
+              type: "string",
+              options: {
+                list: [
+                  { title: "Home", value: "home" },
+                  { title: "Collection", value: "collection" },
+                  { title: "Product", value: "product" },
+                  { title: "Cart", value: "cart" },
+                  { title: "Editorial", value: "editorial" },
+                  { title: "Mobile", value: "mobile" },
+                ],
+              },
+              validation: (rule) =>
+                rule
+                  .required()
+                  .custom((value) =>
+                    !value ||
+                    ["home", "collection", "product", "cart", "editorial", "mobile"].includes(value)
+                      ? true
+                      : "Select one of the approved storefront view kinds.",
+                  ),
+            }),
+            defineField({
+              name: "media",
+              title: "Media",
+              type: "imageWithAlt",
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          preview: {
+            select: { title: "kind", media: "media.image" },
+          },
+        }),
+      ],
+      validation: (rule) =>
+        rule
+          .required()
+          .min(4)
+          .max(6)
+          .custom((value) => validateStorefrontViews(value as StorefrontViewValue[] | undefined)),
     }),
     defineField({
       name: "features",

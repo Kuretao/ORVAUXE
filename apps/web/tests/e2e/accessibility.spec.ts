@@ -35,6 +35,25 @@ test("changed Homepage campaign state has no serious or critical axe violations"
   await expectNoBlockingAxeViolations(page);
 });
 
+test("changed Homepage storefront-system state has no serious or critical axe violations", async ({
+  page,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== "chromium", "Tall desktop interaction only.");
+
+  await page.setViewportSize({ height: 900, width: 1440 });
+  await page.goto("/");
+
+  const system = page.getByRole("region", { name: "A complete storefront system." });
+  const product = system.getByRole("button", { name: /^Product/ });
+  await product.click();
+  await expect(system.locator("[data-system-state]")).toHaveAttribute(
+    "data-system-state",
+    "product",
+  );
+  await expect(product).toHaveAttribute("aria-pressed", "true");
+  await expectNoBlockingAxeViolations(page);
+});
+
 test("open mobile navigation has no serious or critical axe violations", async ({
   page,
 }, testInfo) => {
