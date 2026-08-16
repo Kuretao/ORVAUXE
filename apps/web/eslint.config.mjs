@@ -1,5 +1,5 @@
 import nextConfig from "@orvauxe/eslint-config/next";
-const moduleNames = ["atelier", "editions", "legal", "project-inquiry", "studio"];
+const moduleNames = ["atelier", "editions", "home", "legal", "project-inquiry", "studio"];
 const relativeCrossModulePatterns = moduleNames.flatMap((name) =>
   ["..", "../..", "../../..", "../../../..", "../../../../.."].flatMap((prefix) => [
     `${prefix}/${name}`,

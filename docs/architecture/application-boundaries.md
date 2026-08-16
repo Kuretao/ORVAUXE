@@ -22,6 +22,23 @@ Routes do not own:
 
 ## Module contracts
 
+### Home
+
+Owns the production homepage content query, mapping, deterministic local/E2E fallback and the
+fixed editorial presentation for the launch narrative. The Sanity `homePage` singleton owns
+approved copy, CTAs, media references and one featured Edition; React owns the stable section
+sequence, grid, surface themes and responsive art direction. Home must not evolve into a generic
+page builder.
+
+Public API: `getHomePage`, `HomeScreen` and the route-ready `HomePageData` type.
+
+Allowed dependencies: the Sanity client and image adapters from the data layer, UI primitives,
+and the typed analytics client from a focused interactive leaf when a CTA needs measurement.
+
+Forbidden: direct vendor SDKs in UI, hardcoded production marketing copy scattered through JSX,
+Edition detail deep-links without truthful route content, client-only page rendering, or generic
+layout/animation selectors exposed to editors.
+
 ### Editions
 
 Owns the launch Edition catalogue and detail capability. Its data folder owns named GROQ queries and mapping from generated query results into route-ready Edition models. Its UI owns Edition index/detail screens and Edition-specific interactive islands.

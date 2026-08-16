@@ -15,8 +15,8 @@
     "test:e2e": "pnpm --filter @orvauxe/web e2e",
     "typegen:sanity": "pnpm --filter @orvauxe/studio typegen",
     "typegen:check": "pnpm typegen:sanity && git diff --exit-code -- apps/studio/schema.json apps/web/src/generated/sanity.types.ts",
-    "format": "prettier --write \"apps/**/*.{ts,tsx,js,mjs,json,css}\" \"packages/**/*.{ts,tsx,js,mjs,json,css}\" \"*.{js,mjs,json,yaml,yml}\" \".github/**/*.{yaml,yml,md}\" README.md CONTRIBUTING.md SKELETON_REPORT.md FOUNDATION_REPORT.md \"!apps/studio/schema.json\" \"!apps/web/src/generated/**\" \"!pnpm-lock.yaml\"",
-    "format:check": "prettier --check \"apps/**/*.{ts,tsx,js,mjs,json,css}\" \"packages/**/*.{ts,tsx,js,mjs,json,css}\" \"*.{js,mjs,json,yaml,yml}\" \".github/**/*.{yaml,yml,md}\" README.md CONTRIBUTING.md SKELETON_REPORT.md FOUNDATION_REPORT.md \"!apps/studio/schema.json\" \"!apps/web/src/generated/**\" \"!pnpm-lock.yaml\"",
+    "format": "prettier --write \"apps/**/*.{ts,tsx,js,mjs,json,css}\" \"packages/**/*.{ts,tsx,js,mjs,json,css}\" \"*.{js,mjs,json,yaml,yml}\" \".github/**/*.{yaml,yml,md}\" README.md CONTRIBUTING.md SKELETON_REPORT.md FOUNDATION_REPORT.md HOMEPAGE_REPORT.md \"!apps/studio/schema.json\" \"!apps/web/src/generated/**\" \"!pnpm-lock.yaml\"",
+    "format:check": "prettier --check \"apps/**/*.{ts,tsx,js,mjs,json,css}\" \"packages/**/*.{ts,tsx,js,mjs,json,css}\" \"*.{js,mjs,json,yaml,yml}\" \".github/**/*.{yaml,yml,md}\" README.md CONTRIBUTING.md SKELETON_REPORT.md FOUNDATION_REPORT.md HOMEPAGE_REPORT.md \"!apps/studio/schema.json\" \"!apps/web/src/generated/**\" \"!pnpm-lock.yaml\"",
     "workspace:graph": "pnpm list --recursive --depth 0"
   },
   "devDependencies": {
