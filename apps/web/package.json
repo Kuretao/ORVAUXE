@@ -16,7 +16,7 @@
     "@orvauxe/analytics": "workspace:*",
     "@orvauxe/tokens": "workspace:*",
     "@orvauxe/ui": "workspace:*",
-    "@sanity/client": "7.26.2",
+    "@sanity/client": "8.0.0",
     "@sanity/image-url": "2.1.1",
     "@sentry/nextjs": "10.70.0",
     "gsap": "3.15.0",
