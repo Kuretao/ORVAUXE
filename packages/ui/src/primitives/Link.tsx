@@ -1,10 +1,18 @@
-import type { AnchorHTMLAttributes } from "react";
+import type { ComponentPropsWithRef } from "react";
 
-export type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement>;
+type LinkVariant = "default" | "editorial" | "navigation" | "quiet";
 
-export function Link({ children, className, ...props }: LinkProps) {
+export interface LinkProps extends ComponentPropsWithRef<"a"> {
+  variant?: LinkVariant;
+}
+
+export function Link({ children, className, variant = "default", ...props }: LinkProps) {
   return (
-    <a className={["orvauxe-link", className].filter(Boolean).join(" ")} {...props}>
+    <a
+      {...props}
+      className={["orvauxe-link", `orvauxe-link--${variant}`, className].filter(Boolean).join(" ")}
+      data-variant={variant}
+    >
       {children}
     </a>
   );

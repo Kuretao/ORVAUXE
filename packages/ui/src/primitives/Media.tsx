@@ -1,14 +1,40 @@
-import type { HTMLAttributes, ReactNode } from "react";
+import type { ComponentPropsWithRef, ReactNode } from "react";
 
-export interface MediaProps extends HTMLAttributes<HTMLElement> {
+type MediaAspect = "auto" | "landscape" | "portrait" | "square";
+type MediaFit = "cover" | "contain";
+
+export interface MediaProps extends ComponentPropsWithRef<"figure"> {
+  aspect?: MediaAspect;
   caption?: ReactNode;
+  fit?: MediaFit;
 }
 
-export function Media({ caption, children, className, ...props }: MediaProps) {
+export function Media({
+  aspect = "auto",
+  caption,
+  children,
+  className,
+  fit = "cover",
+  ...props
+}: MediaProps) {
   return (
-    <figure className={["orvauxe-media", className].filter(Boolean).join(" ")} {...props}>
+    <figure
+      {...props}
+      className={[
+        "orvauxe-media",
+        `orvauxe-media--${aspect}`,
+        `orvauxe-media--fit-${fit}`,
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      data-aspect={aspect}
+      data-fit={fit}
+    >
       {children}
-      {caption ? <figcaption>{caption}</figcaption> : null}
+      {caption !== undefined && caption !== null ? (
+        <figcaption className="orvauxe-media__caption">{caption}</figcaption>
+      ) : null}
     </figure>
   );
 }

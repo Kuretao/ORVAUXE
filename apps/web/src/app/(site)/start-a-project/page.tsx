@@ -12,7 +12,7 @@ export const metadata: Metadata = buildMetadata({
 
 export default function StartProjectPage() {
   return (
-    <main className="screen-stack" id="main-content">
+    <main className="screen-stack" id="main-content" tabIndex={-1}>
       <Container>
         <Heading level={1}>Start a project</Heading>
         <StartProjectForm />

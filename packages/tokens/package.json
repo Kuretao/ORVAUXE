@@ -10,6 +10,7 @@
   "scripts": {
     "build": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
+    "test": "node --test test/*.test.mjs",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {

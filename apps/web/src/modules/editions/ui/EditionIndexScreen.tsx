@@ -8,7 +8,7 @@ export interface EditionIndexScreenProps {
 
 export function EditionIndexScreen({ editions }: EditionIndexScreenProps) {
   return (
-    <main className="screen-stack" id="main-content">
+    <main className="screen-stack" id="main-content" tabIndex={-1}>
       <Container>
         <Heading level={1}>Editions</Heading>
         {editions.length === 0 ? (

@@ -8,7 +8,7 @@ export interface EditionScreenProps {
 
 export function EditionScreen({ edition }: EditionScreenProps) {
   return (
-    <main className="screen-stack" id="main-content">
+    <main className="screen-stack" id="main-content" tabIndex={-1}>
       <Container>
         <nav aria-label="Breadcrumb">
           <ol className="breadcrumbs">

@@ -21,7 +21,7 @@ export default function HomePage() {
   return (
     <>
       <JsonLd data={organization} />
-      <main className="screen-stack" id="main-content">
+      <main className="screen-stack" id="main-content" tabIndex={-1}>
         <Container>
           <Heading level={1}>ORVAUXE</Heading>
           <Text data-skeleton-marker>Web application skeleton.</Text>

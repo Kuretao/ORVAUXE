@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "@orvauxe/tokens/styles.css";
+@import "@orvauxe/ui/styles.css";
 @source "../../../../packages/ui/src";
 
 *,
@@ -9,70 +10,113 @@
 }
 
 html {
-  color-scheme: light;
+  min-width: 20rem;
+  color-scheme: var(--orvauxe-color-scheme);
+  text-size-adjust: 100%;
 }
 
 body {
-  min-width: 20rem;
   min-height: 100vh;
+  min-height: 100svh;
   margin: 0;
-  color: var(--orvauxe-color-black);
-  background: var(--orvauxe-color-ivory);
+  color: var(--orvauxe-text-primary);
+  background: var(--orvauxe-surface-primary);
   font-family: var(--orvauxe-font-interface);
-  font-size: var(--orvauxe-type-body);
-  line-height: var(--orvauxe-leading-body);
+  font-size: var(--orvauxe-type-body-md-size);
+  font-weight: var(--orvauxe-type-body-md-weight);
+  line-height: var(--orvauxe-type-body-md-line-height);
+  letter-spacing: var(--orvauxe-type-body-md-letter-spacing);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-a {
-  color: inherit;
+body,
+button,
+input,
+select,
+textarea {
+  font-synthesis: none;
+}
+
+main {
+  min-width: 0;
+}
+
+:where(img, picture, video, canvas) {
+  display: block;
+  max-width: 100%;
+}
+
+img,
+video {
+  height: auto;
 }
 
 button,
 input,
 select,
 textarea {
+  color: inherit;
   font: inherit;
 }
 
+button,
+select {
+  text-transform: none;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  appearance: button;
+}
+
+textarea {
+  resize: vertical;
+}
+
+a {
+  color: inherit;
+}
+
+strong,
+b {
+  font-weight: var(--orvauxe-weight-interface-semibold);
+}
+
+::selection {
+  color: var(--orvauxe-text-on-accent);
+  background: var(--orvauxe-surface-accent);
+}
+
+[data-theme] {
+  color: var(--orvauxe-text-primary);
+  background-color: var(--orvauxe-surface-primary);
+  color-scheme: var(--orvauxe-color-scheme);
+}
+
 :focus-visible {
-  outline: var(--orvauxe-focus-width) solid var(--orvauxe-focus-color);
+  outline: var(--orvauxe-focus-width) solid var(--orvauxe-focus-ring);
   outline-offset: var(--orvauxe-focus-offset);
 }
 
-.skip-link {
-  position: fixed;
-  inset-block-start: var(--orvauxe-space-2);
-  inset-inline-start: var(--orvauxe-space-2);
-  z-index: var(--orvauxe-z-modal);
-  padding: var(--orvauxe-space-2) var(--orvauxe-space-4);
-  color: var(--orvauxe-color-ivory);
-  background: var(--orvauxe-color-black);
-  transform: translateY(-200%);
+.screen-stack,
+.error-screen {
+  padding-block: var(--orvauxe-space-section);
 }
 
-.skip-link:focus {
-  transform: translateY(0);
-}
-
-.site-shell {
-  min-height: 100vh;
+.screen-stack > .orvauxe-container,
+.error-screen > .orvauxe-container {
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  gap: var(--orvauxe-space-content);
 }
 
-.site-header,
-.site-footer {
-  padding: var(--orvauxe-space-4) var(--orvauxe-gutter);
-  border-block-end: var(--orvauxe-border-width) solid var(--orvauxe-border-color);
+.error-screen {
+  min-height: 60vh;
 }
 
-.site-footer {
-  border-block-start: var(--orvauxe-border-width) solid var(--orvauxe-border-color);
-  border-block-end: 0;
-  color: var(--orvauxe-color-graphite-ui);
-}
-
-.site-navigation,
 .breadcrumbs,
 .content-list {
   margin: 0;
@@ -80,17 +124,13 @@ textarea {
   list-style: none;
 }
 
-.site-navigation {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--orvauxe-space-4);
-}
-
 .breadcrumbs {
   display: flex;
   flex-wrap: wrap;
   gap: var(--orvauxe-space-2);
-  color: var(--orvauxe-color-graphite-ui);
+  color: var(--orvauxe-text-secondary);
+  font-size: var(--orvauxe-type-body-sm-size);
+  line-height: var(--orvauxe-type-body-sm-line-height);
 }
 
 .breadcrumbs li + li::before {
@@ -103,62 +143,69 @@ textarea {
   gap: var(--orvauxe-space-3);
 }
 
-.orvauxe-container {
-  width: min(100%, var(--orvauxe-container-content));
-  margin-inline: auto;
-  padding-inline: var(--orvauxe-gutter);
-}
-
-.orvauxe-heading {
-  margin-block: 0 var(--orvauxe-space-4);
-  font-family: var(--orvauxe-font-display);
-  line-height: var(--orvauxe-leading-display);
-}
-
-h1.orvauxe-heading {
-  font-size: clamp(2.5rem, 7vw, 5rem);
-}
-
-.orvauxe-text {
-  max-width: var(--orvauxe-container-reading);
-  margin-block: 0 var(--orvauxe-space-4);
-}
-
-.orvauxe-button {
-  min-height: 2.75rem;
-  padding: var(--orvauxe-space-2) var(--orvauxe-space-4);
-  color: var(--orvauxe-color-ivory);
-  background: var(--orvauxe-color-black);
-  border: var(--orvauxe-border-width) solid var(--orvauxe-color-black);
-  cursor: pointer;
-}
-
-.screen-stack,
-.error-screen {
-  padding-block: var(--orvauxe-space-16);
-}
-
-.error-screen {
-  min-height: 60vh;
-}
-
 form[aria-label="Project inquiry"] {
   display: grid;
-  max-width: var(--orvauxe-container-reading);
+  width: min(100%, var(--orvauxe-container-text));
   gap: var(--orvauxe-space-4);
+}
+
+form[aria-label="Project inquiry"] > fieldset {
+  display: grid;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  gap: var(--orvauxe-space-4);
+  border: 0;
+}
+
+form[aria-label="Project inquiry"] fieldset fieldset {
+  display: grid;
+  min-width: 0;
+  margin: var(--orvauxe-space-2) 0;
+  padding: var(--orvauxe-space-4);
+  gap: var(--orvauxe-space-3);
+  border: var(--orvauxe-border-width) solid var(--orvauxe-border-subtle);
+}
+
+form[aria-label="Project inquiry"] legend {
+  padding-inline: var(--orvauxe-space-2);
+  font-size: var(--orvauxe-type-label-size);
+  font-weight: var(--orvauxe-type-label-weight);
+  line-height: var(--orvauxe-type-label-line-height);
+  letter-spacing: var(--orvauxe-type-label-letter-spacing);
+  text-transform: uppercase;
 }
 
 form[aria-label="Project inquiry"] label {
   display: grid;
   gap: var(--orvauxe-space-2);
+  font-size: var(--orvauxe-type-body-sm-size);
+  font-weight: var(--orvauxe-weight-interface-medium);
+  line-height: var(--orvauxe-type-body-sm-line-height);
 }
 
 form[aria-label="Project inquiry"] :is(input, select, textarea) {
   width: 100%;
-  padding: var(--orvauxe-space-2);
-  color: inherit;
-  background: transparent;
-  border: var(--orvauxe-border-width) solid var(--orvauxe-color-graphite-ui);
+  min-height: var(--orvauxe-target-min);
+  padding: var(--orvauxe-space-control-block) var(--orvauxe-space-control-inline);
+  color: var(--orvauxe-text-primary);
+  background: var(--orvauxe-surface-primary);
+  border: var(--orvauxe-border-width) solid var(--orvauxe-border-default);
+  border-radius: var(--orvauxe-radius-none);
+}
+
+form[aria-label="Project inquiry"] textarea {
+  min-height: var(--orvauxe-space-32);
+}
+
+form[aria-label="Project inquiry"] :is(input, select, textarea):disabled {
+  color: var(--orvauxe-text-secondary);
+  background: var(--orvauxe-surface-secondary);
+  cursor: not-allowed;
+}
+
+form[aria-label="Project inquiry"] :is([role="alert"], [role="status"]) {
+  margin: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -166,8 +213,7 @@ form[aria-label="Project inquiry"] :is(input, select, textarea) {
   *::before,
   *::after {
     scroll-behavior: auto !important;
-    transition-duration: 1ms !important;
-    animation-duration: 1ms !important;
-    animation-iteration-count: 1 !important;
+    animation: none !important;
+    transition: none !important;
   }
 }

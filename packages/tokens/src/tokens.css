@@ -1,21 +1,128 @@
 :root {
-  --orvauxe-color-black: #0b0b0b;
-  --orvauxe-color-ivory: #f2efe8;
-  --orvauxe-color-bone: #d8d2c7;
-  --orvauxe-color-graphite-brand: #74716b;
-  --orvauxe-color-graphite-ui: #6f6c66;
-  --orvauxe-color-oxblood: #421817;
+  /* Primitive brand palette. These six values are the only raw brand colors. */
+  --orvauxe-black: #0b0b0b;
+  --atelier-ivory: #f2efe8;
+  --bone: #d8d2c7;
+  --graphite-brand: #74716b;
+  --graphite-ui: #6f6c66;
+  --oxblood: #421817;
 
-  --orvauxe-font-display: "Bodoni Moda", "Times New Roman", serif;
-  --orvauxe-font-interface: "Inter", Arial, sans-serif;
-  --orvauxe-type-hero: clamp(3.5rem, 8vw, 8.5rem);
-  --orvauxe-type-section: clamp(2.5rem, 5vw, 5.5rem);
-  --orvauxe-type-quote: clamp(2rem, 4vw, 4.5rem);
-  --orvauxe-type-body: 1rem;
-  --orvauxe-type-label: 0.75rem;
-  --orvauxe-leading-display: 0.96;
-  --orvauxe-leading-body: 1.6;
+  /* Compatibility aliases for the repository skeleton. New code uses semantic colors. */
+  --orvauxe-color-black: var(--orvauxe-black);
+  --orvauxe-color-ivory: var(--atelier-ivory);
+  --orvauxe-color-bone: var(--bone);
+  --orvauxe-color-graphite-brand: var(--graphite-brand);
+  --orvauxe-color-graphite-ui: var(--graphite-ui);
+  --orvauxe-color-oxblood: var(--oxblood);
 
+  /* Font files are loaded by each application; this package remains framework-independent. */
+  --orvauxe-font-display: var(
+    --font-orvauxe-display,
+    "Bodoni Moda",
+    Didot,
+    "Times New Roman",
+    serif
+  );
+  --orvauxe-font-interface: var(
+    --font-orvauxe-interface,
+    Inter,
+    "Helvetica Neue",
+    Arial,
+    sans-serif
+  );
+  --orvauxe-weight-display-regular: 400;
+  --orvauxe-weight-display-medium: 500;
+  --orvauxe-weight-interface-regular: 400;
+  --orvauxe-weight-interface-medium: 500;
+  --orvauxe-weight-interface-semibold: 600;
+
+  /* Display XL: rare, short hero statements. */
+  --orvauxe-type-display-xl-family: var(--orvauxe-font-display);
+  --orvauxe-type-display-xl-size: clamp(4rem, 9vw, 9rem);
+  --orvauxe-type-display-xl-line-height: 0.9;
+  --orvauxe-type-display-xl-letter-spacing: -0.035em;
+  --orvauxe-type-display-xl-weight: var(--orvauxe-weight-display-regular);
+
+  /* Display LG: page introductions and editorial statements. */
+  --orvauxe-type-display-lg-family: var(--orvauxe-font-display);
+  --orvauxe-type-display-lg-size: clamp(3.25rem, 7vw, 7rem);
+  --orvauxe-type-display-lg-line-height: 0.92;
+  --orvauxe-type-display-lg-letter-spacing: -0.03em;
+  --orvauxe-type-display-lg-weight: var(--orvauxe-weight-display-regular);
+
+  /* Heading XL: primary page headings. */
+  --orvauxe-type-heading-xl-family: var(--orvauxe-font-display);
+  --orvauxe-type-heading-xl-size: clamp(2.75rem, 5vw, 5rem);
+  --orvauxe-type-heading-xl-line-height: 0.98;
+  --orvauxe-type-heading-xl-letter-spacing: -0.025em;
+  --orvauxe-type-heading-xl-weight: var(--orvauxe-weight-display-regular);
+
+  /* Heading LG: major section headings. */
+  --orvauxe-type-heading-lg-family: var(--orvauxe-font-display);
+  --orvauxe-type-heading-lg-size: clamp(2.25rem, 4vw, 3.75rem);
+  --orvauxe-type-heading-lg-line-height: 1;
+  --orvauxe-type-heading-lg-letter-spacing: -0.02em;
+  --orvauxe-type-heading-lg-weight: var(--orvauxe-weight-display-regular);
+
+  /* Heading MD: subsection headings. */
+  --orvauxe-type-heading-md-family: var(--orvauxe-font-display);
+  --orvauxe-type-heading-md-size: clamp(1.75rem, 2.6vw, 2.5rem);
+  --orvauxe-type-heading-md-line-height: 1.08;
+  --orvauxe-type-heading-md-letter-spacing: -0.015em;
+  --orvauxe-type-heading-md-weight: var(--orvauxe-weight-display-medium);
+
+  /* Heading SM: compact editorial and card-level headings. */
+  --orvauxe-type-heading-sm-family: var(--orvauxe-font-display);
+  --orvauxe-type-heading-sm-size: clamp(1.375rem, 1.8vw, 1.75rem);
+  --orvauxe-type-heading-sm-line-height: 1.14;
+  --orvauxe-type-heading-sm-letter-spacing: -0.01em;
+  --orvauxe-type-heading-sm-weight: var(--orvauxe-weight-display-medium);
+
+  /* Body LG: introductory copy and editorial standfirsts. */
+  --orvauxe-type-body-lg-family: var(--orvauxe-font-interface);
+  --orvauxe-type-body-lg-size: clamp(1.125rem, 1.2vw, 1.25rem);
+  --orvauxe-type-body-lg-line-height: 1.55;
+  --orvauxe-type-body-lg-letter-spacing: -0.005em;
+  --orvauxe-type-body-lg-weight: var(--orvauxe-weight-interface-regular);
+
+  /* Body MD: default prose and interface copy. */
+  --orvauxe-type-body-md-family: var(--orvauxe-font-interface);
+  --orvauxe-type-body-md-size: 1rem;
+  --orvauxe-type-body-md-line-height: 1.6;
+  --orvauxe-type-body-md-letter-spacing: 0;
+  --orvauxe-type-body-md-weight: var(--orvauxe-weight-interface-regular);
+
+  /* Body SM: secondary interface copy, never a substitute for labels. */
+  --orvauxe-type-body-sm-family: var(--orvauxe-font-interface);
+  --orvauxe-type-body-sm-size: 0.875rem;
+  --orvauxe-type-body-sm-line-height: 1.55;
+  --orvauxe-type-body-sm-letter-spacing: 0;
+  --orvauxe-type-body-sm-weight: var(--orvauxe-weight-interface-regular);
+
+  /* Label: controls and navigation; uppercase is applied by the owning component. */
+  --orvauxe-type-label-family: var(--orvauxe-font-interface);
+  --orvauxe-type-label-size: 0.75rem;
+  --orvauxe-type-label-line-height: 1.25;
+  --orvauxe-type-label-letter-spacing: 0.12em;
+  --orvauxe-type-label-weight: var(--orvauxe-weight-interface-semibold);
+
+  /* Caption: metadata and supporting annotations. */
+  --orvauxe-type-caption-family: var(--orvauxe-font-interface);
+  --orvauxe-type-caption-size: 0.75rem;
+  --orvauxe-type-caption-line-height: 1.45;
+  --orvauxe-type-caption-letter-spacing: 0.025em;
+  --orvauxe-type-caption-weight: var(--orvauxe-weight-interface-medium);
+
+  /* Skeleton aliases retained while application styles migrate to semantic type roles. */
+  --orvauxe-type-hero: var(--orvauxe-type-display-xl-size);
+  --orvauxe-type-section: var(--orvauxe-type-heading-xl-size);
+  --orvauxe-type-quote: var(--orvauxe-type-heading-lg-size);
+  --orvauxe-type-body: var(--orvauxe-type-body-md-size);
+  --orvauxe-leading-display: var(--orvauxe-type-display-lg-line-height);
+  --orvauxe-leading-body: var(--orvauxe-type-body-md-line-height);
+
+  /* Numeric scale: quarter-rem rhythm with restrained larger steps. */
+  --orvauxe-space-0: 0;
   --orvauxe-space-1: 0.25rem;
   --orvauxe-space-2: 0.5rem;
   --orvauxe-space-3: 0.75rem;
@@ -25,56 +132,236 @@
   --orvauxe-space-12: 3rem;
   --orvauxe-space-16: 4rem;
   --orvauxe-space-24: 6rem;
+  --orvauxe-space-32: 8rem;
+  --orvauxe-space-40: 10rem;
 
-  /* Structural values complete the implementation contract; Brand Book v1.1 does not prescribe numbers. */
-  --orvauxe-container-content: 75rem;
-  --orvauxe-container-reading: 46rem;
-  --orvauxe-gutter: clamp(1rem, 4vw, 4rem);
-  --orvauxe-grid-columns: 12;
-  --orvauxe-grid-gap: clamp(1rem, 2vw, 2rem);
-  --orvauxe-breakpoint-sm: 40rem;
-  --orvauxe-breakpoint-md: 48rem;
-  --orvauxe-breakpoint-lg: 64rem;
-  --orvauxe-breakpoint-xl: 80rem;
+  /* Semantic spacing separates component intent from the numeric scale. */
+  --orvauxe-space-control-block: var(--orvauxe-space-3);
+  --orvauxe-space-control-inline: var(--orvauxe-space-4);
+  --orvauxe-space-content: var(--orvauxe-space-6);
+  --orvauxe-space-section: clamp(4rem, 8vw, 8rem);
+  --orvauxe-space-section-major: clamp(6rem, 12vw, 12rem);
+  --orvauxe-target-min: 2.75rem;
 
+  /* Viewport/page/editorial/text are the complete public container vocabulary. */
+  --orvauxe-container-viewport: 100%;
+  --orvauxe-container-page: 96rem;
+  --orvauxe-container-editorial: 75rem;
+  --orvauxe-container-text: 46rem;
+  --orvauxe-container-full-bleed: 100vw;
+  --orvauxe-page-gutter: clamp(1.25rem, 4vw, 4rem);
+  --orvauxe-container-content: var(--orvauxe-container-editorial);
+  --orvauxe-container-reading: var(--orvauxe-container-text);
+  --orvauxe-gutter: var(--orvauxe-page-gutter);
+
+  /* Base/mobile is 4 columns; media rules below promote the current grid to 8 and 12. */
+  --orvauxe-grid-columns-mobile: 4;
+  --orvauxe-grid-columns-tablet: 8;
+  --orvauxe-grid-columns-desktop: 12;
+  --orvauxe-grid-columns: var(--orvauxe-grid-columns-mobile);
+  --orvauxe-grid-gap: clamp(0.75rem, 2vw, 2rem);
+
+  /* Four layout transitions: modern phone, tablet, laptop/desktop, wide desktop. */
+  --orvauxe-breakpoint-sm: var(--breakpoint-sm);
+  --orvauxe-breakpoint-md: var(--breakpoint-md);
+  --orvauxe-breakpoint-lg: var(--breakpoint-lg);
+  --orvauxe-breakpoint-xl: var(--breakpoint-xl);
+
+  --orvauxe-motion-instant: 0ms;
   --orvauxe-motion-fast: 160ms;
-  --orvauxe-motion-ui: 320ms;
+  --orvauxe-motion-standard: 320ms;
   --orvauxe-motion-editorial: 800ms;
+  --orvauxe-motion-cinematic: 1200ms;
+  --orvauxe-motion-ui: var(--orvauxe-motion-standard);
+  --orvauxe-motion-distance-sm: 0.5rem;
+  --orvauxe-motion-distance-md: 2rem;
   --orvauxe-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --orvauxe-ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --orvauxe-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --orvauxe-ease-editorial: cubic-bezier(0.65, 0, 0.35, 1);
 
-  --orvauxe-focus-color: var(--orvauxe-color-oxblood);
   --orvauxe-focus-width: 0.125rem;
   --orvauxe-focus-offset: 0.1875rem;
   --orvauxe-border-width: 1px;
-  --orvauxe-border-color: var(--orvauxe-color-bone);
+  --orvauxe-radius-none: 0;
   --orvauxe-radius-minimal: 0.125rem;
-  --orvauxe-shadow-structural: 0 0.5rem 2rem rgb(11 11 11 / 8%);
+  --orvauxe-shadow-structural: 0 0.5rem 2rem
+    color-mix(in srgb, var(--orvauxe-black) 8%, transparent);
 
   --orvauxe-z-base: 0;
+  --orvauxe-z-raised: 1;
   --orvauxe-z-header: 20;
   --orvauxe-z-overlay: 40;
   --orvauxe-z-modal: 60;
+  --orvauxe-z-skip-link: 100;
 }
 
+/* Themes describe editorial surface context, not a user-selectable color mode. */
+:root,
+[data-theme="light"] {
+  --orvauxe-color-scheme: light;
+  --orvauxe-surface-primary: var(--atelier-ivory);
+  --orvauxe-surface-secondary: var(--bone);
+  --orvauxe-surface-inverse: var(--orvauxe-black);
+  --orvauxe-surface-accent: var(--oxblood);
+  --orvauxe-text-primary: var(--orvauxe-black);
+  --orvauxe-text-secondary: var(--graphite-ui);
+  --orvauxe-text-inverse: var(--atelier-ivory);
+  --orvauxe-text-on-accent: var(--atelier-ivory);
+  --orvauxe-border-subtle: var(--bone);
+  --orvauxe-border-default: var(--graphite-ui);
+  --orvauxe-border-strong: var(--orvauxe-black);
+  --orvauxe-accent-primary: var(--oxblood);
+  --orvauxe-accent-hover: color-mix(in srgb, var(--oxblood) 88%, var(--orvauxe-black));
+  --orvauxe-accent-contrast: var(--atelier-ivory);
+  --orvauxe-focus-ring: var(--oxblood);
+
+  /* Skeleton aliases retained for consumers not yet migrated to semantic names. */
+  --orvauxe-focus-color: var(--orvauxe-focus-ring);
+  --orvauxe-border-color: var(--orvauxe-border-subtle);
+}
+
+[data-theme="dark"] {
+  --orvauxe-color-scheme: dark;
+  --orvauxe-surface-primary: var(--orvauxe-black);
+  --orvauxe-surface-secondary: color-mix(in srgb, var(--orvauxe-black) 94%, var(--atelier-ivory));
+  --orvauxe-surface-inverse: var(--atelier-ivory);
+  --orvauxe-surface-accent: var(--oxblood);
+  --orvauxe-text-primary: var(--atelier-ivory);
+  --orvauxe-text-secondary: var(--bone);
+  --orvauxe-text-inverse: var(--orvauxe-black);
+  --orvauxe-text-on-accent: var(--atelier-ivory);
+  --orvauxe-border-subtle: color-mix(in srgb, var(--atelier-ivory) 24%, transparent);
+  --orvauxe-border-default: var(--bone);
+  --orvauxe-border-strong: var(--atelier-ivory);
+  --orvauxe-accent-primary: var(--oxblood);
+  --orvauxe-accent-hover: color-mix(in srgb, var(--oxblood) 78%, var(--atelier-ivory));
+  --orvauxe-accent-contrast: var(--atelier-ivory);
+  --orvauxe-focus-ring: var(--atelier-ivory);
+  --orvauxe-focus-color: var(--orvauxe-focus-ring);
+  --orvauxe-border-color: var(--orvauxe-border-subtle);
+}
+
+/* Breakpoints must be compile-time values so Tailwind emits valid media conditions. */
+@theme {
+  --breakpoint-sm: 30rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 90rem;
+}
+
+/* CSS-first Tailwind mapping. ORVAUXE custom properties remain the source of truth. */
 @theme inline {
-  --color-orvauxe-black: var(--orvauxe-color-black);
-  --color-atelier-ivory: var(--orvauxe-color-ivory);
-  --color-bone: var(--orvauxe-color-bone);
-  --color-graphite-brand: var(--orvauxe-color-graphite-brand);
-  --color-graphite-ui: var(--orvauxe-color-graphite-ui);
-  --color-oxblood: var(--orvauxe-color-oxblood);
+  --color-surface-primary: var(--orvauxe-surface-primary);
+  --color-surface-secondary: var(--orvauxe-surface-secondary);
+  --color-surface-inverse: var(--orvauxe-surface-inverse);
+  --color-surface-accent: var(--orvauxe-surface-accent);
+  --color-text-primary: var(--orvauxe-text-primary);
+  --color-text-secondary: var(--orvauxe-text-secondary);
+  --color-text-inverse: var(--orvauxe-text-inverse);
+  --color-text-on-accent: var(--orvauxe-text-on-accent);
+  --color-border-subtle: var(--orvauxe-border-subtle);
+  --color-border-default: var(--orvauxe-border-default);
+  --color-border-strong: var(--orvauxe-border-strong);
+  --color-accent-primary: var(--orvauxe-accent-primary);
+  --color-accent-hover: var(--orvauxe-accent-hover);
+  --color-accent-contrast: var(--orvauxe-accent-contrast);
+  --color-focus-ring: var(--orvauxe-focus-ring);
+
+  /* Primitive utilities remain available for exceptional brand art direction. */
+  --color-orvauxe-black: var(--orvauxe-black);
+  --color-atelier-ivory: var(--atelier-ivory);
+  --color-bone: var(--bone);
+  --color-graphite-brand: var(--graphite-brand);
+  --color-graphite-ui: var(--graphite-ui);
+  --color-oxblood: var(--oxblood);
+
   --font-display: var(--orvauxe-font-display);
   --font-interface: var(--orvauxe-font-interface);
-  --breakpoint-sm: var(--orvauxe-breakpoint-sm);
-  --breakpoint-md: var(--orvauxe-breakpoint-md);
-  --breakpoint-lg: var(--orvauxe-breakpoint-lg);
-  --breakpoint-xl: var(--orvauxe-breakpoint-xl);
+  --text-display-xl: var(--orvauxe-type-display-xl-size);
+  --text-display-xl--line-height: var(--orvauxe-type-display-xl-line-height);
+  --text-display-xl--letter-spacing: var(--orvauxe-type-display-xl-letter-spacing);
+  --text-display-xl--font-weight: var(--orvauxe-type-display-xl-weight);
+  --text-display-lg: var(--orvauxe-type-display-lg-size);
+  --text-display-lg--line-height: var(--orvauxe-type-display-lg-line-height);
+  --text-display-lg--letter-spacing: var(--orvauxe-type-display-lg-letter-spacing);
+  --text-display-lg--font-weight: var(--orvauxe-type-display-lg-weight);
+  --text-heading-xl: var(--orvauxe-type-heading-xl-size);
+  --text-heading-xl--line-height: var(--orvauxe-type-heading-xl-line-height);
+  --text-heading-xl--letter-spacing: var(--orvauxe-type-heading-xl-letter-spacing);
+  --text-heading-xl--font-weight: var(--orvauxe-type-heading-xl-weight);
+  --text-heading-lg: var(--orvauxe-type-heading-lg-size);
+  --text-heading-lg--line-height: var(--orvauxe-type-heading-lg-line-height);
+  --text-heading-lg--letter-spacing: var(--orvauxe-type-heading-lg-letter-spacing);
+  --text-heading-lg--font-weight: var(--orvauxe-type-heading-lg-weight);
+  --text-heading-md: var(--orvauxe-type-heading-md-size);
+  --text-heading-md--line-height: var(--orvauxe-type-heading-md-line-height);
+  --text-heading-md--letter-spacing: var(--orvauxe-type-heading-md-letter-spacing);
+  --text-heading-md--font-weight: var(--orvauxe-type-heading-md-weight);
+  --text-heading-sm: var(--orvauxe-type-heading-sm-size);
+  --text-heading-sm--line-height: var(--orvauxe-type-heading-sm-line-height);
+  --text-heading-sm--letter-spacing: var(--orvauxe-type-heading-sm-letter-spacing);
+  --text-heading-sm--font-weight: var(--orvauxe-type-heading-sm-weight);
+  --text-body-lg: var(--orvauxe-type-body-lg-size);
+  --text-body-lg--line-height: var(--orvauxe-type-body-lg-line-height);
+  --text-body-lg--letter-spacing: var(--orvauxe-type-body-lg-letter-spacing);
+  --text-body-lg--font-weight: var(--orvauxe-type-body-lg-weight);
+  --text-body-md: var(--orvauxe-type-body-md-size);
+  --text-body-md--line-height: var(--orvauxe-type-body-md-line-height);
+  --text-body-md--letter-spacing: var(--orvauxe-type-body-md-letter-spacing);
+  --text-body-md--font-weight: var(--orvauxe-type-body-md-weight);
+  --text-body-sm: var(--orvauxe-type-body-sm-size);
+  --text-body-sm--line-height: var(--orvauxe-type-body-sm-line-height);
+  --text-body-sm--letter-spacing: var(--orvauxe-type-body-sm-letter-spacing);
+  --text-body-sm--font-weight: var(--orvauxe-type-body-sm-weight);
+  --text-label: var(--orvauxe-type-label-size);
+  --text-label--line-height: var(--orvauxe-type-label-line-height);
+  --text-label--letter-spacing: var(--orvauxe-type-label-letter-spacing);
+  --text-label--font-weight: var(--orvauxe-type-label-weight);
+  --text-caption: var(--orvauxe-type-caption-size);
+  --text-caption--line-height: var(--orvauxe-type-caption-line-height);
+  --text-caption--letter-spacing: var(--orvauxe-type-caption-letter-spacing);
+  --text-caption--font-weight: var(--orvauxe-type-caption-weight);
+
+  --spacing-control-block: var(--orvauxe-space-control-block);
+  --spacing-control-inline: var(--orvauxe-space-control-inline);
+  --spacing-content: var(--orvauxe-space-content);
+  --spacing-section: var(--orvauxe-space-section);
+  --spacing-section-major: var(--orvauxe-space-section-major);
+  --spacing-page-gutter: var(--orvauxe-page-gutter);
+  --spacing-grid-gap: var(--orvauxe-grid-gap);
+  --spacing-target-min: var(--orvauxe-target-min);
+  --container-page: var(--orvauxe-container-page);
+  --container-editorial: var(--orvauxe-container-editorial);
+  --container-text: var(--orvauxe-container-text);
+  --ease-standard: var(--orvauxe-ease-standard);
+  --ease-enter: var(--orvauxe-ease-enter);
+  --ease-exit: var(--orvauxe-ease-exit);
+  --ease-editorial: var(--orvauxe-ease-editorial);
+  --radius-orvauxe: var(--orvauxe-radius-minimal);
+  --shadow-structural: var(--orvauxe-shadow-structural);
+}
+
+/* Custom properties cannot drive media-query conditions, so these mirror md/lg once. */
+@media (min-width: 48rem) {
+  :root {
+    --orvauxe-grid-columns: var(--orvauxe-grid-columns-tablet);
+  }
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --orvauxe-grid-columns: var(--orvauxe-grid-columns-desktop);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --orvauxe-motion-fast: 1ms;
-    --orvauxe-motion-ui: 1ms;
-    --orvauxe-motion-editorial: 1ms;
+    --orvauxe-motion-fast: 0ms;
+    --orvauxe-motion-standard: 0ms;
+    --orvauxe-motion-editorial: 0ms;
+    --orvauxe-motion-cinematic: 0ms;
+    --orvauxe-motion-distance-sm: 0;
+    --orvauxe-motion-distance-md: 0;
   }
 }

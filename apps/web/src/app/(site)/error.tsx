@@ -19,7 +19,7 @@ export default function SiteError({ error, reset }: SiteErrorProps) {
   }, [error]);
 
   return (
-    <main className="error-screen" id="main-content">
+    <main className="error-screen" id="main-content" tabIndex={-1}>
       <Container>
         <Heading level={1}>Unable to render this page</Heading>
         <Text>The application encountered an unexpected error.</Text>

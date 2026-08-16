@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import type { ReactNode } from "react";
-import { Link } from "@orvauxe/ui";
+
+import { SiteFooter } from "./_components/SiteFooter";
+import { SiteHeader } from "./_components/SiteHeader";
+import { SkipLink } from "./_components/SkipLink";
+import styles from "./_components/SiteShell.module.css";
 
 export async function generateMetadata(): Promise<Metadata> {
   const preview = (await draftMode()).isEnabled;
@@ -17,30 +21,15 @@ export async function generateMetadata(): Promise<Metadata> {
     : {};
 }
 
-const navigation = [
-  { href: "/", label: "Home" },
-  { href: "/editions", label: "Editions" },
-  { href: "/atelier", label: "Atelier" },
-  { href: "/studio", label: "Studio" },
-  { href: "/start-a-project", label: "Start a project" },
-] as const;
-
 export default function SiteLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <div className="site-shell">
-      <header className="site-header">
-        <nav aria-label="Primary">
-          <ul className="site-navigation">
-            {navigation.map((item) => (
-              <li key={item.href}>
-                <Link href={item.href}>{item.label}</Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </header>
-      {children}
-      <footer className="site-footer">ORVAUXE development skeleton</footer>
-    </div>
+    <>
+      <SkipLink />
+      <div className={styles.siteShell}>
+        <SiteHeader />
+        {children}
+        <SiteFooter />
+      </div>
+    </>
   );
 }
