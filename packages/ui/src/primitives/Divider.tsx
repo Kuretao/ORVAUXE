@@ -1,5 +1,19 @@
-import type { HTMLAttributes } from "react";
+import type { ComponentPropsWithRef } from "react";
 
-export function Divider({ className, ...props }: HTMLAttributes<HTMLHRElement>) {
-  return <hr className={["orvauxe-divider", className].filter(Boolean).join(" ")} {...props} />;
+type DividerTone = "subtle" | "strong";
+
+export interface DividerProps extends ComponentPropsWithRef<"hr"> {
+  tone?: DividerTone;
+}
+
+export function Divider({ className, tone = "subtle", ...props }: DividerProps) {
+  return (
+    <hr
+      {...props}
+      className={["orvauxe-divider", `orvauxe-divider--${tone}`, className]
+        .filter(Boolean)
+        .join(" ")}
+      data-tone={tone}
+    />
+  );
 }

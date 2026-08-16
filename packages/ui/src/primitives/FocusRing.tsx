@@ -1,7 +1,9 @@
-import type { HTMLAttributes } from "react";
+import type { ComponentPropsWithRef } from "react";
 
-export function FocusRing({ className, ...props }: HTMLAttributes<HTMLSpanElement>) {
+export type FocusRingProps = ComponentPropsWithRef<"span">;
+
+export function FocusRing({ className, ...props }: FocusRingProps) {
   return (
-    <span className={["orvauxe-focus-ring", className].filter(Boolean).join(" ")} {...props} />
+    <span {...props} className={["orvauxe-focus-ring", className].filter(Boolean).join(" ")} />
   );
 }

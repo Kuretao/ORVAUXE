@@ -8,7 +8,7 @@ export interface StudioScreenProps {
 
 export function StudioScreen({ page }: StudioScreenProps) {
   return (
-    <main className="screen-stack" id="main-content">
+    <main className="screen-stack" id="main-content" tabIndex={-1}>
       <Container>
         <Heading level={1}>{page?.heroHeading || "Studio"}</Heading>
         {page?.heroCopy ? (

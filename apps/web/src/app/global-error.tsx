@@ -21,7 +21,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
   return (
     <html lang="en">
       <body>
-        <main className="error-screen" id="main-content">
+        <main className="error-screen" id="main-content" tabIndex={-1}>
           <Heading level={1}>Application error</Heading>
           <Text>The application could not render safely.</Text>
           <Button onClick={reset}>Try again</Button>

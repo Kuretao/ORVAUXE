@@ -8,7 +8,7 @@ export interface LegalPageScreenProps {
 
 export function LegalPageScreen({ page }: LegalPageScreenProps) {
   return (
-    <main className="screen-stack" id="main-content">
+    <main className="screen-stack" id="main-content" tabIndex={-1}>
       <Container>
         <Heading level={1}>{page.title}</Heading>
         {page.effectiveDate ? <Text>Effective {page.effectiveDate}</Text> : null}

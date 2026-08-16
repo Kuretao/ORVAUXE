@@ -8,7 +8,7 @@ export interface AtelierScreenProps {
 
 export function AtelierScreen({ page }: AtelierScreenProps) {
   return (
-    <main className="screen-stack" id="main-content">
+    <main className="screen-stack" id="main-content" tabIndex={-1}>
       <Container>
         <Heading level={1}>{page?.heroHeading || "Atelier"}</Heading>
         {page?.heroCopy ? (

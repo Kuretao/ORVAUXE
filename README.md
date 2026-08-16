@@ -1,6 +1,6 @@
 # ORVAUXE
 
-ORVAUXE Repository Skeleton v1.0 is the compiling monorepo foundation for the website, Sanity Studio, shared design primitives, and typed analytics contract. This phase establishes boundaries and testable workflows; it does not implement the final production design, copy, or live vendor writes.
+ORVAUXE is the compiling monorepo for the website, Sanity Studio, shared design primitives, and typed analytics contract. The approved repository skeleton now includes the production visual foundation and global site shell; route content, final brand assets, and live vendor writes remain separately owned work.
 
 ## Project Overview
 
@@ -84,7 +84,7 @@ pnpm --filter @orvauxe/web dev
 pnpm --filter @orvauxe/studio dev
 ```
 
-The skeleton renders neutral development-safe output and performs no production Attio, Resend, or Turnstile business writes.
+Routes retain neutral development-safe content inside the production site shell and perform no production Attio, Resend, or Turnstile business writes.
 
 ## Sanity and Type Generation
 
@@ -137,7 +137,7 @@ Protected `main` owns production promotion. Review the [deployment](./docs/runbo
 
 ## Documentation
 
-Start at the [documentation index](./docs/README.md). The primary references are the [Architecture Specification](./docs/architecture/ORVAUXE_Architecture_Specification_v1.0.md), [SKELETON_READY](./SKELETON_READY.md), accepted [ADRs](./docs/adr/), engineering standards under [`docs/engineering`](./docs/engineering/), and operational [runbooks](./docs/runbooks/).
+Start at the [documentation index](./docs/README.md). The primary references are the [Architecture Specification](./docs/architecture/ORVAUXE_Architecture_Specification_v1.0.md), [SKELETON_READY](./SKELETON_READY.md), the [digital design-system guide](./docs/engineering/design-system.md), accepted [ADRs](./docs/adr/), engineering standards under [`docs/engineering`](./docs/engineering/), and operational [runbooks](./docs/runbooks/). Phase-specific implementation and validation results are recorded in [FOUNDATION_REPORT](./FOUNDATION_REPORT.md).
 
 Update documentation in the same pull request whenever behavior, ownership, environment, analytics, SEO, CMS, or operational contracts change.
 
