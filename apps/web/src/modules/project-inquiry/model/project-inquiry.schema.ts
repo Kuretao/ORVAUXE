@@ -40,6 +40,10 @@ export const projectInquirySchema = z
     inquiryMessage: z.string().trim().min(10).max(4000),
     sourceContext: z.literal("start-a-project"),
   })
-  .strict();
+  .strict()
+  .transform((data) => {
+    if (data.serviceInterest === "edition" || !data.editionSlug) return data;
+    return { ...data, editionSlug: undefined };
+  });
 
 export type ParsedProjectInquiry = z.infer<typeof projectInquirySchema>;

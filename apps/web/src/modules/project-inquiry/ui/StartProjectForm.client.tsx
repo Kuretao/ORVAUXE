@@ -11,7 +11,11 @@ import { TurnstileWidget } from "./TurnstileWidget.client";
 
 const initialState: InquiryActionState = { status: "idle" };
 
-export function StartProjectForm() {
+interface StartProjectFormProps {
+  initialEditionSlug?: "nocturne";
+}
+
+export function StartProjectForm({ initialEditionSlug }: StartProjectFormProps) {
   const [submissionId] = useState(() => crypto.randomUUID());
   const started = useRef(false);
   const [verification, setVerification] = useState<TurnstileIdentityState>({
@@ -60,7 +64,11 @@ export function StartProjectForm() {
         </label>
         <label>
           Project type
-          <select defaultValue="" name="serviceInterest" required>
+          <select
+            defaultValue={initialEditionSlug ? "edition" : ""}
+            name="serviceInterest"
+            required
+          >
             <option disabled value="">
               Select a project type
             </option>
@@ -70,7 +78,7 @@ export function StartProjectForm() {
         </label>
         <label>
           Edition slug
-          <input name="editionSlug" />
+          <input defaultValue={initialEditionSlug} name="editionSlug" />
         </label>
         <label>
           Budget range

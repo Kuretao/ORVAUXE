@@ -87,12 +87,14 @@ export const edition = defineType({
     defineField({
       name: "status",
       title: "Status",
+      description:
+        "Concept Editions may be published truthfully before commercial availability. Retired Editions are excluded from public routes.",
       type: "string",
       initialValue: "draft",
       options: {
         layout: "radio",
         list: [
-          { title: "Draft", value: "draft" },
+          { title: "Concept", value: "draft" },
           { title: "Available", value: "available" },
           { title: "Retired", value: "retired" },
         ],
@@ -176,10 +178,54 @@ export const edition = defineType({
     }),
     defineField({
       name: "features",
-      title: "Features",
+      title: "Technical foundation",
       type: "array",
-      of: [defineArrayMember({ type: "string" })],
+      of: [
+        defineArrayMember({
+          type: "string",
+          validation: (rule) => rule.required().max(160),
+        }),
+      ],
       validation: (rule) => rule.required().min(1).max(16).unique(),
+    }),
+    defineField({
+      name: "designDna",
+      title: "Design DNA",
+      description: "The defining visual and commerce characteristics of this Edition.",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "string",
+          validation: (rule) => rule.required().max(160),
+        }),
+      ],
+      validation: (rule) => rule.required().min(4).max(10).unique(),
+    }),
+    defineField({
+      name: "systemStays",
+      title: "The system stays",
+      description: "Edition characteristics that remain stable across client adaptations.",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "string",
+          validation: (rule) => rule.required().max(160),
+        }),
+      ],
+      validation: (rule) => rule.required().min(4).max(10).unique(),
+    }),
+    defineField({
+      name: "brandCanAdapt",
+      title: "The brand can adapt",
+      description: "Brand inputs that may change inside the Edition's approved boundaries.",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "string",
+          validation: (rule) => rule.required().max(160),
+        }),
+      ],
+      validation: (rule) => rule.required().min(4).max(10).unique(),
     }),
     defineField({
       name: "startingPrice",
@@ -189,7 +235,9 @@ export const edition = defineType({
     }),
     defineField({
       name: "launchEstimate",
-      title: "Launch estimate copy",
+      title: "Delivery target from Ready to Build",
+      description:
+        "State the target only from Ready to Build; do not promise a calendar date from first contact.",
       type: "string",
       validation: (rule) => rule.required().max(120),
     }),

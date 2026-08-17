@@ -214,7 +214,7 @@ function mapFeaturedEdition(
     editionNumber !== 1 ||
     name !== "Nocturne" ||
     slug !== "nocturne" ||
-    category !== "Fashion" ||
+    category !== "Fashion / Accessories" ||
     edition.status !== "draft"
   ) {
     return null;

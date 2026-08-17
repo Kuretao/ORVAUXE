@@ -3,6 +3,7 @@ import { expect, test } from "@playwright/test";
 const launchRoutes = [
   "/",
   "/editions",
+  "/editions/nocturne",
   "/editions/e2e-edition",
   "/atelier",
   "/studio",

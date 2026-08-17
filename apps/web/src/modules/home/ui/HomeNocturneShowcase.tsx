@@ -1,10 +1,11 @@
 import { Container, Grid, Heading, Link, Text } from "@orvauxe/ui";
 import Image from "next/image";
 
+import { NocturneStorefront } from "@/modules/editions";
+
 import type { HomeMedia, HomePageData, StorefrontViewKind } from "../model/home-page";
 import actionStyles from "./Home.module.css";
 import styles from "./HomeProductStory.module.css";
-import { NocturneStorefront } from "./NocturneStorefront";
 
 interface HomeNocturneShowcaseProps {
   edition: HomePageData["editions"]["featured"];
@@ -130,6 +131,7 @@ export function HomeNocturneShowcase({ edition, indexHref }: HomeNocturneShowcas
         <Grid className={styles.nocturneProofGrid}>
           <div className={`${styles.nocturneStorefront} ${styles.nocturneStorefrontReveal}`}>
             <NocturneStorefront
+              context="homepage-v1-2"
               edition={edition}
               kind="product"
               sizes="(min-width: 96rem) 64rem, (min-width: 64rem) 66vw, (min-width: 48rem) 62vw, 100vw"

@@ -43,7 +43,11 @@ layout/animation selectors exposed to editors.
 
 Owns the launch Edition catalogue and detail capability. Its data folder owns named GROQ queries and mapping from generated query results into route-ready Edition models. Its UI owns Edition index/detail screens and Edition-specific interactive islands.
 
-Public API: getEditions, getEdition, getEditionSlugs, EditionIndexScreen, EditionScreen and only the types routes need.
+Public API: the client-safe `public.ts` exposes the shared Nocturne storefront presentation and
+route-ready Edition types. The explicit server-only `server.ts` entry exposes `getEditions`,
+`getEdition`, `getEditionSlugs`, `EditionIndexScreen` and `EditionScreen` to App Router server
+files. This split prevents Sanity and environment code from entering a client graph while keeping
+all other module internals private.
 
 Allowed dependencies: Sanity client adapter, UI primitives, analytics client for Edition interaction, shared SEO input types.
 

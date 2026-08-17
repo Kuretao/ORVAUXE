@@ -28,14 +28,15 @@ Owns:
 
 - name and slug;
 - editionNumber and category;
-- status: draft/available/retired or the product-approved controlled list;
+- status: concept (`draft` in the retained storage value), available or retired;
 - hero imageWithAlt;
 - intro;
 - gallery of imageWithAlt;
-- controlled features;
+- controlled technical-foundation features;
 - four to six uniquely typed `storefrontViews` (`home`, `collection`, `product`, `cart`, `editorial`, `mobile`) using `imageWithAlt`, with Home, Collection, Product and Mobile required;
+- constrained `designDna`, `systemStays` and `brandCanAdapt` lists for the public product boundary;
 - startingPrice copy;
-- launchEstimate copy;
+- delivery-target copy stored in the retained `launchEstimate` field; it must describe timing from Ready to Build rather than promise a date from first contact;
 - optional approved demo URL;
 - CTA;
 - SEO.
@@ -124,7 +125,6 @@ The Sanity client is in infrastructure/sanity. Queries live with their consumer:
 
 ~~~text
 modules/editions/data/editions.query.ts
-modules/editions/data/edition.query.ts
 modules/atelier/data/atelier-page.query.ts
 modules/studio/data/studio-page.query.ts
 modules/legal/data/legal-page.query.ts

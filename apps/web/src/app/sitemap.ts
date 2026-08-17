@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { getServerEnv } from "@/config/env.server";
 import { siteConfig } from "@/config/site";
-import { getEditionSlugs } from "@/modules/editions";
+import { getEditionSlugs } from "@/modules/editions/server";
 import { getLegalPageSlugs } from "@/modules/legal";
 
 const staticPaths = ["/", "/editions", "/atelier", "/studio", "/start-a-project"] as const;

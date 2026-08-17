@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 
-import { EditionIndexScreen, getEditions } from "@/modules/editions";
+import { EditionIndexScreen, getEditions } from "@/modules/editions/server";
 import { buildMetadata } from "@/seo/metadata/build-metadata";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Editions",
-  description: "Neutral Editions route skeleton.",
+  title: "Premium Shopify Editions | ORVAUXE",
+  description:
+    "Explore ORVAUXE Editions: curated premium Shopify storefront systems adapted to distinctive fashion and design-led brands.",
   pathname: "/editions",
 });
 

@@ -5,6 +5,7 @@
       "@/*": ["./src/*"],
       "@/modules/atelier": ["./src/modules/atelier/public.ts"],
       "@/modules/editions": ["./src/modules/editions/public.ts"],
+      "@/modules/editions/server": ["./src/modules/editions/server.ts"],
       "@/modules/home": ["./src/modules/home/public.ts"],
       "@/modules/legal": ["./src/modules/legal/public.ts"],
       "@/modules/project-inquiry": ["./src/modules/project-inquiry/public.ts"],

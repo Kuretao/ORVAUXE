@@ -88,6 +88,7 @@ describe("HomeScreen", () => {
 
     expect(markup).toContain('id="main-content"');
     expect(markup).toContain('data-content-source="fallback"');
+    expect(markup).toContain('data-storefront-context="homepage-v1-2"');
     expect(markup.match(/<h1\b/g)).toHaveLength(1);
     expect(markup).toContain("Commerce for the distinctive.");
     expect(markup).toContain("Commerce shaped around the brand.");
@@ -161,13 +162,20 @@ describe("HomeScreen", () => {
       expect(within(signals).getByText(signal)).toBeInTheDocument();
     }
 
-    const productProofImages = within(whatWeBuild).getAllByRole("img");
+    const productProofPreviews = within(whatWeBuild).getAllByRole("img");
+    expect(productProofPreviews).toHaveLength(2);
+    expect(productProofPreviews[0]).toHaveAccessibleName(/storefront preview, home view/i);
+    expect(productProofPreviews[1]).toHaveAccessibleName(/storefront preview, mobile view/i);
+
+    const productProofImages = Array.from(whatWeBuild.querySelectorAll("img"));
     expect(productProofImages).toHaveLength(2);
+    expect(productProofImages[0]).toHaveAttribute("alt", "");
     expect(productProofImages[0]).toHaveAttribute("loading", "lazy");
     expect(productProofImages[0]).toHaveAttribute(
       "sizes",
       "(min-width: 96rem) 67rem, (min-width: 64rem) 72vw, (min-width: 48rem) 75vw, 100vw",
     );
+    expect(productProofImages[1]).toHaveAttribute("alt", "");
     expect(productProofImages[1]).toHaveAttribute("loading", "lazy");
     expect(productProofImages[1]).toHaveAttribute(
       "sizes",
@@ -193,7 +201,7 @@ describe("HomeScreen", () => {
       "href",
       "/editions",
     );
-    for (const image of within(nocturne).getAllByRole("img")) {
+    for (const image of nocturne.querySelectorAll("img")) {
       expect(image).toHaveAttribute("loading", "lazy");
       expect(image.getAttribute("sizes")).toBeTruthy();
     }
@@ -206,7 +214,7 @@ describe("HomeScreen", () => {
     for (const list of systemLists) {
       expect(within(list).getAllByRole("listitem")).toHaveLength(6);
     }
-    for (const image of within(system).getAllByRole("img")) {
+    for (const image of system.querySelectorAll("img")) {
       expect(Number(image.getAttribute("height"))).toBeGreaterThan(0);
       expect(Number(image.getAttribute("width"))).toBeGreaterThan(0);
     }

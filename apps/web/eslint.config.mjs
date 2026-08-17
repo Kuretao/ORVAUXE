@@ -26,7 +26,7 @@ const boundaryPatterns = [
     message: "Use the isolated @orvauxe/analytics entrypoints.",
   },
   {
-    group: ["@/modules/*/*"],
+    regex: "^@/modules/[^/]+/(?!server$).+",
     message: "Import another module only through its public API.",
   },
   {
@@ -99,6 +99,7 @@ const eslintConfig = [
           "**/infrastructure/**",
           "**/*.server",
           "**/*.server.*",
+          "@/modules/*/server",
           "@sanity/**",
           "@attio/**",
           "attio/**",
@@ -122,6 +123,7 @@ const eslintConfig = [
         [
           "**/*.server",
           "**/*.server.*",
+          "@/modules/*/server",
           "@/config/env.server",
           "@/infrastructure/**",
           "**/infrastructure/**",

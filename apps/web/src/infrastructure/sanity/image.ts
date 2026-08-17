@@ -1,4 +1,4 @@
-import imageUrlBuilder from "@sanity/image-url";
+import { createImageUrlBuilder } from "@sanity/image-url";
 import type { SanityImageSource } from "@sanity/image-url";
 
 import { getClientEnv } from "@/config/env.client";
@@ -16,7 +16,7 @@ export function getSanityImageUrl(
   const env = getClientEnv();
   if (!env.NEXT_PUBLIC_SANITY_PROJECT_ID || !env.NEXT_PUBLIC_SANITY_DATASET) return null;
 
-  let builder = imageUrlBuilder({
+  let builder = createImageUrlBuilder({
     projectId: env.NEXT_PUBLIC_SANITY_PROJECT_ID,
     dataset: env.NEXT_PUBLIC_SANITY_DATASET,
   }).image(source);

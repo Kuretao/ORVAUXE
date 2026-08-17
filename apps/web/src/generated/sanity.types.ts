@@ -132,6 +132,9 @@ export type Edition = {
     _key: string;
   }>;
   features?: Array<string>;
+  designDna?: Array<string>;
+  systemStays?: Array<string>;
+  brandCanAdapt?: Array<string>;
   startingPrice?: string;
   launchEstimate?: string;
   demoUrl?: string;
@@ -415,9 +418,9 @@ export type AtelierPageQueryResult = {
   } | null;
 } | null;
 
-// Source: ../web/src/modules/editions/data/edition.query.ts
+// Source: ../web/src/modules/editions/data/editions.query.ts
 // Variable: editionQuery
-// Query: *[_type == "edition" && slug.current == $slug][0] {    "id": _id,    name,    "slug": slug.current,    editionNumber,    category,    status,    "intro": pt::text(intro)  }
+// Query: *[    _type == "edition" &&    slug.current == $slug &&    status in ["draft", "available"]  ][0] {      "id": _id,  name,  "slug": slug.current,  editionNumber,  category,  status,  "intro": pt::text(intro),  hero {      decorative,  alt,  caption,  credit,  image {    asset {      _ref    },    "assetId": asset->_id,    "assetUrl": asset->url,    "dimensions": asset->metadata.dimensions {      width,      height,      aspectRatio    },    crop {      top,      bottom,      left,      right    },    hotspot {      x,      y,      width,      height    }  }  },  gallery[] {      decorative,  alt,  caption,  credit,  image {    asset {      _ref    },    "assetId": asset->_id,    "assetUrl": asset->url,    "dimensions": asset->metadata.dimensions {      width,      height,      aspectRatio    },    crop {      top,      bottom,      left,      right    },    hotspot {      x,      y,      width,      height    }  }  },  storefrontViews[] {    kind,    media {        decorative,  alt,  caption,  credit,  image {    asset {      _ref    },    "assetId": asset->_id,    "assetUrl": asset->url,    "dimensions": asset->metadata.dimensions {      width,      height,      aspectRatio    },    crop {      top,      bottom,      left,      right    },    hotspot {      x,      y,      width,      height    }  }    }  },  features,  startingPrice,  launchEstimate,  demoUrl,  designDna,  systemStays,  brandCanAdapt,  cta {    label,    destinationKind,    destination  },  seo {    metaTitle,    metaDescription,    shareImage {        decorative,  alt,  caption,  credit,  image {    asset {      _ref    },    "assetId": asset->_id,    "assetUrl": asset->url,    "dimensions": asset->metadata.dimensions {      width,      height,      aspectRatio    },    crop {      top,      bottom,      left,      right    },    hotspot {      x,      y,      width,      height    }  }    },    noIndex  }  }
 export type EditionQueryResult = {
   id: string;
   name: string | null;
@@ -426,11 +429,151 @@ export type EditionQueryResult = {
   category: string | null;
   status: "available" | "draft" | "retired" | null;
   intro: string;
+  hero: {
+    decorative: boolean | null;
+    alt: string | null;
+    caption: string | null;
+    credit: string | null;
+    image: {
+      asset: {
+        _ref: string;
+      } | null;
+      assetId: string | null;
+      assetUrl: string | null;
+      dimensions: {
+        width: number | null;
+        height: number | null;
+        aspectRatio: number | null;
+      } | null;
+      crop: {
+        top: number | null;
+        bottom: number | null;
+        left: number | null;
+        right: number | null;
+      } | null;
+      hotspot: {
+        x: number | null;
+        y: number | null;
+        width: number | null;
+        height: number | null;
+      } | null;
+    } | null;
+  } | null;
+  gallery: Array<{
+    decorative: boolean | null;
+    alt: string | null;
+    caption: string | null;
+    credit: string | null;
+    image: {
+      asset: {
+        _ref: string;
+      } | null;
+      assetId: string | null;
+      assetUrl: string | null;
+      dimensions: {
+        width: number | null;
+        height: number | null;
+        aspectRatio: number | null;
+      } | null;
+      crop: {
+        top: number | null;
+        bottom: number | null;
+        left: number | null;
+        right: number | null;
+      } | null;
+      hotspot: {
+        x: number | null;
+        y: number | null;
+        width: number | null;
+        height: number | null;
+      } | null;
+    } | null;
+  }> | null;
+  storefrontViews: Array<{
+    kind: "cart" | "collection" | "editorial" | "home" | "mobile" | "product" | null;
+    media: {
+      decorative: boolean | null;
+      alt: string | null;
+      caption: string | null;
+      credit: string | null;
+      image: {
+        asset: {
+          _ref: string;
+        } | null;
+        assetId: string | null;
+        assetUrl: string | null;
+        dimensions: {
+          width: number | null;
+          height: number | null;
+          aspectRatio: number | null;
+        } | null;
+        crop: {
+          top: number | null;
+          bottom: number | null;
+          left: number | null;
+          right: number | null;
+        } | null;
+        hotspot: {
+          x: number | null;
+          y: number | null;
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+  }> | null;
+  features: Array<string> | null;
+  startingPrice: string | null;
+  launchEstimate: string | null;
+  demoUrl: string | null;
+  designDna: Array<string> | null;
+  systemStays: Array<string> | null;
+  brandCanAdapt: Array<string> | null;
+  cta: {
+    label: string | null;
+    destinationKind: "email" | "externalUrl" | "internalPath" | null;
+    destination: string | null;
+  } | null;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    shareImage: {
+      decorative: boolean | null;
+      alt: string | null;
+      caption: string | null;
+      credit: string | null;
+      image: {
+        asset: {
+          _ref: string;
+        } | null;
+        assetId: string | null;
+        assetUrl: string | null;
+        dimensions: {
+          width: number | null;
+          height: number | null;
+          aspectRatio: number | null;
+        } | null;
+        crop: {
+          top: number | null;
+          bottom: number | null;
+          left: number | null;
+          right: number | null;
+        } | null;
+        hotspot: {
+          x: number | null;
+          y: number | null;
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    noIndex: boolean | null;
+  } | null;
 } | null;
 
 // Source: ../web/src/modules/editions/data/editions.query.ts
 // Variable: editionsQuery
-// Query: *[    _type == "edition" &&    defined(slug.current) &&    status == "available"  ] | order(editionNumber asc) {    "id": _id,    name,    "slug": slug.current,    editionNumber,    category,    status,    "intro": pt::text(intro)  }
+// Query: *[    _type == "edition" &&    defined(slug.current) &&    status in ["draft", "available"]  ] | order(editionNumber asc) {      "id": _id,  name,  "slug": slug.current,  editionNumber,  category,  status,  "intro": pt::text(intro),  hero {      decorative,  alt,  caption,  credit,  image {    asset {      _ref    },    "assetId": asset->_id,    "assetUrl": asset->url,    "dimensions": asset->metadata.dimensions {      width,      height,      aspectRatio    },    crop {      top,      bottom,      left,      right    },    hotspot {      x,      y,      width,      height    }  }  },  gallery[] {      decorative,  alt,  caption,  credit,  image {    asset {      _ref    },    "assetId": asset->_id,    "assetUrl": asset->url,    "dimensions": asset->metadata.dimensions {      width,      height,      aspectRatio    },    crop {      top,      bottom,      left,      right    },    hotspot {      x,      y,      width,      height    }  }  },  storefrontViews[] {    kind,    media {        decorative,  alt,  caption,  credit,  image {    asset {      _ref    },    "assetId": asset->_id,    "assetUrl": asset->url,    "dimensions": asset->metadata.dimensions {      width,      height,      aspectRatio    },    crop {      top,      bottom,      left,      right    },    hotspot {      x,      y,      width,      height    }  }    }  },  features,  startingPrice,  launchEstimate,  demoUrl,  designDna,  systemStays,  brandCanAdapt,  cta {    label,    destinationKind,    destination  },  seo {    metaTitle,    metaDescription,    shareImage {        decorative,  alt,  caption,  credit,  image {    asset {      _ref    },    "assetId": asset->_id,    "assetUrl": asset->url,    "dimensions": asset->metadata.dimensions {      width,      height,      aspectRatio    },    crop {      top,      bottom,      left,      right    },    hotspot {      x,      y,      width,      height    }  }    },    noIndex  }  }
 export type EditionsQueryResult = Array<{
   id: string;
   name: string | null;
@@ -439,13 +582,146 @@ export type EditionsQueryResult = Array<{
   category: string | null;
   status: "available" | "draft" | "retired" | null;
   intro: string;
-}>;
-
-// Source: ../web/src/modules/editions/data/editions.query.ts
-// Variable: editionSlugsQuery
-// Query: *[    _type == "edition" &&    defined(slug.current) &&    status == "available"  ] | order(slug.current asc) {    "slug": slug.current  }
-export type EditionSlugsQueryResult = Array<{
-  slug: string | null;
+  hero: {
+    decorative: boolean | null;
+    alt: string | null;
+    caption: string | null;
+    credit: string | null;
+    image: {
+      asset: {
+        _ref: string;
+      } | null;
+      assetId: string | null;
+      assetUrl: string | null;
+      dimensions: {
+        width: number | null;
+        height: number | null;
+        aspectRatio: number | null;
+      } | null;
+      crop: {
+        top: number | null;
+        bottom: number | null;
+        left: number | null;
+        right: number | null;
+      } | null;
+      hotspot: {
+        x: number | null;
+        y: number | null;
+        width: number | null;
+        height: number | null;
+      } | null;
+    } | null;
+  } | null;
+  gallery: Array<{
+    decorative: boolean | null;
+    alt: string | null;
+    caption: string | null;
+    credit: string | null;
+    image: {
+      asset: {
+        _ref: string;
+      } | null;
+      assetId: string | null;
+      assetUrl: string | null;
+      dimensions: {
+        width: number | null;
+        height: number | null;
+        aspectRatio: number | null;
+      } | null;
+      crop: {
+        top: number | null;
+        bottom: number | null;
+        left: number | null;
+        right: number | null;
+      } | null;
+      hotspot: {
+        x: number | null;
+        y: number | null;
+        width: number | null;
+        height: number | null;
+      } | null;
+    } | null;
+  }> | null;
+  storefrontViews: Array<{
+    kind: "cart" | "collection" | "editorial" | "home" | "mobile" | "product" | null;
+    media: {
+      decorative: boolean | null;
+      alt: string | null;
+      caption: string | null;
+      credit: string | null;
+      image: {
+        asset: {
+          _ref: string;
+        } | null;
+        assetId: string | null;
+        assetUrl: string | null;
+        dimensions: {
+          width: number | null;
+          height: number | null;
+          aspectRatio: number | null;
+        } | null;
+        crop: {
+          top: number | null;
+          bottom: number | null;
+          left: number | null;
+          right: number | null;
+        } | null;
+        hotspot: {
+          x: number | null;
+          y: number | null;
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+  }> | null;
+  features: Array<string> | null;
+  startingPrice: string | null;
+  launchEstimate: string | null;
+  demoUrl: string | null;
+  designDna: Array<string> | null;
+  systemStays: Array<string> | null;
+  brandCanAdapt: Array<string> | null;
+  cta: {
+    label: string | null;
+    destinationKind: "email" | "externalUrl" | "internalPath" | null;
+    destination: string | null;
+  } | null;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    shareImage: {
+      decorative: boolean | null;
+      alt: string | null;
+      caption: string | null;
+      credit: string | null;
+      image: {
+        asset: {
+          _ref: string;
+        } | null;
+        assetId: string | null;
+        assetUrl: string | null;
+        dimensions: {
+          width: number | null;
+          height: number | null;
+          aspectRatio: number | null;
+        } | null;
+        crop: {
+          top: number | null;
+          bottom: number | null;
+          left: number | null;
+          right: number | null;
+        } | null;
+        hotspot: {
+          x: number | null;
+          y: number | null;
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    noIndex: boolean | null;
+  } | null;
 }>;
 
 // Source: ../web/src/modules/home/data/home-page.query.ts
@@ -753,9 +1029,8 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "atelierPage"][0] {\n    heroHeading,\n    heroCopy,\n    serviceExplanation,\n    capabilities,\n    processSteps[] {\n      title,\n      description\n    },\n    commercialCopy,\n    cta {\n      label,\n      destinationKind,\n      destination,\n      analyticsId\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      "shareImageUrl": shareImage.image.asset->url,\n      noIndex\n    }\n  }\n': AtelierPageQueryResult;
-    '\n  *[_type == "edition" && slug.current == $slug][0] {\n    "id": _id,\n    name,\n    "slug": slug.current,\n    editionNumber,\n    category,\n    status,\n    "intro": pt::text(intro)\n  }\n': EditionQueryResult;
-    '\n  *[\n    _type == "edition" &&\n    defined(slug.current) &&\n    status == "available"\n  ] | order(editionNumber asc) {\n    "id": _id,\n    name,\n    "slug": slug.current,\n    editionNumber,\n    category,\n    status,\n    "intro": pt::text(intro)\n  }\n': EditionsQueryResult;
-    '\n  *[\n    _type == "edition" &&\n    defined(slug.current) &&\n    status == "available"\n  ] | order(slug.current asc) {\n    "slug": slug.current\n  }\n': EditionSlugsQueryResult;
+    '\n  *[\n    _type == "edition" &&\n    slug.current == $slug &&\n    status in ["draft", "available"]\n  ][0] {\n    \n  "id": _id,\n  name,\n  "slug": slug.current,\n  editionNumber,\n  category,\n  status,\n  "intro": pt::text(intro),\n  hero {\n    \n  decorative,\n  alt,\n  caption,\n  credit,\n  image {\n    asset {\n      _ref\n    },\n    "assetId": asset->_id,\n    "assetUrl": asset->url,\n    "dimensions": asset->metadata.dimensions {\n      width,\n      height,\n      aspectRatio\n    },\n    crop {\n      top,\n      bottom,\n      left,\n      right\n    },\n    hotspot {\n      x,\n      y,\n      width,\n      height\n    }\n  }\n\n  },\n  gallery[] {\n    \n  decorative,\n  alt,\n  caption,\n  credit,\n  image {\n    asset {\n      _ref\n    },\n    "assetId": asset->_id,\n    "assetUrl": asset->url,\n    "dimensions": asset->metadata.dimensions {\n      width,\n      height,\n      aspectRatio\n    },\n    crop {\n      top,\n      bottom,\n      left,\n      right\n    },\n    hotspot {\n      x,\n      y,\n      width,\n      height\n    }\n  }\n\n  },\n  storefrontViews[] {\n    kind,\n    media {\n      \n  decorative,\n  alt,\n  caption,\n  credit,\n  image {\n    asset {\n      _ref\n    },\n    "assetId": asset->_id,\n    "assetUrl": asset->url,\n    "dimensions": asset->metadata.dimensions {\n      width,\n      height,\n      aspectRatio\n    },\n    crop {\n      top,\n      bottom,\n      left,\n      right\n    },\n    hotspot {\n      x,\n      y,\n      width,\n      height\n    }\n  }\n\n    }\n  },\n  features,\n  startingPrice,\n  launchEstimate,\n  demoUrl,\n  designDna,\n  systemStays,\n  brandCanAdapt,\n  cta {\n    label,\n    destinationKind,\n    destination\n  },\n  seo {\n    metaTitle,\n    metaDescription,\n    shareImage {\n      \n  decorative,\n  alt,\n  caption,\n  credit,\n  image {\n    asset {\n      _ref\n    },\n    "assetId": asset->_id,\n    "assetUrl": asset->url,\n    "dimensions": asset->metadata.dimensions {\n      width,\n      height,\n      aspectRatio\n    },\n    crop {\n      top,\n      bottom,\n      left,\n      right\n    },\n    hotspot {\n      x,\n      y,\n      width,\n      height\n    }\n  }\n\n    },\n    noIndex\n  }\n\n  }\n': EditionQueryResult;
+    '\n  *[\n    _type == "edition" &&\n    defined(slug.current) &&\n    status in ["draft", "available"]\n  ] | order(editionNumber asc) {\n    \n  "id": _id,\n  name,\n  "slug": slug.current,\n  editionNumber,\n  category,\n  status,\n  "intro": pt::text(intro),\n  hero {\n    \n  decorative,\n  alt,\n  caption,\n  credit,\n  image {\n    asset {\n      _ref\n    },\n    "assetId": asset->_id,\n    "assetUrl": asset->url,\n    "dimensions": asset->metadata.dimensions {\n      width,\n      height,\n      aspectRatio\n    },\n    crop {\n      top,\n      bottom,\n      left,\n      right\n    },\n    hotspot {\n      x,\n      y,\n      width,\n      height\n    }\n  }\n\n  },\n  gallery[] {\n    \n  decorative,\n  alt,\n  caption,\n  credit,\n  image {\n    asset {\n      _ref\n    },\n    "assetId": asset->_id,\n    "assetUrl": asset->url,\n    "dimensions": asset->metadata.dimensions {\n      width,\n      height,\n      aspectRatio\n    },\n    crop {\n      top,\n      bottom,\n      left,\n      right\n    },\n    hotspot {\n      x,\n      y,\n      width,\n      height\n    }\n  }\n\n  },\n  storefrontViews[] {\n    kind,\n    media {\n      \n  decorative,\n  alt,\n  caption,\n  credit,\n  image {\n    asset {\n      _ref\n    },\n    "assetId": asset->_id,\n    "assetUrl": asset->url,\n    "dimensions": asset->metadata.dimensions {\n      width,\n      height,\n      aspectRatio\n    },\n    crop {\n      top,\n      bottom,\n      left,\n      right\n    },\n    hotspot {\n      x,\n      y,\n      width,\n      height\n    }\n  }\n\n    }\n  },\n  features,\n  startingPrice,\n  launchEstimate,\n  demoUrl,\n  designDna,\n  systemStays,\n  brandCanAdapt,\n  cta {\n    label,\n    destinationKind,\n    destination\n  },\n  seo {\n    metaTitle,\n    metaDescription,\n    shareImage {\n      \n  decorative,\n  alt,\n  caption,\n  credit,\n  image {\n    asset {\n      _ref\n    },\n    "assetId": asset->_id,\n    "assetUrl": asset->url,\n    "dimensions": asset->metadata.dimensions {\n      width,\n      height,\n      aspectRatio\n    },\n    crop {\n      top,\n      bottom,\n      left,\n      right\n    },\n    hotspot {\n      x,\n      y,\n      width,\n      height\n    }\n  }\n\n    },\n    noIndex\n  }\n\n  }\n': EditionsQueryResult;
     '\n  *[_type == "homePage"][0] {\n    heroHeading,\n    heroCopy,\n    heroPrimaryCta {\n      label,\n      destinationKind,\n      destination,\n      analyticsId\n    },\n    heroSecondaryCta {\n      label,\n      destinationKind,\n      destination,\n      analyticsId\n    },\n    heroMedia {\n      \n  decorative,\n  alt,\n  caption,\n  credit,\n  image {\n    asset {\n      _ref\n    },\n    "assetId": asset->_id,\n    "assetUrl": asset->url,\n    "dimensions": asset->metadata.dimensions {\n      width,\n      height,\n      aspectRatio\n    },\n    crop {\n      top,\n      bottom,\n      left,\n      right\n    },\n    hotspot {\n      x,\n      y,\n      width,\n      height\n    }\n  }\n\n    },\n    statementHeading,\n    serviceIntroduction,\n    whatWeBuildHeading,\n    whatWeBuildIntroduction,\n    whatWeBuildSignals,\n    editionsHeading,\n    editionsIntroduction,\n    "featuredEdition": selectedEditions[0]-> {\n      name,\n      "slug": slug.current,\n      editionNumber,\n      category,\n      status,\n      startingPrice,\n      "intro": pt::text(intro),\n      hero {\n        \n  decorative,\n  alt,\n  caption,\n  credit,\n  image {\n    asset {\n      _ref\n    },\n    "assetId": asset->_id,\n    "assetUrl": asset->url,\n    "dimensions": asset->metadata.dimensions {\n      width,\n      height,\n      aspectRatio\n    },\n    crop {\n      top,\n      bottom,\n      left,\n      right\n    },\n    hotspot {\n      x,\n      y,\n      width,\n      height\n    }\n  }\n\n      },\n      storefrontViews[] {\n        kind,\n        media {\n          \n  decorative,\n  alt,\n  caption,\n  credit,\n  image {\n    asset {\n      _ref\n    },\n    "assetId": asset->_id,\n    "assetUrl": asset->url,\n    "dimensions": asset->metadata.dimensions {\n      width,\n      height,\n      aspectRatio\n    },\n    crop {\n      top,\n      bottom,\n      left,\n      right\n    },\n    hotspot {\n      x,\n      y,\n      width,\n      height\n    }\n  }\n\n        }\n      }\n    },\n    atelierHeading,\n    atelierIntroduction,\n    atelierPrice,\n    atelierCapabilities,\n    atelierCta {\n      label,\n      destinationKind,\n      destination,\n      analyticsId\n    },\n    atelierCampaignMedia {\n      \n  decorative,\n  alt,\n  caption,\n  credit,\n  image {\n    asset {\n      _ref\n    },\n    "assetId": asset->_id,\n    "assetUrl": asset->url,\n    "dimensions": asset->metadata.dimensions {\n      width,\n      height,\n      aspectRatio\n    },\n    crop {\n      top,\n      bottom,\n      left,\n      right\n    },\n    hotspot {\n      x,\n      y,\n      width,\n      height\n    }\n  }\n\n    },\n    processHeading,\n    processSteps[] {\n      title,\n      description\n    },\n    studioHeading,\n    studioDescriptor,\n    studioOrigin,\n    studioBody,\n    studioMedia {\n      \n  decorative,\n  alt,\n  caption,\n  credit,\n  image {\n    asset {\n      _ref\n    },\n    "assetId": asset->_id,\n    "assetUrl": asset->url,\n    "dimensions": asset->metadata.dimensions {\n      width,\n      height,\n      aspectRatio\n    },\n    crop {\n      top,\n      bottom,\n      left,\n      right\n    },\n    hotspot {\n      x,\n      y,\n      width,\n      height\n    }\n  }\n\n    },\n    finalCtaEyebrow,\n    finalCtaHeading,\n    finalCtaBody,\n    closingCta {\n      label,\n      destinationKind,\n      destination,\n      analyticsId\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      shareImage {\n        \n  decorative,\n  alt,\n  caption,\n  credit,\n  image {\n    asset {\n      _ref\n    },\n    "assetId": asset->_id,\n    "assetUrl": asset->url,\n    "dimensions": asset->metadata.dimensions {\n      width,\n      height,\n      aspectRatio\n    },\n    crop {\n      top,\n      bottom,\n      left,\n      right\n    },\n    hotspot {\n      x,\n      y,\n      width,\n      height\n    }\n  }\n\n      },\n      noIndex\n    }\n  }\n': HomePageQueryResult;
     '\n  *[_type == "legalPage" && slug.current == $slug][0] {\n    title,\n    "slug": slug.current,\n    "bodyText": pt::text(body),\n    effectiveDate,\n    updatedDate,\n    seo {\n      metaTitle,\n      metaDescription,\n      "shareImageUrl": shareImage.image.asset->url,\n      noIndex\n    }\n  }\n': LegalPageQueryResult;
     '\n  *[_type == "legalPage" && defined(slug.current) && coalesce(seo.noIndex, false) != true] | order(slug.current asc) {\n    "slug": slug.current\n  }\n': LegalPageSlugsQueryResult;

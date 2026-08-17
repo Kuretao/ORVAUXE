@@ -43,6 +43,22 @@ describe("project inquiry model", () => {
     expect(result.success).toBe(false);
   });
 
+  it("drops Edition context when the selected project type is Atelier", () => {
+    const result = projectInquirySchema.parse({
+      submissionId,
+      turnstileVerificationId: firstVerificationId,
+      turnstileToken: "test-token",
+      name: "Ada Lovelace",
+      email: "ada@example.test",
+      serviceInterest: "atelier",
+      editionSlug: "nocturne",
+      inquiryMessage: "A sufficiently detailed project inquiry.",
+      sourceContext: "start-a-project",
+    });
+
+    expect(result.editionSlug).toBeUndefined();
+  });
+
   it("rejects an unapproved source context", () => {
     const result = projectInquirySchema.safeParse({
       submissionId,

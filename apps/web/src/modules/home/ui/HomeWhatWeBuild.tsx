@@ -1,8 +1,9 @@
 import { Container, Grid, Heading, Text } from "@orvauxe/ui";
 
+import { NocturneStorefront } from "@/modules/editions";
+
 import type { HomePageData } from "../model/home-page";
 import styles from "./HomeProductStory.module.css";
-import { NocturneStorefront } from "./NocturneStorefront";
 
 interface HomeWhatWeBuildProps {
   edition: HomePageData["editions"]["featured"];
@@ -48,6 +49,7 @@ export function HomeWhatWeBuild({ content, edition }: HomeWhatWeBuildProps) {
         <div className={styles.productComposition}>
           <div className={styles.productCompositionDesktop}>
             <NocturneStorefront
+              context="homepage-v1-2"
               edition={edition}
               kind="home"
               sizes="(min-width: 96rem) 67rem, (min-width: 64rem) 72vw, (min-width: 48rem) 75vw, 100vw"
@@ -55,6 +57,7 @@ export function HomeWhatWeBuild({ content, edition }: HomeWhatWeBuildProps) {
           </div>
           <div className={styles.productCompositionMobile}>
             <NocturneStorefront
+              context="homepage-v1-2"
               edition={edition}
               kind="mobile"
               sizes="(min-width: 96rem) 18rem, (min-width: 64rem) 18vw, (min-width: 48rem) 26vw, 40vw"

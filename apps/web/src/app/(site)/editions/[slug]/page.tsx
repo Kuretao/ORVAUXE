@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { EditionScreen, getEdition } from "@/modules/editions";
+import { EditionScreen, getEdition } from "@/modules/editions/server";
 import { buildMetadata } from "@/seo/metadata/build-metadata";
 import { buildBreadcrumbStructuredData } from "@/seo/structured-data/breadcrumbs";
 import { JsonLd } from "@/seo/structured-data/JsonLd";
@@ -25,10 +25,11 @@ export async function generateMetadata({ params }: EditionPageProps): Promise<Me
   }
 
   return buildMetadata({
-    title: edition.name,
-    description: edition.intro || "Neutral Edition detail route skeleton.",
+    title: edition.seo.title,
+    description: edition.seo.description,
+    image: edition.seo.shareImage?.src,
     pathname: `/editions/${encodeURIComponent(edition.slug)}`,
-    noIndex: edition.status !== "available",
+    noIndex: edition.seo.noIndex,
   });
 }
 

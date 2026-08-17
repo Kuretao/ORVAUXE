@@ -47,7 +47,7 @@ const validPage = {
     name: "Nocturne",
     slug: "nocturne",
     editionNumber: 1,
-    category: "Fashion",
+    category: "Fashion / Accessories",
     status: "draft",
     startingPrice: "From $2,490",
     intro: "For fashion brands with a cinematic point of view.",
@@ -114,6 +114,7 @@ describe("Home page content mapping", () => {
       editions: {
         indexHref: "/editions",
         featured: {
+          category: "Fashion",
           numberLabel: "Edition 001",
           statusLabel: "Concept Edition",
           startingPrice: "From $2,490",
@@ -134,6 +135,12 @@ describe("Home page content mapping", () => {
 
   it("rejects incomplete or incorrectly routed production content", () => {
     expect(mapHomePage({ ...validPage, statementHeading: " " })).toBeNull();
+    expect(
+      mapHomePage({
+        ...validPage,
+        featuredEdition: { ...validPage.featuredEdition, category: "Fashion" },
+      }),
+    ).toBeNull();
     expect(
       mapHomePage({
         ...validPage,
@@ -201,7 +208,7 @@ describe("Home page content mapping", () => {
       { ...validPage.featuredEdition, name: "Aperture" },
       { ...validPage.featuredEdition, slug: "aperture" },
       { ...validPage.featuredEdition, editionNumber: 2 },
-      { ...validPage.featuredEdition, category: "Jewelry" },
+      { ...validPage.featuredEdition, category: "Fashion" },
       { ...validPage.featuredEdition, status: "available" as const },
     ]) {
       expect(mapHomePage({ ...validPage, featuredEdition })).toBeNull();

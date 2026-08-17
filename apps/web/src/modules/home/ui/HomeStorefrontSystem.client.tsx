@@ -3,10 +3,10 @@
 import { Grid, Text } from "@orvauxe/ui";
 import { useEffect, useRef, useState } from "react";
 
+import { NocturneStorefront, nocturneStorefrontStages } from "@/modules/editions";
+
 import type { HomePageData, StorefrontViewKind } from "../model/home-page";
-import { nocturneStorefrontStages } from "../model/nocturne-storefront";
 import styles from "./HomeProductStory.module.css";
-import { NocturneStorefront } from "./NocturneStorefront";
 
 interface HomeStorefrontSystemClientProps {
   edition: HomePageData["editions"]["featured"];
@@ -84,6 +84,7 @@ export function HomeStorefrontSystemClient({ edition }: HomeStorefrontSystemClie
               key={activeKind}
             >
               <NocturneStorefront
+                context="homepage-v1-2"
                 edition={edition}
                 kind={activeKind}
                 mobileSizes="(min-width: 96rem) 22rem, 21vw"
@@ -144,6 +145,7 @@ export function HomeStorefrontSystemClient({ edition }: HomeStorefrontSystemClie
               </Text>
             </div>
             <NocturneStorefront
+              context="homepage-v1-2"
               edition={edition}
               kind={stage.kind}
               mobileSizes="(min-width: 90rem) 16rem, (min-width: 64rem) 19vw, (min-width: 48rem) 24vw, 30vw"
