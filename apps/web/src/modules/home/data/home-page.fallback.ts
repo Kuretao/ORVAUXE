@@ -87,13 +87,13 @@ export const homePageFallback = {
   atelier: {
     heading: "Atelier",
     introduction:
-      "For brands requiring something entirely their own. Semi-custom and bespoke commerce strategy, design and development.",
+      "For brands requiring something entirely their own. Semi-custom and bespoke commerce strategy, design and implementation.",
     price: "Projects from $6,000",
     capabilities: [
       "Strategy",
       "Art direction",
       "UX / UI",
-      "Commerce development",
+      "Commerce implementation",
       "Integrations",
       "Launch",
     ],

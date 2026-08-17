@@ -206,6 +206,10 @@ describe("HomeScreen", () => {
     for (const list of systemLists) {
       expect(within(list).getAllByRole("listitem")).toHaveLength(6);
     }
+    for (const image of within(system).getAllByRole("img")) {
+      expect(Number(image.getAttribute("height"))).toBeGreaterThan(0);
+      expect(Number(image.getAttribute("width"))).toBeGreaterThan(0);
+    }
     for (const stage of ["Home", "Collection", "Product", "Cart", "Editorial", "Mobile"]) {
       expect(within(system).getAllByText(stage, { exact: true })).toHaveLength(2);
     }
@@ -235,7 +239,7 @@ describe("HomeScreen", () => {
     expect(screen.queryByRole("link", { name: /work|journal/i })).not.toBeInTheDocument();
     expect(
       screen.queryByText(
-        /\b(?:temporary|placeholder|fake|mock)\b|final (?:media|imagery) pending|demo only/i,
+        /\b(?:temporary|placeholder|pending|fake|mock|dev|development|sample)\b|final asset pending|demo only/i,
       ),
     ).not.toBeInTheDocument();
   });

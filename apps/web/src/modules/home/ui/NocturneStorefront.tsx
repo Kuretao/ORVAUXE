@@ -57,19 +57,25 @@ function StorefrontImage({
   return (
     <Image
       alt={alt ?? media.alt}
-      className={className}
-      fill
+      className={[styles.storefrontImage, className].filter(Boolean).join(" ")}
+      height={media.height}
       loading="lazy"
       sizes={sizes}
       src={media.src}
       style={{ objectPosition: media.objectPosition }}
+      width={media.width}
     />
   );
 }
 
 function StorefrontHeader({ compact = false }: { compact?: boolean }) {
   return (
-    <div aria-hidden="true" className={styles.storefrontHeader} data-compact={compact || undefined}>
+    <div
+      aria-hidden="true"
+      className={styles.storefrontHeader}
+      data-compact={compact || undefined}
+      data-storefront-header
+    >
       <span>NOCTURNE</span>
       <span>{compact ? "MENU" : "COLLECTION / EDITORIAL / BAG 0"}</span>
     </div>

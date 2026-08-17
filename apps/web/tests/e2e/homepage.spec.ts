@@ -217,6 +217,27 @@ test("Homepage exposes the expanded product narrative, scope, and truthful route
     await expect(visibleSystemList.getByText(stage, { exact: true })).toBeVisible();
   }
 
+  const storefrontHeaderColors = await system.locator("[data-system-state]").evaluate((element) => {
+    const colorFor = (kind: string) => {
+      const header = element.querySelector<HTMLElement>(
+        `[data-storefront-view="${kind}"] [data-storefront-header]`,
+      );
+      return header ? getComputedStyle(header).color : null;
+    };
+
+    return Object.fromEntries(
+      ["home", "collection", "product", "cart", "editorial", "mobile"].map((kind) => [
+        kind,
+        colorFor(kind),
+      ]),
+    );
+  });
+  expect(storefrontHeaderColors.home).toBe(storefrontHeaderColors.mobile);
+  expect(storefrontHeaderColors.cart).toBe(storefrontHeaderColors.mobile);
+  expect(storefrontHeaderColors.editorial).toBe(storefrontHeaderColors.mobile);
+  expect(storefrontHeaderColors.collection).toBe(storefrontHeaderColors.product);
+  expect(storefrontHeaderColors.collection).not.toBe(storefrontHeaderColors.home);
+
   const atelier = main.getByRole("region", { name: "Atelier", exact: true });
   await expect(atelier.getByRole("link", { name: "Discover Atelier" })).toHaveAttribute(
     "href",
@@ -239,7 +260,7 @@ test("Homepage exposes the expanded product narrative, scope, and truthful route
   await expect(page.locator('a[href^="/work"], a[href^="/journal"]')).toHaveCount(0);
   await expect(
     page.getByText(
-      /\b(?:temporary|placeholder|fake|mock)\b|final (?:media|imagery) pending|demo only/i,
+      /\b(?:temporary|placeholder|pending|fake|mock|dev|development|sample)\b|final asset pending|demo only/i,
     ),
   ).toHaveCount(0);
 });

@@ -17,6 +17,10 @@ async function primeLazyMedia(page: Page): Promise<void> {
   await page.evaluate(async () => document.fonts.ready);
 
   const images = page.locator("main#main-content img:visible");
+  // Chromium can omit offscreen lazy rasters from a full-page capture even after decode.
+  await images.evaluateAll((elements) => {
+    for (const image of elements) image.loading = "eager";
+  });
   const imageCount = await images.count();
   for (let index = 0; index < imageCount; index += 1) {
     await images
@@ -30,6 +34,7 @@ async function primeLazyMedia(page: Page): Promise<void> {
           .catch(() => false),
       )
       .toBe(true);
+    await images.nth(index).evaluate(async (image) => image.decode());
   }
 
   const system = page.locator("main#main-content [data-system-state]");
