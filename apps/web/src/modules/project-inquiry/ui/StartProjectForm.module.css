@@ -1,0 +1,132 @@
+.form,
+.fields,
+.field,
+.fieldPair {
+  display: grid;
+}
+
+.form {
+  gap: var(--orvauxe-space-6);
+}
+
+.fields {
+  min-width: 0;
+  gap: var(--orvauxe-space-8);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.fieldPair {
+  gap: var(--orvauxe-space-8);
+}
+
+.field {
+  min-width: 0;
+  gap: var(--orvauxe-space-3);
+  color: var(--orvauxe-text-primary);
+  font-family: var(--orvauxe-font-interface);
+  font-size: var(--orvauxe-type-label-size);
+  font-weight: var(--orvauxe-type-label-weight);
+  letter-spacing: var(--orvauxe-type-label-letter-spacing);
+}
+
+.field > span {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--orvauxe-space-4);
+  text-transform: uppercase;
+}
+
+.field em {
+  color: var(--orvauxe-text-secondary);
+  font-size: var(--orvauxe-type-caption-size);
+  font-style: normal;
+  font-weight: var(--orvauxe-type-caption-weight);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  min-block-size: var(--orvauxe-target-min);
+  border: 0;
+  border-block-end: var(--orvauxe-border-width) solid var(--orvauxe-border-default);
+  border-radius: 0;
+  color: var(--orvauxe-text-primary);
+  background: transparent;
+  padding: var(--orvauxe-space-3) 0;
+  font: inherit;
+  letter-spacing: normal;
+}
+
+.field textarea {
+  min-block-size: var(--orvauxe-space-40);
+  resize: vertical;
+}
+
+.field input:focus-visible,
+.field select:focus-visible,
+.field textarea:focus-visible {
+  border-block-end-color: currentcolor;
+  outline: var(--orvauxe-border-width) solid currentcolor;
+  outline-offset: var(--orvauxe-space-2);
+}
+
+.field [aria-invalid="true"] {
+  border-block-end-color: var(--orvauxe-status-error, #a2352a);
+}
+
+.field small,
+.response {
+  color: var(--orvauxe-text-secondary);
+  font-size: var(--orvauxe-type-caption-size);
+  line-height: var(--orvauxe-type-caption-line-height);
+}
+
+.verification > fieldset {
+  display: grid;
+  gap: var(--orvauxe-space-4);
+  margin: 0;
+  padding: var(--orvauxe-space-6) 0;
+  border: 0;
+  border-block: var(--orvauxe-border-width) solid var(--orvauxe-border-subtle);
+}
+
+.verification p {
+  margin: 0;
+  color: var(--orvauxe-text-secondary);
+  font-size: var(--orvauxe-type-body-sm-size);
+}
+
+.submit {
+  width: 100%;
+  min-block-size: var(--orvauxe-space-16);
+}
+
+.response {
+  min-block-size: var(--orvauxe-space-6);
+}
+
+.response p {
+  margin: 0;
+}
+
+.visuallyHidden {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (min-width: 48rem) {
+  .fieldPair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

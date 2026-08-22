@@ -10,7 +10,7 @@ export function TurnstileWidget({ onToken }: TurnstileWidgetProps) {
   return (
     <fieldset>
       <legend>Bot verification</legend>
-      <p>The production Turnstile widget is connected in the website implementation phase.</p>
+      <p>Complete verification before sending the inquiry.</p>
       <Button onClick={() => onToken("skeleton-turnstile-token")}>Prepare verification</Button>
     </fieldset>
   );
