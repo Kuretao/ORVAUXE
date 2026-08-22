@@ -128,7 +128,7 @@ Executed results before handoff:
 - `pnpm typecheck`: PASS
 - `pnpm test`: PASS — 119 unit/component tests
 - `pnpm build`: PASS with repository CI environment values
-- `pnpm test:e2e`: PASS — Chromium and mobile Chromium, including axe and visual comparisons
+- `pnpm test:e2e`: PASS — 104 passed, 38 project-specific skips across Chromium and mobile Chromium, including axe and visual comparisons
 - `git diff --check`: PASS
 - Workspace architecture remained within the established module/vendor/UI boundaries; no new dumping-ground directory or cross-package dependency was introduced.
 
