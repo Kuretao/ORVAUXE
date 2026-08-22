@@ -27,7 +27,7 @@ export const studioPageFallback = {
   operatingModel:
     "Editions provide a directed foundation for controlled adaptation. Atelier creates a new system when the brief requires custom architecture, logic or integration depth.",
   trustContent:
-    "Selected commerce experience includes custom storefront engineering across Next.js and Laravel, checkout and order flows, payment handling and fiscal commerce integration.",
+    "Selected commerce experience includes custom storefront engineering across Next.js and Laravel, checkout and order flows, payment handling and fiscal receipt support.",
   contactCta: { label: "Start a Project", href: "/start-a-project" },
   seo: {
     metaTitle: "Studio — Independent Commerce Atelier | ORVAUXE",

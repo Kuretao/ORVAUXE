@@ -14,11 +14,9 @@ No production deployment or Shopify theme publication was performed. The final c
 
 `917b0c42b1abbe9d30a3a507495ac6a6ac4d5d85`
 
-## Nocturne source milestone
+## Product proof approval basis
 
-`983445e533544222e161bf336b662366cfcd7b53`
-
-The private Nocturne repository was inspected read-only. Its repository URL, development-store URL, theme identifiers and access details are not present in customer-visible ORVAUXE output.
+Founder-approved internal Storefront v1 capture set. Private source identifiers, development-store details and access information are intentionally excluded from this public report.
 
 ## Product Proof
 
@@ -65,7 +63,7 @@ The route is server-first and reads the existing constrained `atelierPage` singl
 
 Implemented the independent-studio narrative: point of view, Editions/Atelier operating model, selected commerce engineering experience, Chengdu origin, principles and final CTA.
 
-The real retail work is presented anonymously because public client/name/visual permission was not established. Only verified engineering range is stated: Next.js, Laravel, payments/checkout and fiscal commerce. It is explicitly separated from Nocturne and from luxury art-direction claims. No client imagery, name, URL, metrics or testimonial was published.
+The real retail work is presented anonymously because public client/name/visual permission was not established. Only verified engineering range is stated: Next.js, Laravel, payments/checkout and fiscal receipt support. It is explicitly separated from Nocturne and from luxury art-direction claims. No client imagery, name, URL, metrics or testimonial was published.
 
 The route uses the existing constrained `studioPage` singleton through a dedicated mapper and typed fallback.
 
@@ -77,6 +75,7 @@ The route uses the existing constrained `studioPage` singleton through a dedicat
 - Added a warning not to submit passwords, payment information, customer data or store credentials.
 - Preserved the approved Server Action → Zod → Turnstile → Attio → Resend → PostHog architecture and existing failure semantics.
 - Did not invent a public email or production vendor write.
+- Reviewed the public budget ranges. Their enum IDs are shared by validation, typed analytics and the Attio input contract, so they remain unchanged until a coordinated backwards-safe migration is approved.
 
 ## SEO
 
@@ -126,7 +125,7 @@ Executed results before handoff:
 - `pnpm typegen:check`: PASS (the brief's `sanity:typegen:check` maps to this repository script)
 - `pnpm lint`: PASS
 - `pnpm typecheck`: PASS
-- `pnpm test`: PASS — 119 unit/component tests
+- `pnpm test`: PASS — 120 unit/component tests
 - `pnpm build`: PASS with repository CI environment values
 - `pnpm test:e2e`: PASS — 104 passed, 38 project-specific skips across Chromium and mobile Chromium, including axe and visual comparisons
 - `git diff --check`: PASS
@@ -156,7 +155,7 @@ Confirmed:
 - No fake legal entity or legal status
 - No invented email, domain or support endpoint
 
-The internal provenance document names the source repository only as permitted project provenance and reveals no access details.
+The public provenance document records only the founder-approved internal capture basis, derivatives, dimensions, processing, ownership and intended use. It contains no private source identifier or access detail.
 
 ## Deferred
 
@@ -167,6 +166,7 @@ The internal provenance document names the source repository only as permitted p
 - Public Nocturne demo, only if later approved and intentionally exposed
 - Final production imagery where current ORVAUXE original temporary studies remain
 - Named retail case or public case imagery, only with documented client/public permission
+- Coordinated budget-range refinement (`Under $5k`, `$5k–$10k`, then existing higher bands) across form validation, analytics and Attio contracts
 - Production deployment and any Shopify theme publication
 
 ## Recommendation

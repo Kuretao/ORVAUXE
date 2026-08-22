@@ -30,10 +30,32 @@ describe("StudioScreen", () => {
     render(<StudioScreen page={studioPageFallback} />);
 
     const proof = screen.getByRole("region", { name: "Retail Commerce Platform" });
-    for (const capability of ["Next.js", "Laravel", "Payments / checkout", "Fiscal commerce"]) {
+    for (const capability of [
+      "Next.js",
+      "Laravel",
+      "Payments / checkout",
+      "Receipt / fiscal support",
+    ]) {
       expect(within(proof).getByText(capability)).toBeInTheDocument();
     }
+    expect(proof).toHaveTextContent(/payment handling and fiscal receipt support/i);
+    expect(proof).not.toHaveTextContent(/fiscal commerce/i);
     expect(proof).toHaveTextContent(/anonymous technical proof/i);
     expect(proof).not.toHaveTextContent(/client quote|conversion|revenue|GMV|order count/i);
+  });
+
+  it("tightens a legacy CMS fiscal-commerce phrase before public rendering", () => {
+    render(
+      <StudioScreen
+        page={{
+          ...studioPageFallback,
+          contentSource: "sanity",
+          trustContent: "Checkout, payments and fiscal commerce integration.",
+        }}
+      />,
+    );
+
+    expect(screen.getByText(/checkout, payments and fiscal receipt support/i)).toBeInTheDocument();
+    expect(screen.queryByText(/fiscal commerce/i)).not.toBeInTheDocument();
   });
 });

@@ -17,6 +17,10 @@ const principles = [
   "Systems should remain operable",
 ] as const;
 
+function publicTrustContent(value: string) {
+  return value.replace(/\bfiscal commerce(?: integration)?\b/gi, "fiscal receipt support");
+}
+
 export function StudioScreen({ page }: StudioScreenProps) {
   return (
     <main
@@ -120,7 +124,7 @@ export function StudioScreen({ page }: StudioScreenProps) {
               <Text variant="label">Custom commerce</Text>
             </div>
             <div className={styles.proofCopy}>
-              <Text variant="body-lg">{page.trustContent}</Text>
+              <Text variant="body-lg">{publicTrustContent(page.trustContent)}</Text>
               <Text variant="body-sm">
                 An anonymous technical proof of engineering range—not a Nocturne client case or a
                 luxury art-direction claim.
@@ -134,7 +138,7 @@ export function StudioScreen({ page }: StudioScreenProps) {
             <li>Next.js</li>
             <li>Laravel</li>
             <li>Payments / checkout</li>
-            <li>Fiscal commerce</li>
+            <li>Receipt / fiscal support</li>
           </ul>
         </Container>
       </section>

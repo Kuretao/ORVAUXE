@@ -72,7 +72,7 @@ test("completed public routes keep private product data out of customer-visible 
     const publicCopy = await page.locator("body").innerText();
 
     expect(publicCopy).not.toMatch(
-      /Kuretao\/Nocturne|github\.com\/Kuretao\/Nocturne|myshopify\.com|\/admin\/themes\/|theme_id|C:\\Users/i,
+      /github\.com|myshopify\.com|\/admin\/themes\/|theme_id|C:\\Users|\b[0-9a-f]{40}\b/i,
     );
   }
 
