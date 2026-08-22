@@ -7,10 +7,6 @@ on:
         description: Branch, tag or SHA to capture
         required: true
         default: main
-  # Temporary branch bootstrap. Removed after the first reviewed Linux candidate set.
-  push:
-    branches:
-      - fix/ci-visual-baselines-v1
 
 permissions:
   contents: read

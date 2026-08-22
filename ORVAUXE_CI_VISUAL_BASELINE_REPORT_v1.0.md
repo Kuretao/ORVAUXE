@@ -25,7 +25,16 @@ path was the root cause.
 
 ## Verification
 
-Local and hosted results will be recorded after candidate review and final validation.
+Candidate workflow run `32602984254` generated all 15 Linux baselines successfully. Every candidate
+was reviewed against the approved site for content, section order, responsive composition, imagery,
+font activation, overflow, CTA visibility and private-data exclusion. No product regression was
+accepted as a baseline change.
+
+Local validation passed: frozen install, formatting, Sanity type generation, lint, typecheck, 120
+unit/component tests, production build and `git diff --check`. Windows E2E passed with 89 functional
+tests, 23 intentional skips and 15 serialized visual comparisons.
+
+The final hosted PR result will be recorded after compare-only CI completes.
 
 ## Recommendation
 
