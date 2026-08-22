@@ -1,6 +1,6 @@
 import { Container, Grid, Heading, Text } from "@orvauxe/ui";
 
-import { NocturneStorefront } from "@/modules/editions";
+import { NocturneStorefront, nocturneProofMedia } from "@/modules/editions";
 
 import type { HomePageData } from "../model/home-page";
 import styles from "./HomeProductStory.module.css";
@@ -59,8 +59,10 @@ export function HomeWhatWeBuild({ content, edition }: HomeWhatWeBuildProps) {
             <NocturneStorefront
               context="homepage-v1-2"
               edition={edition}
-              kind="mobile"
+              kind="home"
+              mediaOverride={nocturneProofMedia.homeMobile}
               sizes="(min-width: 96rem) 18rem, (min-width: 64rem) 18vw, (min-width: 48rem) 26vw, 40vw"
+              viewport="mobile"
             />
           </div>
         </div>

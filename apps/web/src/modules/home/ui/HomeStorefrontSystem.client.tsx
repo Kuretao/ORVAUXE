@@ -1,5 +1,6 @@
 "use client";
 
+import { trackClient } from "@orvauxe/analytics/client";
 import { Grid, Text } from "@orvauxe/ui";
 import { useEffect, useRef, useState } from "react";
 
@@ -19,10 +20,19 @@ export function HomeStorefrontSystemClient({ edition }: HomeStorefrontSystemClie
   const [activeKind, setActiveKind] = useState<StorefrontViewKind>("home");
   const [hasInteracted, setHasInteracted] = useState(false);
   const stepElements = useRef<Array<HTMLLIElement | null>>([]);
+  const trackedKinds = useRef(new Set<StorefrontViewKind>());
 
-  function selectKind(kind: StorefrontViewKind) {
+  function selectKind(kind: StorefrontViewKind, trackProof = false) {
     setActiveKind(kind);
     setHasInteracted(true);
+    if (trackProof && !trackedKinds.current.has(kind)) {
+      trackedKinds.current.add(kind);
+      trackClient("edition_proof_viewed", {
+        edition_slug: "nocturne",
+        proof_kind: kind,
+        proof_location: "home_storefront_system",
+      });
+    }
   }
 
   useEffect(() => {
@@ -106,7 +116,7 @@ export function HomeStorefrontSystemClient({ edition }: HomeStorefrontSystemClie
                 <button
                   aria-pressed={activeKind === stage.kind}
                   className={styles.systemStepButton}
-                  onClick={() => selectKind(stage.kind)}
+                  onClick={() => selectKind(stage.kind, true)}
                   onFocus={() => selectKind(stage.kind)}
                   type="button"
                 >

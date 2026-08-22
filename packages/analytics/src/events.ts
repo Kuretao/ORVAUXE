@@ -26,12 +26,20 @@ export interface AnalyticsEvents {
     edition_category: string;
     edition_number?: number;
   };
+  edition_proof_viewed: {
+    edition_slug: string;
+    proof_kind: "home" | "collection" | "product" | "cart" | "editorial" | "mobile";
+    proof_location: "home_storefront_system";
+  };
   edition_demo_opened: {
     edition_slug: string;
     demo_id: string;
     cta_location: string;
   };
   atelier_viewed: {
+    page_path: string;
+  };
+  studio_viewed: {
     page_path: string;
   };
   start_project_clicked: {

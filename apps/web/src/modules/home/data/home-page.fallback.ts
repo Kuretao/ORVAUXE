@@ -1,34 +1,14 @@
+import { nocturneStorefrontProofViews } from "@/modules/editions";
+
 import type { HomeMedia, HomePageData } from "../model/home-page";
 
 const nocturneCampaignMedia = {
   src: "/media/home-campaign-nocturne-temporary.webp",
-  alt: "Dark sculptural fabric study for Nocturne.",
+  alt: "Black leather, brushed metal and smoked glass material study.",
   decorative: false,
   width: 1536,
   height: 1024,
-  objectPosition: "50% 50%",
-  caption: null,
-  credit: "ORVAUXE original concept imagery",
-} as const satisfies HomeMedia;
-
-const nocturneProductMedia = {
-  src: "/media/editions/nocturne/nocturne-product-study-temporary.webp",
-  alt: "Black tailored garment presented as a Nocturne product study.",
-  decorative: false,
-  width: 1536,
-  height: 1024,
-  objectPosition: "50% 50%",
-  caption: null,
-  credit: "ORVAUXE original concept imagery",
-} as const satisfies HomeMedia;
-
-const nocturneDetailMedia = {
-  src: "/media/editions/nocturne/nocturne-detail-study-temporary.webp",
-  alt: "Close material detail from the Nocturne concept study.",
-  decorative: false,
-  width: 1536,
-  height: 1024,
-  objectPosition: "50% 50%",
+  objectPosition: "53% 50%",
   caption: null,
   credit: "ORVAUXE original concept imagery",
 } as const satisfies HomeMedia;
@@ -73,15 +53,8 @@ export const homePageFallback = {
       copy: "For fashion brands with a cinematic point of view.",
       startingPrice: "From $2,490",
       platform: "Shopify",
-      media: null,
-      storefrontViews: [
-        { kind: "home", media: nocturneCampaignMedia },
-        { kind: "collection", media: nocturneProductMedia },
-        { kind: "product", media: nocturneProductMedia },
-        { kind: "cart", media: nocturneDetailMedia },
-        { kind: "editorial", media: nocturneDetailMedia },
-        { kind: "mobile", media: nocturneProductMedia },
-      ],
+      media: nocturneCampaignMedia,
+      storefrontViews: nocturneStorefrontProofViews,
     },
   },
   atelier: {

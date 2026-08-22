@@ -242,14 +242,10 @@
   scroll-snap-align: center;
 }
 
-.systemPreview :global([data-storefront-view="mobile"]) :global([data-storefront-viewport]),
-.systemRail :global([data-storefront-view="mobile"]) :global([data-storefront-viewport]) {
-  aspect-ratio: 16 / 10;
-}
-
-.systemPreview :global([data-storefront-view="mobile"]) :global([data-storefront-mobile]),
-.systemRail :global([data-storefront-view="mobile"]) :global([data-storefront-mobile]) {
-  width: 34%;
+.systemPreview :global([data-storefront-viewport-mode="mobile"]),
+.systemRail :global([data-storefront-viewport-mode="mobile"]) {
+  width: min(100%, 22rem);
+  margin-inline: auto;
 }
 
 .systemRailHeading {

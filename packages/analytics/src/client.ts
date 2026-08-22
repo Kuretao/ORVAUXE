@@ -18,8 +18,10 @@ type ClientAnalyticsEventName = Exclude<AnalyticsEventName, "project_form_submit
 const eventPropertyAllowlist: Record<ClientAnalyticsEventName, readonly string[]> = {
   page_viewed: ["page_path", "page_type", "locale", "referrer_type"],
   edition_viewed: ["edition_slug", "edition_category", "edition_number"],
+  edition_proof_viewed: ["edition_slug", "proof_kind", "proof_location"],
   edition_demo_opened: ["edition_slug", "demo_id", "cta_location"],
   atelier_viewed: ["page_path"],
+  studio_viewed: ["page_path"],
   start_project_clicked: ["cta_id", "cta_location", "edition_slug"],
   project_form_started: ["form_version", "entry_context"],
   contact_link_clicked: ["contact_method", "cta_location"],
