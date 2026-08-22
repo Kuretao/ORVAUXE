@@ -34,9 +34,10 @@ Local validation passed: frozen install, formatting, Sanity type generation, lin
 unit/component tests, production build and `git diff --check`. Windows E2E passed with 89 functional
 tests, 23 intentional skips and 15 serialized visual comparisons.
 
-The final hosted PR result will be recorded after compare-only CI completes.
+Pull request `#13` triggered compare-only GitHub Actions run `32603345687`. `Quality` and
+`Deterministic E2E and axe` both completed successfully, including the canonical Linux visual step.
 
 ## Recommendation
 
-Do not merge until all local gates pass, every Linux candidate is visually approved and both hosted
-CI jobs are green.
+The deterministic visual-baseline fix is recommended for merge after founder review. All local gates
+pass, every Linux candidate was visually approved and both hosted CI jobs are green.
