@@ -1,43 +1,62 @@
 import type { StudioPageQueryResult } from "@/generated/sanity.types";
 import { CMSReadError, sanityFetch } from "@/infrastructure/sanity/client.server";
 
+import { studioPageFallback } from "../model/studio-page";
+import type { StudioPage } from "../model/studio-page";
 import { studioPageQuery } from "./studio-page.query";
 
-export interface StudioPage {
-  heroHeading: string;
-  heroCopy: string;
-  pointOfView?: string | null;
-  origin?: string | null;
-  operatingModel?: string | null;
-  trustContent?: string | null;
-  seo?: {
-    metaTitle?: string | null;
-    metaDescription?: string | null;
-    shareImageUrl?: string | null;
-    noIndex?: boolean | null;
-  } | null;
+function cleanText(value: string | null | undefined): string | null {
+  const text = value?.trim();
+  return text ? text : null;
 }
 
-function mapStudioPage(page: NonNullable<StudioPageQueryResult>): StudioPage | null {
-  const heroCopy = page.heroCopy?.trim();
-  const heroHeading = page.heroHeading?.trim();
+export function mapStudioPage(page: NonNullable<StudioPageQueryResult>): StudioPage | null {
+  const heroCopy = cleanText(page.heroCopy);
+  const heroHeading = cleanText(page.heroHeading);
+  const pointOfView = cleanText(page.pointOfView);
+  const origin = cleanText(page.origin);
+  const operatingModel = cleanText(page.operatingModel);
+  const trustContent = cleanText(page.trustContent);
+  const ctaLabel = cleanText(page.contactCta?.label);
+  const ctaDestination = cleanText(page.contactCta?.destination);
+  const metaTitle = cleanText(page.seo?.metaTitle);
+  const metaDescription = cleanText(page.seo?.metaDescription);
 
-  if (!heroCopy || !heroHeading) {
+  if (
+    !heroCopy ||
+    !heroHeading ||
+    !pointOfView ||
+    !origin ||
+    !operatingModel ||
+    !trustContent ||
+    !ctaLabel ||
+    page.contactCta?.destinationKind !== "internalPath" ||
+    ctaDestination !== "/start-a-project" ||
+    !metaTitle ||
+    !metaDescription
+  ) {
     return null;
   }
 
   return {
+    contentSource: "sanity",
     heroHeading,
     heroCopy,
-    pointOfView: page.pointOfView,
-    origin: page.origin,
-    operatingModel: page.operatingModel,
-    trustContent: page.trustContent,
-    seo: page.seo,
+    pointOfView,
+    origin,
+    operatingModel,
+    trustContent,
+    contactCta: { label: ctaLabel, href: "/start-a-project" },
+    seo: {
+      metaTitle,
+      metaDescription,
+      shareImageUrl: cleanText(page.seo?.shareImageUrl),
+      noIndex: page.seo?.noIndex === true,
+    },
   };
 }
 
-export async function getStudioPage(): Promise<StudioPage | null> {
+export async function getStudioPage(): Promise<StudioPage> {
   let page: StudioPageQueryResult;
 
   try {
@@ -47,11 +66,11 @@ export async function getStudioPage(): Promise<StudioPage | null> {
     });
   } catch (error) {
     if (error instanceof CMSReadError && error.message.includes("configuration is not available")) {
-      return null;
+      return studioPageFallback;
     }
 
     throw error;
   }
 
-  return page ? mapStudioPage(page) : null;
+  return (page ? mapStudioPage(page) : null) ?? studioPageFallback;
 }
