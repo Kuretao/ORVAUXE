@@ -164,18 +164,28 @@ describe("HomeScreen", () => {
 
     const productProofPreviews = within(whatWeBuild).getAllByRole("img");
     expect(productProofPreviews).toHaveLength(2);
-    expect(productProofPreviews[0]).toHaveAccessibleName(/storefront preview, home view/i);
-    expect(productProofPreviews[1]).toHaveAccessibleName(/storefront preview, mobile view/i);
+    expect(productProofPreviews[0]).toHaveAccessibleName(
+      /Nocturne Shopify storefront home view with a dark leather carry object/i,
+    );
+    expect(productProofPreviews[1]).toHaveAccessibleName(
+      /Nocturne Shopify storefront home view on a mobile viewport/i,
+    );
 
     const productProofImages = Array.from(whatWeBuild.querySelectorAll("img"));
     expect(productProofImages).toHaveLength(2);
-    expect(productProofImages[0]).toHaveAttribute("alt", "");
+    expect(productProofImages[0]).toHaveAttribute(
+      "alt",
+      "Nocturne Shopify storefront home view with a dark leather carry object and campaign-led merchandising.",
+    );
     expect(productProofImages[0]).toHaveAttribute("loading", "lazy");
     expect(productProofImages[0]).toHaveAttribute(
       "sizes",
       "(min-width: 96rem) 67rem, (min-width: 64rem) 72vw, (min-width: 48rem) 75vw, 100vw",
     );
-    expect(productProofImages[1]).toHaveAttribute("alt", "");
+    expect(productProofImages[1]).toHaveAttribute(
+      "alt",
+      "Nocturne Shopify storefront home view on a mobile viewport.",
+    );
     expect(productProofImages[1]).toHaveAttribute("loading", "lazy");
     expect(productProofImages[1]).toHaveAttribute(
       "sizes",

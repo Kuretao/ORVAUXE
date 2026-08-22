@@ -147,20 +147,17 @@ test.describe("Nocturne Edition 001", () => {
       await expect(main.locator(`[data-storefront-view="${view}"]`).first()).toBeVisible();
     }
 
-    const storefrontPreviews = main.locator('[data-storefront-viewport][role="img"]');
+    const storefrontPreviews = main.locator(
+      '[data-proof-source="shopify-theme-capture"] [data-storefront-viewport]',
+    );
     expect(await storefrontPreviews.count()).toBeGreaterThan(0);
     for (let index = 0; index < (await storefrontPreviews.count()); index += 1) {
       const preview = storefrontPreviews.nth(index);
-      await expect(preview).toHaveAttribute(
-        "aria-label",
-        /Nocturne storefront preview, \S+ view\./,
-      );
-      const decorativeImages = preview.locator("img");
-      expect(await decorativeImages.count()).toBeGreaterThan(0);
-      for (let imageIndex = 0; imageIndex < (await decorativeImages.count()); imageIndex += 1) {
-        await expect(decorativeImages.nth(imageIndex)).toHaveAttribute("alt", "");
-        await expect(decorativeImages.nth(imageIndex)).toHaveAttribute("sizes", /\S/);
-      }
+      const proofImage = preview.locator("img");
+      await expect(proofImage).toHaveCount(1);
+      await expect(proofImage).toHaveAttribute("alt", /Nocturne/i);
+      await expect(proofImage).toHaveAttribute("sizes", /\S/);
+      await expect(proofImage).toHaveAttribute("src", /nocturne-.*\.webp/);
     }
 
     const semanticImages = await main
@@ -215,8 +212,8 @@ test.describe("Nocturne Edition 001", () => {
       .click();
 
     await expect(page).toHaveURL(/\/start-a-project\?edition=nocturne$/);
-    await expect(page.getByLabel("Project type")).toHaveValue("edition");
-    await expect(page.getByLabel("Edition slug")).toHaveValue("nocturne");
+    await expect(page.getByLabel(/What are you building/)).toHaveValue("edition");
+    await expect(page.getByLabel("Edition interest")).toHaveValue("nocturne");
   });
 });
 

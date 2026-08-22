@@ -14,6 +14,7 @@ export type {
   EditionStorefrontView,
   StorefrontViewKind,
 } from "./model/edition";
+export { nocturneProofMedia, nocturneStorefrontProofViews } from "./data/edition.fallback";
 export { NocturneStorefront, nocturneStorefrontStages } from "./ui/NocturneStorefront";
 export type {
   NocturneStorefrontProps,

@@ -10,11 +10,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const page = await getStudioPage();
 
   return buildMetadata({
-    title: page?.seo?.metaTitle || "Studio",
-    description: page?.seo?.metaDescription || "Neutral Studio route skeleton.",
+    title: page.seo.metaTitle,
+    description: page.seo.metaDescription,
     pathname: "/studio",
-    image: page?.seo?.shareImageUrl,
-    noIndex: Boolean(page?.seo?.noIndex),
+    image: page.seo.shareImageUrl ?? undefined,
+    noIndex: page.seo.noIndex,
   });
 }
 

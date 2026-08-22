@@ -1,0 +1,122 @@
+.screen {
+  color: var(--orvauxe-text-primary);
+  background: var(--orvauxe-surface-primary);
+}
+
+.hero,
+.intake {
+  padding-block: var(--orvauxe-space-section-major);
+}
+
+.heroGrid,
+.routeHeader,
+.routeGrid,
+.formGrid {
+  align-items: start;
+}
+
+.index,
+.heroGrid > h1,
+.heroCopy,
+.routeHeader > h2,
+.routeGrid article,
+.formIntroduction,
+.formPanel {
+  grid-column: 1 / -1;
+}
+
+.index {
+  color: var(--orvauxe-text-secondary);
+  text-transform: uppercase;
+}
+
+.heroGrid > h1,
+.routeHeader > h2 {
+  max-inline-size: 12ch;
+  margin-block-start: var(--orvauxe-space-8);
+}
+
+.heroCopy,
+.formIntroduction {
+  display: grid;
+  gap: var(--orvauxe-space-6);
+  margin-block-start: var(--orvauxe-space-8);
+}
+
+.routeGrid,
+.formGrid {
+  margin-block-start: var(--orvauxe-space-section);
+}
+
+.routeGrid article {
+  display: grid;
+  align-content: start;
+  gap: var(--orvauxe-space-5, var(--orvauxe-space-4));
+  padding-block: var(--orvauxe-space-8);
+  border-block: var(--orvauxe-border-width) solid var(--orvauxe-border-default);
+}
+
+.routeGrid article + article {
+  border-block-start: 0;
+}
+
+.formIntroduction h2 {
+  max-inline-size: 12ch;
+}
+
+.formPanel {
+  margin-block-start: var(--orvauxe-space-12);
+}
+
+@media (min-width: 48rem) {
+  .index {
+    grid-column: 1 / 3;
+  }
+
+  .heroGrid > h1,
+  .routeHeader > h2,
+  .formIntroduction {
+    grid-column: 1 / 5;
+  }
+
+  .heroCopy,
+  .formPanel {
+    grid-column: 5 / 9;
+    margin-block-start: 0;
+  }
+
+  .routeGrid article:first-child {
+    grid-column: 1 / 5;
+  }
+
+  .routeGrid article:last-child {
+    grid-column: 5 / 9;
+  }
+
+  .routeGrid article + article {
+    padding-inline-start: var(--orvauxe-space-8);
+    border-block-start: var(--orvauxe-border-width) solid var(--orvauxe-border-default);
+    border-inline-start: var(--orvauxe-border-width) solid var(--orvauxe-border-default);
+  }
+}
+
+@media (min-width: 64rem) {
+  .heroGrid > h1,
+  .routeHeader > h2,
+  .formIntroduction {
+    grid-column: 3 / 8;
+  }
+
+  .heroCopy,
+  .formPanel {
+    grid-column: 9 / 13;
+  }
+
+  .routeGrid article:first-child {
+    grid-column: 1 / 6;
+  }
+
+  .routeGrid article:last-child {
+    grid-column: 8 / 13;
+  }
+}

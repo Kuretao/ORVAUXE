@@ -7,11 +7,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const page = await getAtelierPage();
 
   return buildMetadata({
-    title: page?.seo?.metaTitle || "Atelier",
-    description: page?.seo?.metaDescription || "Neutral Atelier route skeleton.",
+    title: page.seo.metaTitle,
+    description: page.seo.metaDescription,
     pathname: "/atelier",
-    image: page?.seo?.shareImageUrl,
-    noIndex: Boolean(page?.seo?.noIndex),
+    image: page.seo.shareImageUrl ?? undefined,
+    noIndex: page.seo.noIndex,
   });
 }
 
