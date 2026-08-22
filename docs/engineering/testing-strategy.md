@@ -95,11 +95,11 @@ Automated axe checks do not prove WCAG conformance.
 
 Initial approved baselines:
 
-| Page | Desktop | Mobile |
-|---|---:|---:|
-| Home | 1440×1000 | 390×844 |
-| Edition detail | 1440×1000 | 390×844 |
-| Atelier | 1440×1000 | deferred until design if cost needs control |
+| Page           |   Desktop |                                      Mobile |
+| -------------- | --------: | ------------------------------------------: |
+| Home           | 1440×1000 |                                     390×844 |
+| Edition detail | 1440×1000 |                                     390×844 |
+| Atelier        | 1440×1000 | deferred until design if cost needs control |
 
 Use one Chromium baseline environment initially for stability. Additional browsers are functional E2E targets, not duplicate visual baselines, unless defects justify them.
 
@@ -113,6 +113,17 @@ Baseline changes require:
 4. baseline update in the same PR.
 
 Once baselines are approved, critical visual diffs block merge.
+
+The canonical hosted baseline is captured and compared on `ubuntu-24.04` with Node 24.19.0,
+pnpm 10.34.5 and the Chromium revision pinned by `@playwright/test` 1.62.1. Snapshot paths
+include `linux/` or `win32/`; one operating system must never silently compare against the
+other's rasterization. Windows baselines support normal workstation QA, while Linux is the
+merge-blocking source of visual truth.
+
+Normal CI is compare-only. Linux baseline updates require an explicit run of the `Visual baseline
+candidates` workflow, review of every uploaded candidate, and a deliberate commit. Visual captures
+run with one worker because these pages contain several very large full-page screenshots; functional
+E2E and axe checks retain their parallel execution.
 
 ## Browser matrix
 
@@ -129,4 +140,3 @@ Merge E2E: Chromium desktop and mobile emulation. Pre-launch/nightly: current Ch
 ## Flake policy
 
 A flaky blocking test is a defect. Quarantine is temporary, owned and time-bound. Retries may gather evidence but cannot hide persistent nondeterminism. Fix data, waiting conditions or environment rather than adding arbitrary sleeps.
-

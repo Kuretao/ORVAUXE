@@ -6,7 +6,10 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "e2e": "playwright test",
+    "e2e": "pnpm e2e:functional && pnpm e2e:visual",
+    "e2e:functional": "playwright test --grep-invert \"visual baseline\"",
+    "e2e:visual": "playwright test --grep \"visual baseline\" --project=chromium --workers=1",
+    "e2e:visual:update": "pnpm e2e:visual --update-snapshots",
     "lint": "eslint . --max-warnings 0",
     "start": "next start",
     "test": "vitest run",

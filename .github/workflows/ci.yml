@@ -86,7 +86,7 @@ jobs:
   browser:
     name: Deterministic E2E and axe
     needs: quality
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     env:
       ORVAUXE_E2E_MODE: "stub"
@@ -122,8 +122,11 @@ jobs:
       - name: Install Playwright Chromium
         run: pnpm --filter @orvauxe/web exec playwright install --with-deps chromium
 
-      - name: Run deterministic E2E and axe smoke tests
-        run: pnpm test:e2e
+      - name: Run functional E2E and axe checks
+        run: pnpm --filter @orvauxe/web e2e:functional
+
+      - name: Run canonical Linux visual regression
+        run: pnpm --filter @orvauxe/web e2e:visual
 
       - name: Upload Playwright diagnostics
         if: failure()
