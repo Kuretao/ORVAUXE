@@ -217,26 +217,13 @@ test("Homepage exposes the expanded product narrative, scope, and truthful route
     await expect(visibleSystemList.getByText(stage, { exact: true })).toBeVisible();
   }
 
-  const storefrontHeaderColors = await system.locator("[data-system-state]").evaluate((element) => {
-    const colorFor = (kind: string) => {
-      const header = element.querySelector<HTMLElement>(
-        `[data-storefront-view="${kind}"] [data-storefront-header]`,
-      );
-      return header ? getComputedStyle(header).color : null;
-    };
-
-    return Object.fromEntries(
-      ["home", "collection", "product", "cart", "editorial", "mobile"].map((kind) => [
-        kind,
-        colorFor(kind),
-      ]),
-    );
-  });
-  expect(storefrontHeaderColors.home).toBe(storefrontHeaderColors.mobile);
-  expect(storefrontHeaderColors.cart).toBe(storefrontHeaderColors.mobile);
-  expect(storefrontHeaderColors.editorial).toBe(storefrontHeaderColors.mobile);
-  expect(storefrontHeaderColors.collection).toBe(storefrontHeaderColors.product);
-  expect(storefrontHeaderColors.collection).not.toBe(storefrontHeaderColors.home);
+  const proofImages = system.locator('[data-proof-source="shopify-theme-capture"] img');
+  expect(await proofImages.count()).toBeGreaterThanOrEqual(storefrontStages.length);
+  for (let index = 0; index < (await proofImages.count()); index += 1) {
+    await expect(proofImages.nth(index)).toHaveAttribute("alt", /Nocturne/i);
+    await expect(proofImages.nth(index)).toHaveAttribute("src", /nocturne-.*\.webp/);
+    await expect(proofImages.nth(index)).toHaveAttribute("sizes", /\S/);
+  }
 
   const atelier = main.getByRole("region", { name: "Atelier", exact: true });
   await expect(atelier.getByRole("link", { name: "Discover Atelier" })).toHaveAttribute(

@@ -2,7 +2,14 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import type { Page } from "@playwright/test";
 
-const accessibilityRoutes = ["/", "/editions", "/editions/nocturne", "/start-a-project"] as const;
+const accessibilityRoutes = [
+  "/",
+  "/editions",
+  "/editions/nocturne",
+  "/atelier",
+  "/studio",
+  "/start-a-project",
+] as const;
 
 async function expectNoBlockingAxeViolations(page: Page): Promise<void> {
   const result = await new AxeBuilder({ page }).analyze();
