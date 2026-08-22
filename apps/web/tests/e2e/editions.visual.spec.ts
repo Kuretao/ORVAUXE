@@ -1,6 +1,8 @@
 import { expect, test } from "@playwright/test";
 import type { Page } from "@playwright/test";
 
+import { expectOrvauxeFonts, visualScreenshotOptions } from "./visual-test-helpers";
+
 const visualStates = [
   {
     height: 812,
@@ -35,7 +37,7 @@ const visualStates = [
 ] as const;
 
 async function primePageForFullPageCapture(page: Page): Promise<void> {
-  await page.evaluate(async () => document.fonts.ready);
+  await expectOrvauxeFonts(page);
 
   const images = page.locator("main#main-content img:visible");
   // Chromium can omit offscreen lazy rasters from a long capture even after decode.
@@ -79,11 +81,8 @@ for (const state of visualStates) {
     await primePageForFullPageCapture(page);
 
     await expect(page).toHaveScreenshot(state.name, {
-      animations: "disabled",
-      caret: "hide",
       fullPage: true,
-      maxDiffPixelRatio: 0.02,
-      threshold: 0.25,
+      ...visualScreenshotOptions,
     });
   });
 }

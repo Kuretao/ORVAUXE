@@ -1,6 +1,8 @@
 import { expect, test } from "@playwright/test";
 import type { Page } from "@playwright/test";
 
+import { expectOrvauxeFonts, visualScreenshotOptions } from "./visual-test-helpers";
+
 const visualStates = [
   { height: 812, name: "atelier-mobile-375.png", path: "/atelier", width: 375 },
   { height: 900, name: "atelier-desktop-1440.png", path: "/atelier", width: 1440 },
@@ -16,7 +18,7 @@ const visualStates = [
 ] as const;
 
 async function primePage(page: Page): Promise<void> {
-  await page.evaluate(async () => document.fonts.ready);
+  await expectOrvauxeFonts(page);
   const images = page.locator("main#main-content img:visible");
   await images.evaluateAll((elements) => {
     for (const image of elements) image.loading = "eager";
@@ -39,11 +41,8 @@ for (const state of visualStates) {
     await primePage(page);
 
     await expect(page).toHaveScreenshot(state.name, {
-      animations: "disabled",
-      caret: "hide",
       fullPage: true,
-      maxDiffPixelRatio: 0.02,
-      threshold: 0.25,
+      ...visualScreenshotOptions,
     });
   });
 }

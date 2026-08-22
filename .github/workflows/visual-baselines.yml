@@ -1,0 +1,66 @@
+name: Visual baseline candidates
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Branch, tag or SHA to capture
+        required: true
+        default: main
+
+permissions:
+  contents: read
+
+env:
+  CI: "true"
+  NEXT_TELEMETRY_DISABLED: "1"
+  NEXT_PUBLIC_TURNSTILE_SITE_KEY: "1x00000000000000000000AA"
+  ORVAUXE_SITE_URL: "http://127.0.0.1:3000"
+  SANITY_STUDIO_PROJECT_ID: "ci000000"
+  SANITY_STUDIO_DATASET: "production"
+  TURNSTILE_SECRET_KEY: "1x0000000000000000000000000000000AA"
+
+jobs:
+  capture:
+    name: Capture Linux candidates
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out requested revision
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.34.5
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24.19.0
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build web application
+        run: pnpm --filter @orvauxe/web build
+
+      - name: Install pinned Playwright Chromium
+        run: pnpm --filter @orvauxe/web exec playwright install --with-deps chromium
+
+      - name: Capture candidate Linux baselines
+        run: pnpm --filter @orvauxe/web e2e:visual:update
+
+      - name: Upload candidates for human review
+        uses: actions/upload-artifact@v7
+        with:
+          name: linux-visual-baseline-candidates-${{ github.run_id }}
+          path: apps/web/tests/e2e/*.visual.spec.ts-snapshots/linux/*.png
+          if-no-files-found: error
+          retention-days: 7
