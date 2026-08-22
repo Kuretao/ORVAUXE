@@ -99,6 +99,15 @@
   font-size: var(--orvauxe-type-body-sm-size);
 }
 
+.verification legend {
+  padding: 0;
+  font-family: var(--orvauxe-font-interface);
+  font-size: var(--orvauxe-type-label-size);
+  font-weight: var(--orvauxe-type-label-weight);
+  letter-spacing: var(--orvauxe-type-label-letter-spacing);
+  text-transform: uppercase;
+}
+
 .submit {
   width: 100%;
   min-block-size: var(--orvauxe-space-16);
@@ -125,8 +134,20 @@
   white-space: nowrap;
 }
 
-@media (min-width: 48rem) {
+@media (min-width: 64rem) {
   .fieldPair {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--orvauxe-space-6);
+  }
+
+  .field {
+    gap: var(--orvauxe-space-4);
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    min-block-size: calc(var(--orvauxe-target-min) + var(--orvauxe-space-1));
+    padding-block: var(--orvauxe-space-4);
   }
 }

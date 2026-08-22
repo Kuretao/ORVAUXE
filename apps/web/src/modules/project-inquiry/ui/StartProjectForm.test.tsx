@@ -31,6 +31,11 @@ describe("StartProjectForm", () => {
     expect(screen.getByLabelText(/Email/i)).toBeRequired();
     expect(screen.getByLabelText(/What are you building/i)).toBeRequired();
     expect(screen.getByLabelText(/Project context/i)).toBeRequired();
+    expect(screen.getByRole("group", { name: "Verification" })).toHaveTextContent(
+      "Verify securely before sending your inquiry.",
+    );
+    expect(screen.getByRole("button", { name: "Verify & continue" })).toBeEnabled();
+    expect(screen.queryByText(/Bot verification|Prepare verification/i)).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Submit inquiry" })).toBeEnabled();
   });
 });

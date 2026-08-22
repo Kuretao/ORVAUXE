@@ -30,7 +30,7 @@ test.describe("project inquiry in deterministic stub mode", () => {
     await page.getByLabel(/What are you building/).selectOption({ index: 1 });
     await page.getByLabel("Budget range").selectOption({ index: 1 });
     await page.getByLabel(/Project context/).fill(projectInquiryFixture.projectDetails);
-    await page.getByRole("button", { name: "Prepare verification" }).click();
+    await page.getByRole("button", { name: "Verify & continue" }).click();
     await page.getByRole("button", { name: "Submit inquiry" }).click();
 
     await expect(page.getByRole("status")).toContainText(/accepted|received|submitted/i);

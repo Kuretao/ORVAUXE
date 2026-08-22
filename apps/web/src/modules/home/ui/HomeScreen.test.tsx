@@ -207,6 +207,7 @@ describe("HomeScreen", () => {
       within(nocturne).getByText("Concept Edition / ORVAUXE Original", { exact: true }),
     ).toBeInTheDocument();
     expect(within(nocturne).getByText("Shopify", { exact: true })).toBeInTheDocument();
+    expect(within(nocturne).queryByText("Concept product study")).not.toBeInTheDocument();
     expect(within(nocturne).getByRole("link", { name: "Explore Editions" })).toHaveAttribute(
       "href",
       "/editions",
