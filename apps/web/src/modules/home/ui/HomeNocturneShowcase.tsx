@@ -103,9 +103,6 @@ export function HomeNocturneShowcase({ edition, indexHref }: HomeNocturneShowcas
             <Text as="span" variant="label">
               ORVAUXE Original
             </Text>
-            <Text as="span" variant="caption">
-              Concept product study
-            </Text>
           </div>
         </div>
 

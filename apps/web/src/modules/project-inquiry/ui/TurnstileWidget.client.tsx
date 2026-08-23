@@ -9,9 +9,9 @@ export interface TurnstileWidgetProps {
 export function TurnstileWidget({ onToken }: TurnstileWidgetProps) {
   return (
     <fieldset>
-      <legend>Bot verification</legend>
-      <p>Complete verification before sending the inquiry.</p>
-      <Button onClick={() => onToken("skeleton-turnstile-token")}>Prepare verification</Button>
+      <legend>Verification</legend>
+      <p>Verify securely before sending your inquiry.</p>
+      <Button onClick={() => onToken("skeleton-turnstile-token")}>Verify &amp; continue</Button>
     </fieldset>
   );
 }

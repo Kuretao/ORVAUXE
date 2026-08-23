@@ -115,8 +115,7 @@ export function NocturneEditionScreen({ edition }: NocturneEditionScreenProps) {
                 purchase path into one native Shopify system.
               </Text>
               <Text variant="body-sm">
-                Presented as an ORVAUXE Original and Concept Edition: a coherent product study for
-                controlled brand adaptation.
+                A coherent product study for controlled brand adaptation.
               </Text>
             </div>
           </Grid>

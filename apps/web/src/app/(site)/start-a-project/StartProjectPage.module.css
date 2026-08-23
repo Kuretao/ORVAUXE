@@ -107,9 +107,12 @@
     grid-column: 3 / 8;
   }
 
-  .heroCopy,
-  .formPanel {
+  .heroCopy {
     grid-column: 9 / 13;
+  }
+
+  .formPanel {
+    grid-column: 8 / 13;
   }
 
   .routeGrid article:first-child {
