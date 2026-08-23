@@ -133,7 +133,7 @@ test("layout, motion, focus, and reduced-motion contracts are present", () => {
   for (const name of ["page", "editorial", "text", "full-bleed"]) {
     assert.match(css, new RegExp(`--orvauxe-container-${name}:`));
   }
-  for (const name of ["instant", "fast", "standard", "editorial", "cinematic"]) {
+  for (const name of ["instant", "fast", "quick", "standard", "editorial", "cinematic"]) {
     assert.match(css, new RegExp(`--orvauxe-motion-${name}:`));
   }
   for (const name of ["standard", "enter", "exit", "editorial"]) {
@@ -141,6 +141,13 @@ test("layout, motion, focus, and reduced-motion contracts are present", () => {
   }
 
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
+  assert.match(css, /--orvauxe-motion-instant:\s*140ms;/);
+  assert.match(css, /--orvauxe-motion-fast:\s*220ms;/);
+  assert.match(css, /--orvauxe-motion-standard:\s*380ms;/);
+  assert.match(css, /--orvauxe-motion-editorial:\s*640ms;/);
+  assert.match(css, /--orvauxe-motion-cinematic:\s*900ms;/);
+  assert.match(css, /--orvauxe-ease-standard:\s*cubic-bezier\(0\.22, 1, 0\.36, 1\);/);
+  assert.match(css, /--orvauxe-motion-instant:\s*0ms;/);
   assert.match(css, /--orvauxe-motion-cinematic:\s*0ms;/);
   assert.match(css, /--orvauxe-focus-width:/);
   assert.match(css, /--orvauxe-z-skip-link:/);

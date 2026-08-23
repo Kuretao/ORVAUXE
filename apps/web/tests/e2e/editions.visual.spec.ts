@@ -1,7 +1,11 @@
 import { expect, test } from "@playwright/test";
 import type { Page } from "@playwright/test";
 
-import { expectOrvauxeFonts, visualScreenshotOptions } from "./visual-test-helpers";
+import {
+  expectOrvauxeFonts,
+  settleMotionForVisualCapture,
+  visualScreenshotOptions,
+} from "./visual-test-helpers";
 
 const visualStates = [
   {
@@ -77,6 +81,7 @@ for (const state of visualStates) {
     );
 
     await page.setViewportSize({ height: state.height, width: state.width });
+    await settleMotionForVisualCapture(page);
     await page.goto(state.path, { waitUntil: "networkidle" });
     await primePageForFullPageCapture(page);
 

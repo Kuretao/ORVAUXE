@@ -26,6 +26,7 @@ yarn-error.log*
 **/playwright-report/
 **/blob-report/
 **/test-results/
+output/playwright/
 
 # Editors and operating systems
 .vscode/

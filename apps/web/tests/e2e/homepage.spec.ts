@@ -375,6 +375,8 @@ test("Campaign controls retain keyboard focus, expose all three states, and wrap
   await previous.press("Enter");
   await expect(previous).toBeFocused();
   await expectSelectedCampaignState(campaign, campaignStates[2]);
+  await expect(campaign.locator('[data-campaign-media="incoming"]')).toHaveCount(1);
+  await expect(campaign.locator('[data-campaign-media="outgoing"]')).toHaveCount(0);
 });
 
 test("Campaign remains on its selected state without autoplay", async ({ page }, testInfo) => {
@@ -481,6 +483,7 @@ test("Reduced-motion Homepage keeps campaign and storefront content immediately 
   await campaign.getByRole("button", { name: "Next campaign state" }).click();
   await expectSelectedCampaignState(campaign, campaignStates[1]);
   await expect(campaign.locator("[data-asset-status] img")).toBeVisible();
+  await expect(campaign.locator('[data-campaign-media="outgoing"]')).toHaveCount(0);
 
   const main = page.locator("main#main-content");
   const system = main.getByRole("region", { name: "A complete storefront system." });
@@ -494,6 +497,12 @@ test("Reduced-motion Homepage keeps campaign and storefront content immediately 
     (element) => element.getAnimations({ subtree: true }).length,
   );
   expect(activeMotionCount).toBe(0);
+  await expect(main.locator('[data-motion-state="pending"]')).toHaveCount(0);
+  const revealCount = await main.locator("[data-motion-reveal]").count();
+  expect(revealCount).toBeGreaterThan(0);
+  await expect(main.locator('[data-motion-reveal][data-motion-state="static"]')).toHaveCount(
+    revealCount,
+  );
 });
 
 test("Homepage is deliberately composed at representative widths", async ({ page }, testInfo) => {

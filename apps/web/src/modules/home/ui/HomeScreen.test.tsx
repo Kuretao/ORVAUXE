@@ -95,6 +95,7 @@ describe("HomeScreen", () => {
     expect(markup).toContain("A complete storefront system.");
     expect(markup).toContain("From direction to launch.");
     expect(markup).toContain("01 / 03");
+    expect(markup).not.toContain("data-motion-state=");
     expect(markup).not.toContain("Temporary media");
     expect(markup).not.toContain("final Edition imagery pending");
   });
@@ -297,6 +298,8 @@ describe("HomeScreen", () => {
     const previous = within(campaign).getByRole("button", { name: "Previous campaign state" });
     fireEvent.click(previous);
     expect(within(campaign).getByText("03 / 03", { exact: true })).toBeInTheDocument();
+    expect(campaign.querySelectorAll('[data-campaign-media="incoming"]')).toHaveLength(1);
+    expect(campaign.querySelectorAll('[data-campaign-media="outgoing"]')).toHaveLength(1);
   });
 
   it("keeps panel previews transient, pointer-specific, and separate from link focus", () => {

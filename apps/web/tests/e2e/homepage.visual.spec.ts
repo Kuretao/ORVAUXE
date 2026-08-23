@@ -1,7 +1,11 @@
 import { expect, test } from "@playwright/test";
 import type { Page } from "@playwright/test";
 
-import { expectOrvauxeFonts, visualScreenshotOptions } from "./visual-test-helpers";
+import {
+  expectOrvauxeFonts,
+  settleMotionForVisualCapture,
+  visualScreenshotOptions,
+} from "./visual-test-helpers";
 
 const visualStates = [
   { fullPage: true, height: 812, name: "home-mobile-375.png", width: 375 },
@@ -65,6 +69,7 @@ for (const state of visualStates) {
     );
 
     await page.setViewportSize({ height: state.height, width: state.width });
+    await settleMotionForVisualCapture(page);
     await page.goto("/", { waitUntil: "networkidle" });
     await primeLazyMedia(page);
 

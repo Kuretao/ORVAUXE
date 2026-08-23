@@ -3,6 +3,12 @@ import type { Page } from "@playwright/test";
 
 const screenshotTimeout = 15_000;
 
+export async function settleMotionForVisualCapture(page: Page): Promise<void> {
+  await page.addInitScript(() => {
+    document.documentElement.dataset.motion = "settled";
+  });
+}
+
 export async function expectOrvauxeFonts(page: Page): Promise<void> {
   await page.evaluate(async () => document.fonts.ready);
 
