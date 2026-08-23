@@ -2,7 +2,7 @@
 
 import { Container, Grid, Heading, Link, Text } from "@orvauxe/ui";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import type {
   HomeCampaignPanelId,
@@ -18,6 +18,7 @@ const canonicalPanelByState = {
   brand: "studio",
   nocturne: "nocturne",
 } as const satisfies Record<HomeCampaignStateId, HomeCampaignPanelId>;
+const reducedMotionQuery = "(prefers-reduced-motion: reduce)";
 
 function CampaignAction({ action }: { action: HomeCampaignState["actions"][number] }) {
   const props = {
@@ -40,6 +41,11 @@ export function HomeCampaignClient({ panels, states }: PreparedHomeCampaign) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [previewPanelId, setPreviewPanelId] = useState<HomeCampaignPanelId | null>(null);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [interactionKind, setInteractionKind] = useState<"preview" | "selected">("selected");
+  const [mediaTransition, setMediaTransition] = useState<{
+    incoming: HomeCampaignState;
+    outgoing: HomeCampaignState | null;
+  }>({ incoming: states[0], outgoing: null });
   const selectedState = states[selectedIndex] ?? states[0];
   const previewPanel = previewPanelId
     ? panels.find((panel) => panel.id === previewPanelId)
@@ -49,18 +55,64 @@ export function HomeCampaignClient({ panels, states }: PreparedHomeCampaign) {
     : selectedState;
   const activeIndex = states.findIndex((state) => state.id === activeState.id);
   const activePanelId = previewPanelId ?? canonicalPanelByState[selectedState.id];
+  const transitionKind = hasInteracted ? interactionKind : "initial";
+
+  useEffect(() => {
+    if (typeof window.matchMedia !== "function") return;
+    const mediaQuery = window.matchMedia(reducedMotionQuery);
+    const settleReducedMotion = () => {
+      if (!mediaQuery.matches) return;
+      setMediaTransition((current) =>
+        current.outgoing ? { ...current, outgoing: null } : current,
+      );
+    };
+
+    settleReducedMotion();
+    mediaQuery.addEventListener("change", settleReducedMotion);
+    return () => mediaQuery.removeEventListener("change", settleReducedMotion);
+  }, []);
+
+  function transitionMedia(nextState: HomeCampaignState) {
+    setMediaTransition((current) =>
+      current.incoming.id === nextState.id
+        ? current
+        : {
+            incoming: nextState,
+            outgoing:
+              typeof window.matchMedia === "function" &&
+              window.matchMedia(reducedMotionQuery).matches
+                ? null
+                : current.incoming,
+          },
+    );
+  }
 
   function selectState(nextIndex: number) {
     const normalizedIndex = (nextIndex + states.length) % states.length;
+    const nextState = states[normalizedIndex] ?? states[0];
     setPreviewPanelId(null);
     setSelectedIndex(normalizedIndex);
     setHasInteracted(true);
+    setInteractionKind("selected");
+    transitionMedia(nextState);
   }
 
   function beginPanelPreview(panelId: HomeCampaignPanelId, pointerType: string) {
     if (pointerType !== "mouse") return;
+    const panel = panels.find((candidate) => candidate.id === panelId);
+    const nextState = states.find((state) => state.id === panel?.previewStateId);
+    if (!nextState) return;
+
     setPreviewPanelId(panelId);
     setHasInteracted(true);
+    setInteractionKind("preview");
+    transitionMedia(nextState);
+  }
+
+  function endPanelPreview() {
+    setPreviewPanelId(null);
+    setInteractionKind("preview");
+    transitionMedia(selectedState);
   }
 
   return (
@@ -71,21 +123,47 @@ export function HomeCampaignClient({ panels, states }: PreparedHomeCampaign) {
       data-theme="dark"
     >
       <div className={styles.campaignStage}>
-        <div
-          className={styles.campaignMedia}
-          data-asset-status={activeState.media.temporary ? "temporary" : "production"}
-          data-transition={hasInteracted ? "active" : "initial"}
-          key={activeState.id}
-        >
-          <Image
-            alt={activeState.media.alt}
-            fetchPriority={!hasInteracted && activeIndex === 0 ? "high" : "auto"}
-            fill
-            loading={!hasInteracted && activeIndex === 0 ? "eager" : "lazy"}
-            sizes="100vw"
-            src={activeState.media.src}
-            style={{ objectPosition: activeState.media.objectPosition }}
-          />
+        <div className={styles.campaignMediaStack} data-transition-kind={transitionKind}>
+          {mediaTransition.outgoing ? (
+            <div
+              aria-hidden="true"
+              className={`${styles.campaignMedia} ${styles.campaignMediaOutgoing}`}
+              data-campaign-media="outgoing"
+              key={`outgoing-${mediaTransition.outgoing.id}`}
+              onAnimationEnd={(event) => {
+                if (event.target !== event.currentTarget) return;
+                const outgoingId = mediaTransition.outgoing?.id;
+                setMediaTransition((current) =>
+                  current.outgoing?.id === outgoingId ? { ...current, outgoing: null } : current,
+                );
+              }}
+            >
+              <Image
+                alt=""
+                fill
+                loading="lazy"
+                sizes="100vw"
+                src={mediaTransition.outgoing.media.src}
+                style={{ objectPosition: mediaTransition.outgoing.media.objectPosition }}
+              />
+            </div>
+          ) : null}
+          <div
+            className={`${styles.campaignMedia} ${styles.campaignMediaIncoming}`}
+            data-asset-status={activeState.media.temporary ? "temporary" : "production"}
+            data-campaign-media="incoming"
+            key={`incoming-${mediaTransition.incoming.id}`}
+          >
+            <Image
+              alt={mediaTransition.incoming.media.alt}
+              fetchPriority={!hasInteracted && activeIndex === 0 ? "high" : "auto"}
+              fill
+              loading={!hasInteracted && activeIndex === 0 ? "eager" : "lazy"}
+              sizes="100vw"
+              src={mediaTransition.incoming.media.src}
+              style={{ objectPosition: mediaTransition.incoming.media.objectPosition }}
+            />
+          </div>
         </div>
         <div aria-hidden="true" className={styles.campaignScrim} />
 
@@ -99,7 +177,11 @@ export function HomeCampaignClient({ panels, states }: PreparedHomeCampaign) {
             </Text>
           </div>
 
-          <Grid className={styles.campaignContent} key={`content-${activeState.id}`}>
+          <Grid
+            className={styles.campaignContent}
+            data-transition-kind={transitionKind}
+            key={`content-${activeState.id}`}
+          >
             <div className={styles.campaignTitleBlock}>
               <Heading
                 className={styles.campaignHeading}
@@ -151,7 +233,11 @@ export function HomeCampaignClient({ panels, states }: PreparedHomeCampaign) {
         </Container>
       </div>
 
-      <nav aria-label="Homepage destinations" className={styles.campaignRail}>
+      <nav
+        aria-label="Homepage destinations"
+        className={styles.campaignRail}
+        data-intro={hasInteracted ? "settled" : "enter"}
+      >
         <ol className={styles.campaignPanelList}>
           {panels.map((panel) => (
             <li className={styles.campaignPanelItem} key={panel.id}>
@@ -160,7 +246,7 @@ export function HomeCampaignClient({ panels, states }: PreparedHomeCampaign) {
                 data-previewed={activePanelId === panel.id ? "true" : "false"}
                 href={panel.href}
                 onPointerEnter={(event) => beginPanelPreview(panel.id, event.pointerType)}
-                onPointerLeave={() => setPreviewPanelId(null)}
+                onPointerLeave={endPanelPreview}
                 variant="quiet"
               >
                 <Text as="span" className={styles.campaignPanelIndex} variant="caption">

@@ -208,6 +208,105 @@ form[aria-label="Project inquiry"] :is([role="alert"], [role="status"]) {
   margin: 0;
 }
 
+@keyframes orvauxe-hero-part-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1rem, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes orvauxe-hero-media-settle {
+  from {
+    opacity: 0.92;
+    transform: scale(1.015);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+[data-motion-reveal] {
+  --orvauxe-reveal-distance: 1.5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-motion-hero] [data-motion-part] {
+    animation: orvauxe-hero-part-enter var(--orvauxe-motion-editorial) var(--orvauxe-ease-enter)
+      both;
+  }
+
+  [data-motion-hero] [data-motion-part="body"] {
+    animation-delay: 90ms;
+  }
+
+  [data-motion-hero] [data-motion-part="action"] {
+    animation-delay: 150ms;
+  }
+
+  [data-motion-hero] [data-motion-media] {
+    animation: orvauxe-hero-media-settle var(--orvauxe-motion-cinematic) var(--orvauxe-ease-enter)
+      both;
+  }
+
+  [data-motion-state="pending"]:not([data-motion-variant="composition"]),
+  [data-motion-state="revealed"]:not([data-motion-variant="composition"]) {
+    transition: transform var(--orvauxe-motion-editorial) var(--orvauxe-ease-enter);
+  }
+
+  [data-motion-state="pending"]:not([data-motion-variant="composition"]) {
+    transform: translate3d(0, var(--orvauxe-reveal-distance), 0);
+  }
+
+  [data-motion-state="pending"][data-motion-variant="proof"] {
+    transform: translate3d(0, var(--orvauxe-reveal-distance), 0) scale(1.015);
+  }
+
+  [data-motion-state="revealed"]:not([data-motion-variant="composition"]) {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  [data-motion-variant="composition"] [data-motion-part] {
+    transition: transform var(--orvauxe-motion-editorial) var(--orvauxe-ease-enter);
+  }
+
+  [data-motion-state="pending"][data-motion-variant="composition"] [data-motion-part] {
+    transform: translate3d(0, var(--orvauxe-reveal-distance), 0);
+  }
+
+  [data-motion-state="revealed"][data-motion-variant="composition"] [data-motion-part] {
+    transform: translate3d(0, 0, 0);
+  }
+
+  [data-motion-variant="composition"] [data-motion-part="body"] {
+    transition-delay: 70ms;
+  }
+
+  [data-motion-variant="composition"] [data-motion-part="action"] {
+    transition-delay: 130ms;
+  }
+}
+
+@media (max-width: 47.999rem) {
+  [data-motion-reveal] {
+    --orvauxe-reveal-distance: 0.875rem;
+  }
+
+  [data-motion-hero] [data-motion-part="body"] {
+    animation-delay: 50ms;
+  }
+
+  [data-motion-hero] [data-motion-part="action"] {
+    animation-delay: 90ms;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

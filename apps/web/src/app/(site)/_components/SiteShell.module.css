@@ -161,6 +161,23 @@
   letter-spacing: var(--orvauxe-type-label-letter-spacing);
   text-transform: uppercase;
   cursor: pointer;
+  transition:
+    color var(--orvauxe-motion-fast) var(--orvauxe-ease-standard),
+    background-color var(--orvauxe-motion-fast) var(--orvauxe-ease-standard),
+    transform var(--orvauxe-motion-instant) var(--orvauxe-ease-standard);
+}
+
+.menuButton:hover,
+.menuButton:focus-visible,
+.closeButton:hover,
+.closeButton:focus-visible {
+  color: var(--orvauxe-text-inverse);
+  background: var(--orvauxe-surface-inverse);
+}
+
+.menuButton:active,
+.closeButton:active {
+  transform: translateY(1px);
 }
 
 .mobileDialog {
@@ -173,14 +190,32 @@
   color: var(--orvauxe-text-primary);
   background: var(--orvauxe-surface-primary);
   border: 0;
+  opacity: 0;
+  transform: translate3d(0, -0.75rem, 0);
+  transition:
+    display var(--orvauxe-motion-standard) allow-discrete,
+    overlay var(--orvauxe-motion-standard) allow-discrete,
+    opacity var(--orvauxe-motion-standard) var(--orvauxe-ease-standard),
+    transform var(--orvauxe-motion-standard) var(--orvauxe-ease-standard);
 }
 
 .mobileDialog::backdrop {
   background: var(--orvauxe-surface-primary);
+  opacity: 0;
+  transition:
+    display var(--orvauxe-motion-standard) allow-discrete,
+    overlay var(--orvauxe-motion-standard) allow-discrete,
+    opacity var(--orvauxe-motion-standard) var(--orvauxe-ease-standard);
 }
 
 .mobileDialog[open] {
   display: block;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.mobileDialog[open]::backdrop {
+  opacity: 1;
 }
 
 .mobileDialogFrame {
@@ -215,6 +250,47 @@
   line-height: var(--orvauxe-type-heading-md-line-height);
   letter-spacing: var(--orvauxe-type-heading-md-letter-spacing);
   text-transform: none;
+}
+
+.mobileDialog .navigationList li {
+  opacity: 0;
+  transform: translate3d(0, 0.5rem, 0);
+  transition:
+    opacity var(--orvauxe-motion-fast) var(--orvauxe-ease-enter),
+    transform var(--orvauxe-motion-fast) var(--orvauxe-ease-enter);
+}
+
+.mobileDialog[open] .navigationList li {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.mobileDialog[open] .navigationList li:nth-child(2) {
+  transition-delay: 30ms;
+}
+
+.mobileDialog[open] .navigationList li:nth-child(3) {
+  transition-delay: 60ms;
+}
+
+.mobileDialog[open] .navigationList li:nth-child(4) {
+  transition-delay: 90ms;
+}
+
+@starting-style {
+  .mobileDialog[open] {
+    opacity: 0;
+    transform: translate3d(0, -0.75rem, 0);
+  }
+
+  .mobileDialog[open]::backdrop {
+    opacity: 0;
+  }
+
+  .mobileDialog[open] .navigationList li {
+    opacity: 0;
+    transform: translate3d(0, 0.5rem, 0);
+  }
 }
 
 .mobileOrigin {
@@ -254,7 +330,17 @@
 
 @media (prefers-reduced-motion: reduce) {
   .skipLink,
-  .navigationLink::after {
+  .navigationLink::after,
+  .menuButton,
+  .closeButton,
+  .mobileDialog,
+  .mobileDialog::backdrop,
+  .mobileDialog .navigationList li {
     transition: none;
+  }
+
+  .menuButton:active,
+  .closeButton:active {
+    transform: none;
   }
 }

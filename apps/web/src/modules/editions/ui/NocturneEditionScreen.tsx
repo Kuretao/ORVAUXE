@@ -19,8 +19,13 @@ export function NocturneEditionScreen({ edition }: NocturneEditionScreenProps) {
         slug={edition.slug}
       />
 
-      <section aria-labelledby="nocturne-heading" className={styles.nocturneHero} data-theme="dark">
-        <div className={styles.nocturneHeroMedia}>
+      <section
+        aria-labelledby="nocturne-heading"
+        className={styles.nocturneHero}
+        data-motion-hero
+        data-theme="dark"
+      >
+        <div className={styles.nocturneHeroMedia} data-motion-media>
           <Image
             alt={edition.heroMedia.decorative ? "" : edition.heroMedia.alt}
             fill
@@ -44,7 +49,7 @@ export function NocturneEditionScreen({ edition }: NocturneEditionScreenProps) {
             </ol>
           </nav>
           <Grid className={styles.nocturneHeroGrid}>
-            <div className={styles.nocturneHeroIdentity}>
+            <div className={styles.nocturneHeroIdentity} data-motion-part="heading">
               <Text className={styles.kicker} variant="label">
                 {edition.numberLabel} / {edition.originLabel}
               </Text>
@@ -57,7 +62,7 @@ export function NocturneEditionScreen({ edition }: NocturneEditionScreenProps) {
                 {edition.name}
               </Heading>
             </div>
-            <div className={styles.nocturneHeroCopy}>
+            <div className={styles.nocturneHeroCopy} data-motion-part="body">
               <dl className={styles.metadata}>
                 <div>
                   <dt>Category</dt>
@@ -146,7 +151,7 @@ export function NocturneEditionScreen({ edition }: NocturneEditionScreenProps) {
             </Text>
           </Grid>
 
-          <div className={styles.experiencePrimary}>
+          <div className={styles.experiencePrimary} data-motion-reveal data-motion-variant="proof">
             <NocturneStorefront
               edition={edition}
               kind="home"
@@ -154,7 +159,11 @@ export function NocturneEditionScreen({ edition }: NocturneEditionScreenProps) {
             />
           </div>
 
-          <div className={styles.experienceCollection}>
+          <div
+            className={styles.experienceCollection}
+            data-motion-reveal
+            data-motion-variant="proof"
+          >
             <NocturneStorefront
               edition={edition}
               kind="collection"
@@ -163,14 +172,18 @@ export function NocturneEditionScreen({ edition }: NocturneEditionScreenProps) {
           </div>
 
           <Grid className={styles.experiencePair}>
-            <div className={styles.experienceProduct}>
+            <div
+              className={styles.experienceProduct}
+              data-motion-reveal
+              data-motion-variant="proof"
+            >
               <NocturneStorefront
                 edition={edition}
                 kind="product"
                 sizes="(min-width: 96rem) 64rem, (min-width: 64rem) 66vw, (min-width: 48rem) 62vw, 100vw"
               />
             </div>
-            <div className={styles.experienceMobile}>
+            <div className={styles.experienceMobile} data-motion-reveal data-motion-variant="proof">
               <NocturneStorefront
                 edition={edition}
                 kind="mobile"
@@ -340,16 +353,17 @@ export function NocturneEditionScreen({ edition }: NocturneEditionScreenProps) {
         data-theme="light"
       >
         <Container>
-          <Grid className={styles.finalGrid}>
+          <Grid className={styles.finalGrid} data-motion-reveal data-motion-variant="composition">
             <Heading
               className={styles.finalHeading}
+              data-motion-part="heading"
               id="nocturne-final-heading"
               level={2}
               variant="display-lg"
             >
               Start with Nocturne.
             </Heading>
-            <div className={styles.finalCopy}>
+            <div className={styles.finalCopy} data-motion-part="body">
               <Text variant="body-lg">
                 Tell us about the brand, the current Shopify store and what needs to be ready for
                 launch.

@@ -22,19 +22,20 @@ export function EditionIndexScreen({ editions }: EditionIndexScreenProps) {
     <main className={styles.screen} id="main-content" tabIndex={-1}>
       <section aria-labelledby="editions-heading" className={styles.indexHero} data-theme="light">
         <Container>
-          <Grid className={styles.indexHeroGrid}>
-            <Text className={styles.eyebrow} variant="label">
+          <Grid className={styles.indexHeroGrid} data-motion-hero>
+            <Text className={styles.eyebrow} data-motion-part="eyebrow" variant="label">
               01 / Editions
             </Text>
             <Heading
               className={styles.indexHeading}
+              data-motion-part="heading"
               id="editions-heading"
               level={1}
               variant="display-lg"
             >
               Curated commerce, ready to become yours.
             </Heading>
-            <div className={styles.indexLead}>
+            <div className={styles.indexLead} data-motion-part="body">
               <Text variant="body-lg">
                 Premium Shopify storefront systems adapted to your brand and launched on a defined
                 foundation.
@@ -68,7 +69,7 @@ export function EditionIndexScreen({ editions }: EditionIndexScreenProps) {
           </Grid>
 
           {featured ? (
-            <div className={styles.indexProof}>
+            <div className={styles.indexProof} data-motion-reveal data-motion-variant="proof">
               <NocturneStorefront
                 edition={featured}
                 kind="home"
@@ -456,16 +457,17 @@ export function EditionIndexScreen({ editions }: EditionIndexScreenProps) {
         data-theme="light"
       >
         <Container>
-          <Grid className={styles.finalGrid}>
+          <Grid className={styles.finalGrid} data-motion-reveal data-motion-variant="composition">
             <Heading
               className={styles.finalHeading}
+              data-motion-part="heading"
               id="editions-final-heading"
               level={2}
               variant="display-lg"
             >
               Choose the foundation. Bring the brand.
             </Heading>
-            <div className={styles.finalCopy}>
+            <div className={styles.finalCopy} data-motion-part="body">
               <Text variant="body-lg">
                 Tell us what you are building and whether a named Edition already feels like the
                 right place to begin.

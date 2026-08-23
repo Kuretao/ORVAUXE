@@ -15,25 +15,61 @@
   isolation: isolate;
 }
 
-.campaignMedia,
+.campaignMediaStack,
 .campaignScrim {
   position: absolute;
   inset: 0;
 }
 
-.campaignMedia {
+.campaignMediaStack {
   z-index: var(--orvauxe-z-base);
+  overflow: hidden;
   background: var(--orvauxe-surface-secondary);
 }
 
-.campaignMedia[data-transition="active"] {
-  animation: campaign-media-reveal var(--orvauxe-motion-standard) var(--orvauxe-ease-editorial) both;
+.campaignMedia {
+  position: absolute;
+  inset: 0;
 }
 
 .campaignMedia > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.campaignMediaIncoming {
+  z-index: 1;
+}
+
+.campaignMediaOutgoing {
+  z-index: 0;
+  pointer-events: none;
+}
+
+.campaignMediaStack[data-transition-kind="selected"] .campaignMediaIncoming {
+  animation: campaign-media-enter var(--orvauxe-motion-editorial) var(--orvauxe-ease-enter) both;
+}
+
+.campaignMediaStack[data-transition-kind="selected"] .campaignMediaOutgoing {
+  animation: campaign-media-exit var(--orvauxe-motion-editorial) var(--orvauxe-ease-exit) both;
+}
+
+.campaignMediaStack[data-transition-kind="preview"] .campaignMediaIncoming,
+.campaignMediaStack[data-transition-kind="preview"] .campaignMediaOutgoing {
+  animation-duration: var(--orvauxe-motion-standard);
+}
+
+.campaignMediaStack[data-transition-kind="preview"] .campaignMediaIncoming {
+  animation-name: campaign-media-enter;
+  animation-timing-function: var(--orvauxe-ease-enter);
+  animation-fill-mode: both;
+}
+
+.campaignMediaStack[data-transition-kind="preview"] .campaignMediaOutgoing {
+  animation-name: campaign-media-exit;
+  animation-timing-function: var(--orvauxe-ease-exit);
+  animation-fill-mode: both;
 }
 
 .campaignScrim {
@@ -80,6 +116,28 @@
 .campaignTitleBlock,
 .campaignCommercial {
   grid-column: 1 / -1;
+}
+
+.campaignContent[data-transition-kind="initial"] .campaignTitleBlock,
+.campaignContent[data-transition-kind="initial"] .campaignCommercial,
+.campaignContent[data-transition-kind="selected"] .campaignTitleBlock,
+.campaignContent[data-transition-kind="selected"] .campaignCommercial,
+.campaignRail[data-intro="enter"] {
+  animation: campaign-copy-enter var(--orvauxe-motion-editorial) var(--orvauxe-ease-enter) both;
+}
+
+.campaignContent[data-transition-kind="initial"] .campaignCommercial,
+.campaignContent[data-transition-kind="selected"] .campaignCommercial {
+  animation-delay: 80ms;
+}
+
+.campaignContent[data-transition-kind="preview"] .campaignTitleBlock,
+.campaignContent[data-transition-kind="preview"] .campaignCommercial {
+  animation: campaign-copy-enter var(--orvauxe-motion-standard) var(--orvauxe-ease-enter) both;
+}
+
+.campaignRail[data-intro="enter"] {
+  animation-delay: 140ms;
 }
 
 .campaignTitleBlock {
@@ -294,15 +352,39 @@
   border: 0;
 }
 
-@keyframes campaign-media-reveal {
+@keyframes campaign-media-enter {
   from {
-    opacity: 0.82;
-    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+    transform: scale(1.015);
   }
 
   to {
     opacity: 1;
-    clip-path: inset(0);
+    transform: scale(1);
+  }
+}
+
+@keyframes campaign-media-exit {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.996);
+  }
+}
+
+@keyframes campaign-copy-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.875rem, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -758,6 +840,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .campaignMedia,
+  .campaignContent > *,
+  .campaignRail,
   .campaignControl,
   .campaignPanelLink::after,
   .editorialAction::before,

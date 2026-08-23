@@ -33,11 +33,11 @@ export function StudioScreen({ page }: StudioScreenProps) {
 
       <section aria-labelledby="studio-heading" className={styles.hero} data-theme="dark">
         <Container>
-          <Grid className={styles.heroGrid}>
-            <Text className={styles.index} variant="label">
+          <Grid className={styles.heroGrid} data-motion-hero>
+            <Text className={styles.index} data-motion-part="eyebrow" variant="label">
               01 / ORVAUXE
             </Text>
-            <div className={styles.heroIdentity}>
+            <div className={styles.heroIdentity} data-motion-part="heading">
               <Text variant="label">Commerce Atelier</Text>
               <Heading id="studio-heading" level={1} variant="display-lg">
                 {page.heroHeading}
@@ -46,7 +46,7 @@ export function StudioScreen({ page }: StudioScreenProps) {
                 Chengdu · Worldwide
               </Text>
             </div>
-            <Text className={styles.heroCopy} variant="body-lg">
+            <Text className={styles.heroCopy} data-motion-part="body" variant="body-lg">
               {page.heroCopy}
             </Text>
           </Grid>
@@ -113,8 +113,8 @@ export function StudioScreen({ page }: StudioScreenProps) {
         data-theme="light"
       >
         <Container>
-          <Grid className={styles.proofGrid}>
-            <div className={styles.proofIdentity}>
+          <Grid className={styles.proofGrid} data-motion-reveal data-motion-variant="composition">
+            <div className={styles.proofIdentity} data-motion-part="heading">
               <Text className={styles.index} variant="label">
                 04 / Selected commerce experience
               </Text>
@@ -123,7 +123,7 @@ export function StudioScreen({ page }: StudioScreenProps) {
               </Heading>
               <Text variant="label">Custom commerce</Text>
             </div>
-            <div className={styles.proofCopy}>
+            <div className={styles.proofCopy} data-motion-part="body">
               <Text variant="body-lg">{publicTrustContent(page.trustContent)}</Text>
               <Text variant="body-sm">
                 An anonymous technical proof of engineering range—not a Nocturne client case or a
@@ -146,7 +146,7 @@ export function StudioScreen({ page }: StudioScreenProps) {
       <section aria-labelledby="studio-origin-heading" className={styles.origin} data-theme="dark">
         <Container>
           <Grid className={styles.originGrid}>
-            <figure className={styles.originMedia}>
+            <figure className={styles.originMedia} data-motion-reveal data-motion-variant="proof">
               <Image
                 alt="Contemporary concrete and glass architecture reflected after rain."
                 fill
@@ -199,11 +199,16 @@ export function StudioScreen({ page }: StudioScreenProps) {
 
       <section aria-labelledby="studio-final-heading" className={styles.finalCta} data-theme="dark">
         <Container>
-          <Grid className={styles.finalGrid}>
-            <Heading id="studio-final-heading" level={2} variant="display-lg">
+          <Grid className={styles.finalGrid} data-motion-reveal data-motion-variant="composition">
+            <Heading
+              data-motion-part="heading"
+              id="studio-final-heading"
+              level={2}
+              variant="display-lg"
+            >
               Have a brand worth building for?
             </Heading>
-            <div className={styles.finalCopy}>
+            <div className={styles.finalCopy} data-motion-part="body">
               <Text variant="body-lg">
                 Tell us what the storefront needs to express, sell and make easier to operate.
               </Text>

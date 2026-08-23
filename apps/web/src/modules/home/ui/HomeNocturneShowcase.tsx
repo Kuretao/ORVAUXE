@@ -34,7 +34,7 @@ function ProofImage({
   sizes: string;
 }) {
   return (
-    <div className={className}>
+    <div className={className} data-motion-reveal data-motion-variant="proof">
       {media ? (
         <Image
           alt={media.alt}
@@ -61,19 +61,20 @@ export function HomeNocturneShowcase({ edition, indexHref }: HomeNocturneShowcas
   return (
     <section aria-labelledby="home-nocturne-heading" className={styles.nocturne} data-theme="dark">
       <Container>
-        <Grid className={styles.storyHeader}>
-          <Text className={styles.storyIndex} variant="label">
+        <Grid className={styles.storyHeader} data-motion-reveal data-motion-variant="composition">
+          <Text className={styles.storyIndex} data-motion-part="eyebrow" variant="label">
             04 / {edition.numberLabel}
           </Text>
           <Heading
             className={`${styles.storyHeading} ${styles.nocturneTitle}`}
+            data-motion-part="heading"
             id="home-nocturne-heading"
             level={2}
             variant="display-lg"
           >
             {edition.name}
           </Heading>
-          <div className={styles.storyCopy}>
+          <div className={styles.storyCopy} data-motion-part="body">
             <Text className={styles.storyIntroduction} variant="body-lg">
               {edition.copy}
             </Text>
@@ -88,7 +89,7 @@ export function HomeNocturneShowcase({ edition, indexHref }: HomeNocturneShowcas
           </div>
         </Grid>
 
-        <div className={styles.nocturneCampaign}>
+        <div className={styles.nocturneCampaign} data-motion-reveal data-motion-variant="proof">
           {campaignMedia ? (
             <Image
               alt={campaignMedia.alt}
@@ -126,7 +127,11 @@ export function HomeNocturneShowcase({ edition, indexHref }: HomeNocturneShowcas
         </dl>
 
         <Grid className={styles.nocturneProofGrid}>
-          <div className={`${styles.nocturneStorefront} ${styles.nocturneStorefrontReveal}`}>
+          <div
+            className={`${styles.nocturneStorefront} ${styles.nocturneStorefrontReveal}`}
+            data-motion-reveal
+            data-motion-variant="proof"
+          >
             <NocturneStorefront
               context="homepage-v1-2"
               edition={edition}

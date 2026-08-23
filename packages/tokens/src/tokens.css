@@ -167,18 +167,19 @@
   --orvauxe-breakpoint-lg: var(--breakpoint-lg);
   --orvauxe-breakpoint-xl: var(--breakpoint-xl);
 
-  --orvauxe-motion-instant: 0ms;
-  --orvauxe-motion-fast: 160ms;
-  --orvauxe-motion-standard: 320ms;
-  --orvauxe-motion-editorial: 800ms;
-  --orvauxe-motion-cinematic: 1200ms;
+  --orvauxe-motion-instant: 140ms;
+  --orvauxe-motion-fast: 220ms;
+  --orvauxe-motion-quick: var(--orvauxe-motion-fast);
+  --orvauxe-motion-standard: 380ms;
+  --orvauxe-motion-editorial: 640ms;
+  --orvauxe-motion-cinematic: 900ms;
   --orvauxe-motion-ui: var(--orvauxe-motion-standard);
   --orvauxe-motion-distance-sm: 0.5rem;
   --orvauxe-motion-distance-md: 2rem;
-  --orvauxe-ease-standard: cubic-bezier(0.2, 0, 0, 1);
-  --orvauxe-ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
-  --orvauxe-ease-exit: cubic-bezier(0.4, 0, 1, 1);
-  --orvauxe-ease-editorial: cubic-bezier(0.65, 0, 0.35, 1);
+  --orvauxe-ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --orvauxe-ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
+  --orvauxe-ease-exit: cubic-bezier(0.4, 0, 0.2, 1);
+  --orvauxe-ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
 
   --orvauxe-focus-width: 0.125rem;
   --orvauxe-focus-offset: 0.1875rem;
@@ -357,7 +358,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   :root {
+    --orvauxe-motion-instant: 0ms;
     --orvauxe-motion-fast: 0ms;
+    --orvauxe-motion-quick: 0ms;
     --orvauxe-motion-standard: 0ms;
     --orvauxe-motion-editorial: 0ms;
     --orvauxe-motion-cinematic: 0ms;

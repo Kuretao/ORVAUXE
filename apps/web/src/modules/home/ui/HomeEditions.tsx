@@ -13,19 +13,24 @@ export function HomeEditions({ editions }: HomeEditionsProps) {
   return (
     <section aria-labelledby="home-editions-heading" className={styles.editions} data-theme="light">
       <Container>
-        <Grid className={styles.editionsIntroduction}>
-          <Text className={styles.editionsKicker} variant="label">
+        <Grid
+          className={styles.editionsIntroduction}
+          data-motion-reveal
+          data-motion-variant="composition"
+        >
+          <Text className={styles.editionsKicker} data-motion-part="eyebrow" variant="label">
             03 / Editions
           </Text>
           <Heading
             className={styles.editionsHeading}
+            data-motion-part="heading"
             id="home-editions-heading"
             level={2}
             variant="heading-xl"
           >
             {editions.heading}
           </Heading>
-          <div className={styles.editionsCopy}>
+          <div className={styles.editionsCopy} data-motion-part="body">
             <Text variant="body-lg">{editions.introduction}</Text>
             <Text className={styles.price} variant="label">
               {featured.startingPrice}
