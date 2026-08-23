@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 
 import { SiteFooter } from "./_components/SiteFooter";
 import { SiteHeader } from "./_components/SiteHeader";
+import { SiteMotion } from "./_components/SiteMotion.client";
 import { SkipLink } from "./_components/SkipLink";
 import styles from "./_components/SiteShell.module.css";
 
@@ -25,6 +26,7 @@ export default function SiteLayout({ children }: Readonly<{ children: ReactNode 
   return (
     <>
       <SkipLink />
+      <SiteMotion />
       <div className={styles.siteShell}>
         <SiteHeader />
         {children}

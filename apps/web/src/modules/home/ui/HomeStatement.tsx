@@ -18,16 +18,17 @@ export function HomeStatement({ statement }: HomeStatementProps) {
         <Text className={styles.sectionIndex} variant="label">
           01 / Point of view
         </Text>
-        <Grid className={styles.statementGrid}>
+        <Grid className={styles.statementGrid} data-motion-reveal data-motion-variant="composition">
           <Heading
             className={styles.statementHeading}
+            data-motion-part="heading"
             id="home-statement-heading"
             level={2}
             variant="display-lg"
           >
             {statement.heading}
           </Heading>
-          <Text className={styles.statementBody} variant="body-lg">
+          <Text className={styles.statementBody} data-motion-part="body" variant="body-lg">
             {statement.body}
           </Text>
         </Grid>

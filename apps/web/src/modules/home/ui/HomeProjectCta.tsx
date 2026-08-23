@@ -30,11 +30,18 @@ export function HomeProjectCta({ content }: HomeProjectCtaProps) {
       className={styles.projectCta}
       data-theme="light"
     >
-      <Container className={styles.projectCtaFrame}>
-        <Text variant="label">{content.eyebrow}</Text>
+      <Container
+        className={styles.projectCtaFrame}
+        data-motion-reveal
+        data-motion-variant="composition"
+      >
+        <Text data-motion-part="eyebrow" variant="label">
+          {content.eyebrow}
+        </Text>
         <Heading
           aria-label={headingLines.join(" ")}
           className={styles.projectCtaHeading}
+          data-motion-part="heading"
           id="home-project-cta-heading"
           level={2}
           variant="display-lg"
@@ -49,7 +56,7 @@ export function HomeProjectCta({ content }: HomeProjectCtaProps) {
             </span>
           ))}
         </Heading>
-        <Grid className={styles.projectCtaFooter}>
+        <Grid className={styles.projectCtaFooter} data-motion-part="body">
           <Text className={styles.projectCtaBody} variant="body-lg">
             {content.body}
           </Text>

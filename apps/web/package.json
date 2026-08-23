@@ -11,6 +11,7 @@
     "e2e:visual": "playwright test --grep \"visual baseline\" --project=chromium --workers=1",
     "e2e:visual:update": "pnpm e2e:visual --update-snapshots",
     "lint": "eslint . --max-warnings 0",
+    "review:motion": "node scripts/capture-motion-review.mjs",
     "start": "next start",
     "test": "vitest run",
     "typecheck": "next typegen && tsc --noEmit"

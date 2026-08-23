@@ -390,13 +390,13 @@
 
 @keyframes system-preview-change {
   from {
-    opacity: 0.72;
-    clip-path: inset(0 0 0 9%);
+    opacity: 0.88;
+    transform: translate3d(0, 0.75rem, 0) scale(1.008);
   }
 
   to {
     opacity: 1;
-    clip-path: inset(0);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 

@@ -27,14 +27,14 @@ export default async function StartProjectPage({ searchParams }: StartProjectPag
     <main className={styles.screen} id="main-content" tabIndex={-1}>
       <section aria-labelledby="project-heading" className={styles.hero} data-theme="dark">
         <Container>
-          <Grid className={styles.heroGrid}>
-            <Text className={styles.index} variant="label">
+          <Grid className={styles.heroGrid} data-motion-hero>
+            <Text className={styles.index} data-motion-part="eyebrow" variant="label">
               Project inquiry
             </Text>
-            <Heading id="project-heading" level={1} variant="display-lg">
+            <Heading data-motion-part="heading" id="project-heading" level={1} variant="display-lg">
               Tell us what you are building.
             </Heading>
-            <div className={styles.heroCopy}>
+            <div className={styles.heroCopy} data-motion-part="body">
               <Text variant="body-lg">
                 Share the brand, the current storefront and what the next stage needs to accomplish.
               </Text>
@@ -49,11 +49,16 @@ export default async function StartProjectPage({ searchParams }: StartProjectPag
 
       <section aria-labelledby="project-route-heading" className={styles.intake} data-theme="light">
         <Container>
-          <Grid className={styles.routeHeader}>
-            <Text className={styles.index} variant="label">
+          <Grid className={styles.routeHeader} data-motion-reveal data-motion-variant="composition">
+            <Text className={styles.index} data-motion-part="eyebrow" variant="label">
               Edition or Atelier
             </Text>
-            <Heading id="project-route-heading" level={2} variant="heading-xl">
+            <Heading
+              data-motion-part="heading"
+              id="project-route-heading"
+              level={2}
+              variant="heading-xl"
+            >
               Start from the right foundation.
             </Heading>
           </Grid>

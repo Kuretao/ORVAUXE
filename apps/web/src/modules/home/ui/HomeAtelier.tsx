@@ -15,11 +15,20 @@ export function HomeAtelier({ atelier }: HomeAtelierProps) {
         <Text className={styles.sectionIndex} variant="label">
           06 / Bespoke commerce
         </Text>
-        <Grid className={styles.atelierIntroduction}>
-          <Heading id="home-atelier-heading" level={2} variant="heading-xl">
+        <Grid
+          className={styles.atelierIntroduction}
+          data-motion-reveal
+          data-motion-variant="composition"
+        >
+          <Heading
+            data-motion-part="heading"
+            id="home-atelier-heading"
+            level={2}
+            variant="heading-xl"
+          >
             {atelier.heading}
           </Heading>
-          <div className={styles.atelierCopy}>
+          <div className={styles.atelierCopy} data-motion-part="body">
             <Text variant="body-lg">{atelier.introduction}</Text>
             <Text className={styles.price} variant="label">
               {atelier.price}
@@ -36,7 +45,7 @@ export function HomeAtelier({ atelier }: HomeAtelierProps) {
         </Grid>
 
         <Grid className={styles.atelierExperience}>
-          <figure className={styles.atelierMedia}>
+          <figure className={styles.atelierMedia} data-motion-reveal data-motion-variant="proof">
             <Image
               alt={
                 atelier.media?.alt ??

@@ -30,7 +30,8 @@
     color var(--orvauxe-motion-fast) var(--orvauxe-ease-standard),
     background-color var(--orvauxe-motion-fast) var(--orvauxe-ease-standard),
     border-color var(--orvauxe-motion-fast) var(--orvauxe-ease-standard),
-    opacity var(--orvauxe-motion-fast) var(--orvauxe-ease-standard);
+    opacity var(--orvauxe-motion-fast) var(--orvauxe-ease-standard),
+    transform var(--orvauxe-motion-instant) var(--orvauxe-ease-standard);
 }
 
 .orvauxe-button:hover:not(:disabled) {
@@ -40,7 +41,8 @@
 }
 
 .orvauxe-button:active:not(:disabled) {
-  opacity: 0.78;
+  opacity: 0.92;
+  transform: translateY(1px);
 }
 
 .orvauxe-button:disabled,
@@ -364,5 +366,9 @@
   .orvauxe-button,
   .orvauxe-link {
     transition: none;
+  }
+
+  .orvauxe-button:active:not(:disabled) {
+    transform: none;
   }
 }

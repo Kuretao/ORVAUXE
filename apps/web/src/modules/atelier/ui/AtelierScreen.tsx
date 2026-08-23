@@ -21,17 +21,17 @@ export function AtelierScreen({ page }: AtelierScreenProps) {
 
       <section aria-labelledby="atelier-heading" className={styles.hero} data-theme="dark">
         <Container>
-          <Grid className={styles.heroGrid}>
-            <Text className={styles.index} variant="label">
+          <Grid className={styles.heroGrid} data-motion-hero>
+            <Text className={styles.index} data-motion-part="eyebrow" variant="label">
               01 / Atelier
             </Text>
-            <div className={styles.heroIdentity}>
+            <div className={styles.heroIdentity} data-motion-part="heading">
               <Text variant="label">Bespoke commerce</Text>
               <Heading id="atelier-heading" level={1} variant="display-lg">
                 {page.heroHeading}
               </Heading>
             </div>
-            <div className={styles.heroCopy}>
+            <div className={styles.heroCopy} data-motion-part="body">
               <Text variant="body-lg">{page.heroCopy}</Text>
               <Text className={styles.price} variant="label">
                 From $6,000
@@ -51,14 +51,23 @@ export function AtelierScreen({ page }: AtelierScreenProps) {
 
       <section aria-labelledby="atelier-fit-heading" className={styles.section} data-theme="light">
         <Container>
-          <Grid className={styles.sectionHeader}>
-            <Text className={styles.index} variant="label">
+          <Grid
+            className={styles.sectionHeader}
+            data-motion-reveal
+            data-motion-variant="composition"
+          >
+            <Text className={styles.index} data-motion-part="eyebrow" variant="label">
               02 / When Atelier
             </Text>
-            <Heading id="atelier-fit-heading" level={2} variant="heading-xl">
+            <Heading
+              data-motion-part="heading"
+              id="atelier-fit-heading"
+              level={2}
+              variant="heading-xl"
+            >
               The system follows the brief.
             </Heading>
-            <Text className={styles.sectionCopy} variant="body-lg">
+            <Text className={styles.sectionCopy} data-motion-part="body" variant="body-lg">
               {page.serviceExplanation}
             </Text>
           </Grid>
@@ -166,7 +175,7 @@ export function AtelierScreen({ page }: AtelierScreenProps) {
 
       <section className={styles.material} data-theme="light">
         <Container>
-          <figure className={styles.materialFigure}>
+          <figure className={styles.materialFigure} data-motion-reveal data-motion-variant="proof">
             <Image
               alt="Ivory tailoring material and black structural forms arranged as an atelier study."
               fill
@@ -192,11 +201,16 @@ export function AtelierScreen({ page }: AtelierScreenProps) {
         data-theme="light"
       >
         <Container>
-          <Grid className={styles.finalGrid}>
-            <Heading id="atelier-final-heading" level={2} variant="display-lg">
+          <Grid className={styles.finalGrid} data-motion-reveal data-motion-variant="composition">
+            <Heading
+              data-motion-part="heading"
+              id="atelier-final-heading"
+              level={2}
+              variant="display-lg"
+            >
               Build with the Atelier.
             </Heading>
-            <div className={styles.finalCopy}>
+            <div className={styles.finalCopy} data-motion-part="body">
               <Text variant="body-lg">{page.commercialCopy}</Text>
               <Link
                 className={styles.editorialAction}
