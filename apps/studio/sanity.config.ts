@@ -9,21 +9,22 @@ import {
   singletonTypeNames,
 } from "./src/structure/desk-structure";
 
-function requireEnvironmentValue(name: "SANITY_STUDIO_PROJECT_ID" | "SANITY_STUDIO_DATASET") {
-  const value = process.env[name];
+const projectId = process.env.SANITY_STUDIO_PROJECT_ID;
+const dataset = process.env.SANITY_STUDIO_DATASET;
 
-  if (!value) {
-    throw new Error(`Missing required Studio environment variable: ${name}`);
-  }
+if (!projectId) {
+  throw new Error("Missing required Studio environment variable: SANITY_STUDIO_PROJECT_ID");
+}
 
-  return value;
+if (!dataset) {
+  throw new Error("Missing required Studio environment variable: SANITY_STUDIO_DATASET");
 }
 
 export default defineConfig({
   name: "default",
   title: "ORVAUXE",
-  projectId: requireEnvironmentValue("SANITY_STUDIO_PROJECT_ID"),
-  dataset: requireEnvironmentValue("SANITY_STUDIO_DATASET"),
+  projectId,
+  dataset,
   plugins: [structureTool({ structure: deskStructure }), visionTool()],
   schema: {
     types: schemaTypes,
