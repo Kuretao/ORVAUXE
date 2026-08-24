@@ -29,6 +29,9 @@ importers:
 
   apps/studio:
     dependencies:
+      '@sanity/client':
+        specifier: 7.26.2
+        version: 7.26.2
       '@sanity/vision':
         specifier: 6.9.2
         version: 6.9.2(dfaa94a517a62e51f35ef729dbac17ca)

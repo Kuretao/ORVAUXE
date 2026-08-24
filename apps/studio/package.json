@@ -7,11 +7,15 @@
     "dev": "sanity dev",
     "build": "sanity build",
     "lint": "eslint . --max-warnings 0",
+    "seed:dry-run": "node --env-file=.env.local scripts/seed-production-content.mjs --dry-run",
+    "seed:production": "node --env-file=.env.local scripts/seed-production-content.mjs --execute",
+    "seed:verify": "node --env-file=.env.local scripts/seed-production-content.mjs --verify",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "typegen": "sanity schema extract --path schema.json --force && sanity typegen generate"
   },
   "dependencies": {
+    "@sanity/client": "7.26.2",
     "@sanity/vision": "6.9.2",
     "react": "19.2.8",
     "react-dom": "19.2.8",
