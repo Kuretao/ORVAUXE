@@ -23,8 +23,8 @@
     "@orvauxe/eslint-config": "workspace:*",
     "@orvauxe/typescript-config": "workspace:*",
     "eslint": "9.39.5",
-    "prettier": "3.9.6",
-    "turbo": "2.10.10",
+    "prettier": "3.9.8",
+    "turbo": "2.10.13",
     "typescript": "6.0.3"
   }
 }
